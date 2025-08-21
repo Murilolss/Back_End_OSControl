@@ -11,6 +11,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Produto {
+  id Int
+
+  name String
+  category String
+  salesUnit String
+  purchasePrice String
+  salePrice String
+  observations String
+  isActive Boolean
+
+  creadtedAt dateTime
+  updatedAt dateTime
+}
+
 model User {
   id Int
 
@@ -60,6 +75,21 @@ model cadastroEmpresaJuridica {
 
   createAdaT Datetime
   upatedAt DateTime
+}
+model User{
+  id Int
+
+  email String
+  senha String
+  cpf String
+  phone String
+  birth Date
+  signature Float
+  isActive Boolean
+
+  createdAt DateTime
+  updateAt DateTime
+
 }
 
 model Client {
