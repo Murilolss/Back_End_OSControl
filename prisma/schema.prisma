@@ -20,7 +20,7 @@ model Produto {
   purchasePrice String
   salePrice String
   observations String
-  isActive boolean
+  isActive Boolean
 
   creadtedAt dateTime
   updatedAt dateTime
