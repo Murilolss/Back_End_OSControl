@@ -11,17 +11,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model cadastroEmpresaJuridica {
-  
-  id Int 
-  
-  name String
-  cnpj String
-  cep String
-  adress String
-  number Int
-  neighborhood String
-model cadastroEmpresaFisica{
+model User {
+  id Int
+
+  email String
+  senha String
+  cpf String
+  phone String
+  birth Date
+  signature Float
+  isActive Boolean
+
+  createdAt DateTime
+  updateAt DateTime
+}
+
+model cadastroEmpresaFisica {
   id Int
 
   name String
@@ -35,39 +40,26 @@ model cadastroEmpresaFisica{
   phone String
   email String
   site String
-  isActive boolean
+  isActive Boolean
 
   creadtedAt dateTime
   updatedAt dateTime
 }
 
- createAdaT Datetime
- upatedAt DateTime
-}
-
-model Servico{
-  id Int
-  nameService String
-  price Float
-  observations String
+model cadastroEmpresaJuridica {
+  
+  id Int 
+  
+  name String
+  cnpj String
+  cep String
+  adress String
+  number Int
+  neighborhood String
+  isActive Boolean
 
   createAdaT Datetime
   upatedAt DateTime
-}
-model User{
-  id Int
-
-  email String
-  senha String
-  cpf String
-  phone String
-  birth Date
-  signature Float
-  isActive Boolean
-
-  createdAt DateTime
-  updateAt DateTime
-
 }
 
 model Client {
@@ -84,6 +76,30 @@ model Client {
   city String
 
   createdAt DateTime
-  updateAt DateTime
-  
+  updateAt DateTime  
+}
+
+model Servico {
+  id Int
+  nameService String
+  price Float
+  observations String
+
+  createAdaT Datetime
+  upatedAt DateTime
+}
+
+model Produto {
+  id Int
+ 
+  name String
+  category String
+  salesUnit String
+  purchasePrice String
+  salePrice String
+  observations String
+  isActive Boolean
+ 
+  creadtedAt dateTime
+  updatedAt dateTime
 }
