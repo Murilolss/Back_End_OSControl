@@ -20,6 +20,7 @@ model Produto {
   purchasePrice String
   salePrice String
   observations String
+}
 
 model cadastroEmpresaJuridica {
   
