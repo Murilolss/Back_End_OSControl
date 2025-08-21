@@ -10,3 +10,24 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model cadastroEmpresaJuridica {
+  
+  id Int 
+  
+  name String
+  cnpj String
+  cep String
+  adress String
+  number Int
+  neighborhood String
+  state String
+  city String
+  phone String
+  email String
+  site String
+  isActive boolean
+
+  creadtedAt dateTime
+  updatedAt dateTime
+}
