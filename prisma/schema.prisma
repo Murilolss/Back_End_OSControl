@@ -21,9 +21,81 @@ model Produto {
   salePrice String
   observations String
 
+model cadastroEmpresaJuridica {
+  
+  id Int 
+  
+  name String
+  cnpj String
+  cep String
+  adress String
+  number Int
+  neighborhood String
+model cadastroEmpresaFisica{
+  id Int
+
+  name String
+  cpf String
+  cep String
+  address String
+  neighborhood String
+  number Int
+  state String
+  city String
+  phone String
+  email String
+  site String
+  isActive boolean
+
+  creadtedAt dateTime
+  updatedAt dateTime
+}
+
+ createAdaT Datetime
+ upatedAt DateTime
+}
+
+model Servico{
+  id Int
+  nameService String
+  price Float
+  observations String
+
+  createAdaT Datetime
+  upatedAt DateTime
+}
+model User{
+  id Int
+
+  email String
+  senha String
+  cpf String
+  phone String
+  birth Date
+  signature Float
+  isActive Boolean
+
   createdAt DateTime
   updateAt DateTime
 
 }
  
  
+
+model Client {
+  id String
+
+  name String
+  cpf String
+  phone String
+  email String
+  address String
+  number Int
+  neighborhood String
+  state String
+  city String
+
+  createdAt DateTime
+  updateAt DateTime
+  
+}
