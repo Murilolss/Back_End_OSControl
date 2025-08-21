@@ -11,23 +11,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Produto {
-  id Int
-
-  name String
-  category String
-  salesUnit String
-  purchasePrice String
-  salePrice String
-  observations String
-  isActive Boolean
-
-  creadtedAt dateTime
-  updatedAt dateTime
-}
-
 model User {
-  id Int
+  id Int @id @default (autoincrement())
 
   email String
   senha String
@@ -35,10 +20,10 @@ model User {
   phone String
   birth Date
   signature Float
-  isActive Boolean
+  isActive Boolean @map("is_active")
 
-  createdAt DateTime
-  updateAt DateTime
+  createdAt DateTime @map("created_at") @default(now())
+  updateAt DateTime @map("update_at") @updateAt
 }
 
 model cadastroEmpresaFisica {
@@ -55,10 +40,10 @@ model cadastroEmpresaFisica {
   phone String
   email String
   site String
-  isActive Boolean
+  isActive Boolean @map("is_active")
 
-  creadtedAt dateTime
-  updatedAt dateTime
+  creadtedAt dateTime @map("created_at") @default(now())
+  updatedAt dateTime @map("update_at") @updateAt
 }
 
 model cadastroEmpresaJuridica {
@@ -71,25 +56,10 @@ model cadastroEmpresaJuridica {
   adress String
   number Int
   neighborhood String
-  isActive Boolean
+  isActive Boolean @map("is_active")
 
-  createAdaT Datetime
-  upatedAt DateTime
-}
-model User{
-  id Int
-
-  email String
-  senha String
-  cpf String
-  phone String
-  birth Date
-  signature Float
-  isActive Boolean
-
-  createdAt DateTime
-  updateAt DateTime
-
+  createAdaT Datetime @map("created_at") @default(now())
+  upatedAt DateTime @map("update_at") @updateAt
 }
 
 model Client {
@@ -104,19 +74,21 @@ model Client {
   neighborhood String
   state String
   city String
+  isActive Boolean @map("is_active")
 
-  createdAt DateTime
-  updateAt DateTime  
+  createdAt DateTime @map("created_at") @default(now())
+  updateAt DateTime @map("update_at") @updateAt
 }
 
 model Servico {
   id Int
-  nameService String
+  nameService String @map("name_service")
   price Float
   observations String
+  isActive Boolean @map("is_active")
 
-  createAdaT Datetime
-  upatedAt DateTime
+  createAdaT Datetime @map("created_at") @default(now())
+  upatedAt DateTime @map("update_at") @updateAt
 }
 
 model Produto {
@@ -124,12 +96,12 @@ model Produto {
  
   name String
   category String
-  salesUnit String
-  purchasePrice String
-  salePrice String
+  salesUnit String @map("sales_unit")
+  purchasePrice String @map("purchase_price")
+  salePrice String @map("sale_price")
   observations String
-  isActive Boolean
+  isActive Boolean @map("is_active")
  
-  creadtedAt dateTime
-  updatedAt dateTime
+  creadtedAt dateTime @map("created_at") @default(now())
+  updatedAt dateTime @map("update_at") @updateAt
 }
