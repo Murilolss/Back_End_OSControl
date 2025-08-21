@@ -20,6 +20,10 @@ model Produto {
   purchasePrice String
   salePrice String
   observations String
+  isActive boolean
+
+  creadtedAt dateTime
+  updatedAt dateTime
 }
 
 model cadastroEmpresaJuridica {
