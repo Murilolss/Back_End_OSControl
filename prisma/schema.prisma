@@ -16,7 +16,7 @@ model User {
 
   email String
   pass String
-  cpf String
+  document String
   phone String
   birth Date
   signature Float
@@ -24,47 +24,6 @@ model User {
 
   createdAt DateTime @map("created_at") @default(now())
   updateAt DateTime @map("update_at") @updateAt
-}
-
-model cadastroPessoaFisica {
-  id Int @id @default (autoincrement())
-
-  name String
-  cpf String
-  cep String
-  address String
-  neighborhood String
-  number Int
-  state String
-  city String
-  phone String
-  email String
-  site String
-  isActive Boolean @map("is_active")
-
-  creadtedAt dateTime @map("created_at") @default(now())
-  updatedAt dateTime @map("update_at") @updateAt
-}
-
-model cadastroPessoaJuridica {
-  id Int @id @default (autoincrement())
-  
-  name String
-  cnpj String
-  cep String
-  adress String
-  neighborhood String
-  number Int
-  state String
-  city String
-  phone String
-  email String
-  site String
-  
-  isActive Boolean @map("is_active")
-
-  createAdaT Datetime @map("created_at") @default(now())
-  upatedAt DateTime @map("update_at") @updateAt
 }
 
 model Client {
