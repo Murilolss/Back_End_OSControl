@@ -15,7 +15,7 @@ model User {
   id Int @id @default (autoincrement())
 
   email String
-  senha String
+  pass String
   cpf String
   phone String
   birth Date
@@ -26,8 +26,8 @@ model User {
   updateAt DateTime @map("update_at") @updateAt
 }
 
-model cadastroEmpresaFisica {
-  id Int
+model cadastroPessoaFisica {
+  id Int @id @default (autoincrement())
 
   name String
   cpf String
@@ -46,16 +46,21 @@ model cadastroEmpresaFisica {
   updatedAt dateTime @map("update_at") @updateAt
 }
 
-model cadastroEmpresaJuridica {
-  
-  id Int 
+model cadastroPessoaJuridica {
+  id Int @id @default (autoincrement())
   
   name String
   cnpj String
   cep String
   adress String
-  number Int
   neighborhood String
+  number Int
+  state String
+  city String
+  phone String
+  email String
+  site String
+  
   isActive Boolean @map("is_active")
 
   createAdaT Datetime @map("created_at") @default(now())
@@ -63,10 +68,11 @@ model cadastroEmpresaJuridica {
 }
 
 model Client {
-  id String
+  id Int @id @default (autoincrement())
 
   name String
-  cpf String
+  cpf String 
+  cep String
   phone String
   email String
   address String
@@ -80,10 +86,12 @@ model Client {
   updateAt DateTime @map("update_at") @updateAt
 }
 
-model Servico {
-  id Int
+model Service {
+  id Int @id @default (autoincrement())
+
   nameService String @map("name_service")
-  price Float
+  price Float 
+  description String
   observations String
   isActive Boolean @map("is_active")
 
@@ -91,11 +99,12 @@ model Servico {
   upatedAt DateTime @map("update_at") @updateAt
 }
 
-model Produto {
-  id Int
- 
+model Product {
+  id Int @id @default (autoincrement())
+
   name String
   category String
+  description String
   salesUnit String @map("sales_unit")
   purchasePrice String @map("purchase_price")
   salePrice String @map("sale_price")
