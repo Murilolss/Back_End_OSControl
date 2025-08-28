@@ -14,26 +14,33 @@ datasource db {
 model User {
   id Int @id @default (autoincrement())
 
-  email String
+  email String @unique
   pass String
-  document String
+  document String @unique
   phone String
-  birth Date
+  birth DateTime
   signature Float
   isActive Boolean @map("is_active")
 
   createdAt DateTime @map("created_at") @default(now())
-  updateAt DateTime @map("update_at") @updateAt
+  updateAt DateTime @map("update_at") 
+
+  services    Service[]12
+  clients     Client[]
+  orders      Order[]
+  products    Product[]
+
+  @@map("users")
 }
 
 model Client {
   id Int @id @default (autoincrement())
 
   name String
-  cpf String 
+  cpf String  @unique
   cep String
   phone String
-  email String
+  email String  @unique
   address String
   number Int
   neighborhood String
@@ -42,7 +49,15 @@ model Client {
   isActive Boolean @map("is_active")
 
   createdAt DateTime @map("created_at") @default(now())
-  updateAt DateTime @map("update_at") @updateAt
+  updateAt DateTime @map("update_at") 
+
+  orders    Order[]
+
+  userId     Int      @map("user_id")
+
+  user     User   @relation(fields: [userId], references: [id])
+
+  @@map("clients")
 }
 
 model Service {
@@ -54,8 +69,15 @@ model Service {
   observations String
   isActive Boolean @map("is_active")
 
-  createAdaT Datetime @map("created_at") @default(now())
-  upatedAt DateTime @map("update_at") @updateAt
+  createAdaT DateTime @map("created_at") @default(now())
+  upatedAt DateTime @map("update_at") 
+
+  orders      Order?
+  userId    Int   @map("user_id")
+
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("services")
+
 }
 
 model Product {
@@ -64,12 +86,63 @@ model Product {
   name String
   category String
   description String
-  salesUnit String @map("sales_unit")
-  purchasePrice String @map("purchase_price")
-  salePrice String @map("sale_price")
+  salesUnit String      @map("sales_unit")
+  purchasePrice String  @map("purchase_price")
+  salePrice String      @map("sale_price")
   observations String
-  isActive Boolean @map("is_active")
+  isActive Boolean      @map("is_active")
  
-  creadtedAt dateTime @map("created_at") @default(now())
-  updatedAt dateTime @map("update_at") @updateAt
+  updatedAt DateTime    @map("update_at") 
+
+  shops     Shop[]
+
+  userId    Int   @map("user_id")
+
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("products")
 }
+
+model Shop{
+  id Int @id @default (autoincrement())
+
+  amount Int
+  salePrice Float       @map("sale_price")
+
+  creadtedAt DateTime   @map("created_at") @default(now())
+  updatedAt DateTime    @map("update_at") 
+
+  productId  Int      @map("product_id")
+  orderId    Int      @map("orderId_id")
+
+  product    Product  @relation(fields: [productId], references: [id])
+  order      Order    @relation(fields: [orderId], references: [id])
+
+  @@map("shops")
+
+}
+
+model Order{
+  id Int @id @default (autoincrement())
+
+  salePrice Float     @map("sale_price")
+  servicePrice Float   @map("service_price")
+  productPrice Float   @map("product_price")
+
+  creadtedAt DateTime   @map("created_at") @default(now())
+  updatedAt DateTime    @map("update_at") 
+
+  shops     Shop[]
+
+  userId     Int      @map("user_id")
+  serviceId  Int      @map("service_id") @unique
+  clientId   Int      @map("client_id")
+  
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  service    Service  @relation(fields: [serviceId], references: [id])
+  client     Client   @relation(fields: [clientId], references: [id])
+
+
+  @@map("orders")
+}
+
