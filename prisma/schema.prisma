@@ -19,18 +19,39 @@ model User {
   document String @unique
   phone String
   birth DateTime
-  signature Float
+  signature Boolean
   isActive Boolean @map("is_active")
 
   createdAt DateTime @map("created_at") @default(now())
   updateAt DateTime @map("update_at") 
 
-  services    Service[]12
+  services    Service[]
   clients     Client[]
   orders      Order[]
   products    Product[]
+  signatures  Signature[]
 
   @@map("users")
+
+  
+
+
+}
+
+model Signature{
+  id Int @id @default (autoincrement())
+
+  default Boolean
+  premium Boolean
+  isActive Boolean @map("is_active")
+
+  createdAt DateTime @map("created_at") @default(now())
+  updateAt DateTime @map("update_at")
+
+  userId     Int      @map("user_id")
+  user     User   @relation(fields: [userId], references: [id])
+
+  @@map("signatures")
 }
 
 model Client {
