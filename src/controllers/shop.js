@@ -1,16 +1,21 @@
 import prisma from '../prisma'
-export const UserController = {
+export const ShopController = {
 // create, pode ter varios nomes( no banco de dados é insert), post, set, "guarda objeto" store;
 
 // asincrona nome_da_fubção( req(recebendo, eponder e proximo))
 
 async store(req, res, next){
+    try{ 
 
-    const{ orderId, productId, amount, salePrice} = req.body;
+        const{ orderId, productId, amount, salePrice} = req.body;
 
-    const u = await prisma.shop.create({
-        data:{ orderId, productId, amount, salePrice}
-    });
+        const u = await prisma.shop.create({
+            data:{ orderId, productId, amount, salePrice}
+        });
 
+        res.status(201).json(u);
+    } catch(error) {
+        next(error);
+    }
 }
 }
