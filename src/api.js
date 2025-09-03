@@ -22,7 +22,7 @@ app.use('/shops', shopRoutes)
 app.use('/signatures', signatureRoutes)
 app.use('/users', userRoutes)
 
-app.use((err, req, res, next) => {
+app.use((err, _req, res, _next) => {
     console.error(err);
     if (err.code === 'P2002'){
         return res.status(409).json({
