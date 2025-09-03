@@ -11,6 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//Murilo Leandro
 model User {
   id Int @id @default (autoincrement())
 
@@ -38,6 +39,7 @@ model User {
 
 }
 
+//Marcos
 model Signature{
   id Int @id @default (autoincrement())
 
@@ -54,6 +56,7 @@ model Signature{
   @@map("signatures")
 }
 
+//Leonardo
 model Client {
   id Int @id @default (autoincrement())
 
@@ -81,6 +84,7 @@ model Client {
   @@map("clients")
 }
 
+// Murilo Andrade
 model Service {
   id Int @id @default (autoincrement())
 
@@ -101,6 +105,7 @@ model Service {
 
 }
 
+// Leonardo
 model Product {
   id Int @id @default (autoincrement())
 
@@ -123,6 +128,7 @@ model Product {
   @@map("products")
 }
 
+// Marcos
 model Shop{
   id Int @id @default (autoincrement())
 
@@ -142,6 +148,7 @@ model Shop{
 
 }
 
+// Murilo Andrade
 model Order{
   id Int @id @default (autoincrement())
 
