@@ -7,15 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-<<<<<<< HEAD
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
-=======
 //Murilo Leandro
->>>>>>> 62ee1f0134a3ca83464564abfd725b8c46352eea
 model User {
   id Int @id @default (autoincrement())
 
@@ -37,10 +34,6 @@ model User {
   signatures  Signature[]
 
   @@map("users")
-
-  
-
-
 }
 
 //Marcos
@@ -105,7 +98,6 @@ model Service {
 
   user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@map("services")
-
 }
 
 // Leonardo
@@ -148,7 +140,6 @@ model Shop{
   order      Order    @relation(fields: [orderId], references: [id])
 
   @@map("shops")
-
 }
 
 // Murilo Andrade
