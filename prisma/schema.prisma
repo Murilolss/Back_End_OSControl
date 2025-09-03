@@ -47,8 +47,7 @@ model User {
 model Signature{
   id Int @id @default (autoincrement())
 
-  default Boolean
-  premium Boolean
+  type String
   isActive Boolean @map("is_active")
 
   createdAt DateTime @map("created_at") @default(now())
