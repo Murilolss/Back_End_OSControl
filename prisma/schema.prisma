@@ -1,17 +1,21 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
-}
 
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
+<<<<<<< HEAD
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+=======
 //Murilo Leandro
+>>>>>>> 62ee1f0134a3ca83464564abfd725b8c46352eea
 model User {
   id Int @id @default (autoincrement())
 
