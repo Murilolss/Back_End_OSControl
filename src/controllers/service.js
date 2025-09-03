@@ -5,17 +5,24 @@ import prisma from '../prisma'
 // asincrono nome_da_função(recebendo, responder, próximo)
 export const ServiceController = {
     async store(req, res, next){
-        const { nameService, price, description, observations, isActive, userId } = req.body;
-    
-        const service = await prisma.service.create({
-            data : { 
-                nameService,
-                price, 
-                description, 
-                observations, 
-                isActive, 
-                userId 
+        try{
+            const { nameService, price, description, observations, isActive, userId } = req.body;
+            
+            const service = await prisma.service.create({
+                data : { 
+                    nameService,
+                    price, 
+                    description, 
+                    observations, 
+                    isActive, 
+                    userId 
+                }
+            });
+            // respondendo 201-criado encapsulando no formato json(service)
+            res.status(201).json(service)
             }
-        });
+        catch(err){
+            next(err);
+        }
     }
 }
