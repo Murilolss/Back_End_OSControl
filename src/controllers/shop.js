@@ -9,13 +9,18 @@ async store(req, res, next){
 
         const{ orderId, productId, amount, salePrice} = req.body;
 
-        const u = await prisma.shop.create({
-            data:{ orderId, productId, amount, salePrice}
+        const shop = await prisma.shop.create({
+            data:{ 
+                orderId, 
+                productId, 
+                amount, 
+                salePrice
+            }
         });
 
-        res.status(201).json(u);
-    } catch(error) {
-        next(error);
+        res.status(201).json(shop);
+        } catch(error) {
+            next(error);
+        }
     }
-}
 }

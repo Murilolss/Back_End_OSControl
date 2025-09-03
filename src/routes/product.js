@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { ProductController } from '../controllers/product'
 
-const route = Router();
+const route = new Router();
 
 route.post('/', ProductController.store);
+
+export default route;

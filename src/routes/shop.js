@@ -1,7 +1,7 @@
 import { Router } from "express"; 
 import {ShopController} from '../controllers/shop'
 
-const route  = Router();
+const route  = new Router();
 
 route.post('/', ShopController.store)
 

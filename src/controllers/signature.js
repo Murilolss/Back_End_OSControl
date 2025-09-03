@@ -5,11 +5,15 @@ export const SignatureController = {
         
             const{ type, isActive, userId} = req.body;
             
-            const u = await prisma.signature.create({   
-                data: { type, isActive, userId}
+            const signature = await prisma.signature.create({   
+                data: { 
+                    type, 
+                    isActive, 
+                    userId
+                }
             });
             
-            res.status(201).json(u);
+            res.status(201).json(signature);
         }catch(error) {
             next(error);
         }
