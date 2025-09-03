@@ -5,17 +5,24 @@ import prisma from '../prisma'
 // asincrono nome_da_função(recebendo, responder, próximo)
 export const OrderController = {
     async store(req, res, next){
-        const { salePrice, servicePrice, productPrice, userId, serviceId, clientId } = req.body;
-    
-        const order = prisma.order.create({
-            data : { 
-                salePrice, 
-                servicePrice, 
-                productPrice, 
-                userId, 
-                serviceId, 
-                clientId 
-            }
-        });
+        try {
+            const { salePrice, servicePrice, productPrice, userId, serviceId, clientId } = req.body;
+            
+            const order = prisma.order.create({
+                data : { 
+                    salePrice, 
+                    servicePrice, 
+                    productPrice, 
+                    userId, 
+                    serviceId, 
+                    clientId 
+                }
+            });
+            // respondendo 201-criado encapsulando no formato json(order)
+            res.status(201).json(order)
+        }
+        catch(err){
+            next(err);
+        }
     }
 }
