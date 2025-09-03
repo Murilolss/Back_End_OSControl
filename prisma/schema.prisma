@@ -1,16 +1,21 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
-}
 
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
+<<<<<<< HEAD
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+=======
+//Murilo Leandro
+>>>>>>> 62ee1f0134a3ca83464564abfd725b8c46352eea
 model User {
   id Int @id @default (autoincrement())
 
@@ -38,6 +43,7 @@ model User {
 
 }
 
+//Marcos
 model Signature{
   id Int @id @default (autoincrement())
 
@@ -54,6 +60,7 @@ model Signature{
   @@map("signatures")
 }
 
+//Leonardo
 model Client {
   id Int @id @default (autoincrement())
 
@@ -81,6 +88,7 @@ model Client {
   @@map("clients")
 }
 
+// Murilo Andrade
 model Service {
   id Int @id @default (autoincrement())
 
@@ -101,6 +109,7 @@ model Service {
 
 }
 
+// Leonardo
 model Product {
   id Int @id @default (autoincrement())
 
@@ -123,6 +132,7 @@ model Product {
   @@map("products")
 }
 
+// Marcos
 model Shop{
   id Int @id @default (autoincrement())
 
@@ -142,6 +152,7 @@ model Shop{
 
 }
 
+// Murilo Andrade
 model Order{
   id Int @id @default (autoincrement())
 
