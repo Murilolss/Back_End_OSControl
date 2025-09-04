@@ -2,13 +2,13 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 
-import clientRoutes from './routers/client.js'
-import orderRoutes from './routers/order.js'
-import productRoutes from './routers/product.js'
-import serviceRoutes from './routers/service.js'
-import shopRoutes from './routers/shop.js'
-import signatureRoutes from './routers/signature.js'
-import userRoutes from './routers/user.js'
+import clientRoutes from './routes/client.js'
+import orderRoutes from './routes/order.js'
+import productRoutes from './routes/product.js'
+import serviceRoutes from './routes/service.js'
+import shopRoutes from './routes/shop.js'
+import signatureRoutes from './routes/signature.js'
+import userRoutes from './routes/user.js'
 
 const app = express();
 app.use(cors());
