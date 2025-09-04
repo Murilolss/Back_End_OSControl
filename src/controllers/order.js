@@ -7,12 +7,12 @@ export const OrderController = {
             
             const order = prisma.order.create({
                 data : { 
-                    salePrice, 
-                    servicePrice, 
-                    productPrice, 
-                    userId, 
-                    serviceId, 
-                    clientId 
+                    salePrice: Number(salePrice), 
+                    servicePrice: Number(servicePrice), 
+                    productPrice: Number(productPrice), 
+                    userId: Number(userId), 
+                    serviceId: Number(serviceId), 
+                    clientId: Number(clientId) 
                 }
             });
             // respondendo 201-criado encapsulando no formato json(order)

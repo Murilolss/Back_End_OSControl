@@ -4,8 +4,8 @@ content-type: application/json
 {
     "nameService" : "testee",
     "price" : 20, 
-    "description" : "Blablabla", 
-    "observations" : "blablabla2", 
+    "description" : "blabla", 
+    "observations" : "blabla2", 
     "isActive" : true, 
-    "userId" : 2
+    "userId" : 3
 }

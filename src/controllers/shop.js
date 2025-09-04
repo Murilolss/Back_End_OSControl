@@ -8,10 +8,10 @@ export const ShopController = {
 
         const shop = await prisma.shop.create({
             data:{ 
-                orderId, 
-                productId, 
-                amount, 
-                salePrice
+                orderId: Number(orderId),
+                productId: Number(productId),
+                amount: Number(amount),
+                salePrice: Number(salePrice)
             }
         });
 
