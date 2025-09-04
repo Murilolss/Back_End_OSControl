@@ -20,7 +20,7 @@ model User {
   document String @unique
   phone String
   birth DateTime
-  signature Boolean
+  signature String
   isActive Boolean @map("is_active")
 
   createdAt DateTime @map("created_at") @default(now())

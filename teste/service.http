@@ -1,0 +1,11 @@
+POST http://localhost:3000/services HTTP/1.1
+content-type: application/json
+
+{
+    "nameService" : "testee",
+    "price" : 20, 
+    "description" : "Blablabla", 
+    "observations" : "blablabla2", 
+    "isActive" : true, 
+    "userId" : 2
+}
