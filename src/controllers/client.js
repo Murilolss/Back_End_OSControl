@@ -1,6 +1,6 @@
 import prisma from '../prisma';
 
-    export const ClientController ={
+export const ClientController ={
      async store(req, res, next ){
         try{
         const { name, document, cep, phone, email, address, number, neighborhood, state, city, isActive, userId   } = req.body;

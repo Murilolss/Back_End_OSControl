@@ -1,10 +1,7 @@
 import prisma from '../prisma'
+
 export const ShopController = {
-// create, pode ter varios nomes( no banco de dados é insert), post, set, "guarda objeto" store;
-
-// asincrona nome_da_fubção( req(recebendo, eponder e proximo))
-
-async store(req, res, next){
+    async store(req, res, next){
     try{ 
 
         const{ orderId, productId, amount, salePrice} = req.body;

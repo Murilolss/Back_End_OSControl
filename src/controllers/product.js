@@ -1,7 +1,6 @@
 import prisma from '../prisma';
 
 export const ProductController ={
-
     async store(req, res, next ){
         try{
         const { name, category, description,  salesUnit, purchasePrice , salePrice, observations, isActive,userId  } = req.body;

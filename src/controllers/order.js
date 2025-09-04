@@ -1,8 +1,5 @@
 import prisma from '../prisma'
 
-//C - CREATE, INSERT, POST, SET, STORE
-
-// asincrono nome_da_função(recebendo, responder, próximo)
 export const OrderController = {
     async store(req, res, next){
         try {
