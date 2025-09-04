@@ -13,7 +13,7 @@ export const UserController = {
                 phone,
                 birth,
                 signature,
-                isActive
+                isActive : Boolean(isActive)
             }
         });
 
