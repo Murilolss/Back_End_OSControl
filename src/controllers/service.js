@@ -21,8 +21,8 @@ export const ServiceController = {
             // respondendo 201-criado encapsulando no formato json(service)
             res.status(201).json(service)
             }
-        catch(err){
-            next(err);
+        catch(error){
+            next(error);
         }
     }
 }

@@ -21,8 +21,8 @@ export const OrderController = {
             // respondendo 201-criado encapsulando no formato json(order)
             res.status(201).json(order)
         }
-        catch(err){
-            next(err);
+        catch(error){
+            next(error);
         }
     }
 }
