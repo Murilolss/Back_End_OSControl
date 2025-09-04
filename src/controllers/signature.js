@@ -9,8 +9,8 @@ export const SignatureController = {
             const signature = await prisma.signature.create({   
                 data: { 
                     type, 
-                    isActive, 
-                    userId
+                    isActive: Boolean(isActive),
+                    userId: Number(userId)
                 }
             });
             
