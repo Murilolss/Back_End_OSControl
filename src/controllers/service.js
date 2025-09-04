@@ -8,11 +8,11 @@ export const ServiceController = {
             const service = await prisma.service.create({
                 data : { 
                     nameService,
-                    price, 
+                    price: Number(price), 
                     description, 
                     observations, 
-                    isActive, 
-                    userId 
+                    isActive: Boolean(isActive), 
+                    userId: Number(userId)
                 }
             });
             // respondendo 201-criado encapsulando no formato json(service)
