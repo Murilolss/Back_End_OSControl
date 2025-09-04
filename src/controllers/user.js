@@ -3,7 +3,7 @@ import prisma from '../prisma.js';
 export const UserController = {
     async store(req, res, next){
         try{
-            const {email, password, document, phone, birth, signature, is_active} = req.body;
+            const {email, password, document, phone, birth, signature, isActive} = req.body;
     
             const user = await prisma.user.creat({
             data: {
@@ -13,7 +13,7 @@ export const UserController = {
                 phone,
                 birth,
                 signature,
-                is_active
+                isActive
             }
         });
 

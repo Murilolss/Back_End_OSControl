@@ -1,0 +1,11 @@
+POST http://localhost:3000/orders HTTP/1.1
+content-type: application/json
+
+{
+    "salePrice" : 20,
+    "servicePrice" : 29,
+    "productPrice" : 10,
+    "userId" : 2,
+    "serviceId" : 1,
+    "clientId" : 1
+}
