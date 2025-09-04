@@ -15,8 +15,7 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "signatures" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "default" BOOLEAN NOT NULL,
-    "premium" BOOLEAN NOT NULL,
+    "type" TEXT NOT NULL,
     "is_active" BOOLEAN NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "update_at" DATETIME NOT NULL,
