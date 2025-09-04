@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ServiceController } from '../controllers/service'
+import { ServiceController } from '../controllers/service.js'
 
 const route = new Router();
 
