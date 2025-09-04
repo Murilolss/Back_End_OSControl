@@ -4,6 +4,9 @@ npx prisma generate
 npx prisma migrate dev --name init
 npx prisma db push  --force-reset
 npx prisma studio
+npm run dev
+
+remover o output do prisma client
 
 CRUD
 //C - CREATE, INSERT, POST, SET, STORE
