@@ -11,11 +11,11 @@ export const ProductController ={
                     category, 
                     description, 
                     salesUnit, 
-                    purchasePrice, 
-                    salePrice, 
+                    purchasePrice : Number(purchasePrice), 
+                    salePrice : Number(salePrice), 
                     observations, 
-                    isActive,
-                    userId
+                    isActive : Boolean(isActive),
+                    userId : Number(userId)
                 }
         });
 

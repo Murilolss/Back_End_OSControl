@@ -3,8 +3,8 @@ Content-Type: application/json
 
 {
     "type" : "Basic",
-    "isActive":"true",
-    "userId":,
+    "isActive": true,
+    "userId": 3,
 }
 
     

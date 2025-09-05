@@ -8,17 +8,17 @@ export const ClientController ={
         const client = await prisma.client.create({
             data: { 
                 name, 
-                document, 
+                document,
                 cep, 
                 phone, 
                 email, 
                 address, 
-                number, 
+                number : Number(number),
                 neighborhood, 
                 state, 
                 city, 
-                isActive, 
-                userId 
+                isActive: Boolean(isActive), 
+                userId : Number(userId)
             }
         
      });

@@ -1,9 +1,9 @@
-OST http: //localhost:3000/signatures HTTP/1.1
+POST http: //localhost:3000/shops HTTP/1.1
 Content-Type: application/json
 
 {
-    "orderId": , 
-    "productId": , 
-    "amount": , 
-    "salePrice": 
+    "orderId": 1, 
+    "productId": 1, 
+    "amount": 1, 
+    "salePrice" : 30
 }

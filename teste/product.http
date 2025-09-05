@@ -1,0 +1,15 @@
+POST http://localhost:3000/products HTTP/1.1
+content-type: application/json
+
+{
+    "name" : "MSI B450",
+    "category" : "Placa Mãe",
+    "description" : "127v",
+    "salesUnit" : "UN", 
+    "purchasePrice" : 10, 
+    "salePrice" : 20, 
+    "observations" : "Azul",
+    "isActive" : true,
+    "userId" : 3
+
+}
