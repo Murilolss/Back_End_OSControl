@@ -10,6 +10,6 @@ content-type: application/json
     "salePrice" : 20, 
     "observations" : "Azul",
     "isActive" : true,
-    "userId" : 1
+    "userId" : 4
 
 }
