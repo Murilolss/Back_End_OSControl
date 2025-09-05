@@ -4,7 +4,7 @@ Content-Type: application/json
 {
     "type" : "Basic",
     "isActive": true,
-    "userId": 3,
+    "userId": 1,
 }
 
     
