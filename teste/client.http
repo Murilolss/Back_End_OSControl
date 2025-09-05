@@ -12,7 +12,7 @@ content-type: application/json
     "neighborhood" : "Centro",
     "state" : "São Paulo",
     "city" : "São Carlos",
-    "isActive" : "true",
+    "isActive" : true,
     "userId" : 4
 
 }
