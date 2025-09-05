@@ -24,7 +24,7 @@ model User {
   isActive Boolean @map("is_active")
 
   createdAt DateTime @map("created_at") @default(now())
-  updateAt DateTime @map("update_at") 
+  updatedAt DateTime @map("updated_at") @default(now())
 
   services    Service[]
   clients     Client[]
@@ -43,7 +43,7 @@ model Signature{
   isActive Boolean @map("is_active")
 
   createdAt DateTime @map("created_at") @default(now())
-  updateAt DateTime @map("update_at")
+  updatedAt DateTime @map("updated_at") @default(now())
 
   userId     Int      @map("user_id")
   user     User   @relation(fields: [userId], references: [id])
@@ -68,7 +68,7 @@ model Client {
   isActive Boolean @map("is_active")
 
   createdAt DateTime @map("created_at") @default(now())
-  updateAt DateTime @map("update_at") 
+  updatedAt DateTime @map("updated_at") @default(now())
 
   orders    Order[]
 
@@ -89,8 +89,8 @@ model Service {
   observations String
   isActive Boolean @map("is_active")
 
-  createAdaT DateTime @map("created_at") @default(now())
-  upatedAt DateTime @map("update_at") 
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @map("updated_at") @default(now()) 
 
   orders      Order?
   userId    Int   @map("user_id")
@@ -111,8 +111,10 @@ model Product {
   salePrice String      @map("sale_price")
   observations String
   isActive Boolean      @map("is_active")
- 
-  updatedAt DateTime    @map("update_at") 
+
+
+ createdAt DateTime @map("created_at") @default(now())
+ updatedAt DateTime @map("updated_at") @default(now()) 
 
   shops     Shop[]
 
@@ -129,8 +131,8 @@ model Shop{
   amount Int
   salePrice Float       @map("sale_price")
 
-  creadtedAt DateTime   @map("created_at") @default(now())
-  updatedAt DateTime    @map("update_at") 
+ createdAt DateTime @map("created_at") @default(now())
+ updatedAt DateTime @map("updated_at") @default(now()) 
 
   productId  Int      @map("product_id")
   orderId    Int      @map("orderId_id")
@@ -149,8 +151,8 @@ model Order{
   servicePrice Float   @map("service_price")
   productPrice Float   @map("product_price")
 
-  creadtedAt DateTime   @map("created_at") @default(now())
-  updatedAt DateTime    @map("update_at") 
+ createdAt DateTime @map("created_at") @default(now())
+ updatedAt DateTime @map("updated_at") @default(now()) 
 
   shops     Shop[]
 
