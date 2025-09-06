@@ -14,7 +14,7 @@ content-type: application/json
     "city" : "São Carlos",
     "isActive" : true,
     "userId" : 1
-
+    
 }
 
 
