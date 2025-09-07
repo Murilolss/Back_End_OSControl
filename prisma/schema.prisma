@@ -92,7 +92,7 @@ model Service {
   createdAt DateTime @map("created_at") @default(now())
   updatedAt DateTime @map("updated_at") @updatedAt 
 
-  orders      Order?
+  orders      Order[]
   userId    Int   @map("user_id")
 
   user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -157,7 +157,7 @@ model Order{
   shops     Shop[]
 
   userId     Int      @map("user_id")
-  serviceId  Int      @map("service_id") @unique
+  serviceId  Int      @map("service_id")
   clientId   Int      @map("client_id")
   
 

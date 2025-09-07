@@ -5,7 +5,7 @@ export const UserController = {
         try{
             const {email, password, document, phone, birth, signature, isActive} = req.body;
     
-            const user = await prisma.user.creat({
+            const user = await prisma.user.create({
             data: {
                 email,
                 password,

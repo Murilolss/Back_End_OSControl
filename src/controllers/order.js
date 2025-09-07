@@ -6,7 +6,7 @@ export const OrderController = {
             const { salePrice, servicePrice, productPrice, userId, serviceId, clientId } = req.body;
             
             const order = prisma.order.create({
-                data : { 
+                data: { 
                     salePrice: Number(salePrice), 
                     servicePrice: Number(servicePrice), 
                     productPrice: Number(productPrice), 

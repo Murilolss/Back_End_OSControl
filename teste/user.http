@@ -8,5 +8,5 @@ content-type: application/json
     "phone" : "16 99999-9999",
     "birth" : "1970-01-01T00:00:00.000Z",
     "signature" : "Basic",
-    "isActive" : true,
+    "isActive" : true
 }
