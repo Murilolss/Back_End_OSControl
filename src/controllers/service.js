@@ -21,5 +21,14 @@ export const ServiceController = {
         catch(error){
             next(error);
         }
+    },
+    async index(req, res, next) { 
+        try {
+            const services = await prisma.service.findMany();
+            res.status(200).json(services)
+        }
+        catch(error){
+            next(error);
+        }
     }
 }
