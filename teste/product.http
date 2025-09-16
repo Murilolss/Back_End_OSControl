@@ -15,7 +15,10 @@ content-type: application/json
 
 }
 
-### ler todos os usuarios 
-GET  http://localhost:3000/products HTTP/1.1
+### ler todos os products
+GET  http://localhost:3000/products?name=MSiB450 HTTP/1.1
 content-type: application/json
 
+### ler todos os products e category
+GET  http://localhost:3000/products?name=MSIB450&category=placaMãe HTTP/1.1
+content-type: application/json
