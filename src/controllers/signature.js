@@ -18,5 +18,12 @@ export const SignatureController = {
         }catch(error) {
             next(error);
         }
+    },
+
+    async index(req, res, next){
+        const signature = await prisma.user.findMany()
+
+        res.status(200).json(signature)
+
     }
 }
