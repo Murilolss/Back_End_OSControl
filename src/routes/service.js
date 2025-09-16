@@ -4,5 +4,6 @@ import { ServiceController } from '../controllers/service.js'
 const route = new Router();
 
 route.post('/', ServiceController.store);
+route.get('/', ServiceController.index);
 
 export default route;
