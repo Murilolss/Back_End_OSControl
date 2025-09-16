@@ -13,6 +13,17 @@ Content-Type: application/json
 }
 
 ### Ler Todos os Usuarios
-
 GET http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+### Ler o email do user
+GET http://localhost:3000/users?email=murilo@gmail.com HTTP/1.1
+Content-Type: application/json
+
+### Ler o email e cpf do user
+GET http://localhost:3000/users?email=murilo@gmail.com&document=111.222.333-44 HTTP/1.1
+Content-Type: application/json
+
+### Ler o email, cpf e assinatura do user
+GET http://localhost:3000/users?email=murilo@gmail.com&document=111.222.333-44&signature=Basic HTTP/1.1
 Content-Type: application/json
