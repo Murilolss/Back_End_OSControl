@@ -19,5 +19,12 @@ export const ShopController = {
         } catch(error) {
             next(error);
         }
+    },
+
+    async index(req, res, next){
+        const shops = await prisma.user.findMany()
+
+        res.status(200).json(shops)
+
     }
 }
