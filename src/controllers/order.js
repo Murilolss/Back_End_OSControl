@@ -24,7 +24,18 @@ export const OrderController = {
     },
     async index(req, res, next) { 
         try {
-            const orders = await prisma.order.findMany();
+            const orders = await prisma.order.findMany({
+                where: {
+                    OR: [
+                        {salePrice: Number(req.query.salePrice)}, 
+                        {servicePrice: Number(req.query.servicePrice)}, 
+                        {productPrice: Number(req.query.productPrice)}
+                    ]
+                }
+            });
+            if (orders.length === 0) {
+                return res.status(404).json({ message: "Nada foi achado" })
+            }
             res.status(200).json(orders)
         }
         catch(error){

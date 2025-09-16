@@ -13,5 +13,5 @@ content-Type: application/json
 }
 
 ### Ler todas orders
-GET http://localhost:3000/orders HTTP/1.1
+GET http://localhost:3000/orders?salePrice=20 HTTP/1.1
 content-Type: application/json
