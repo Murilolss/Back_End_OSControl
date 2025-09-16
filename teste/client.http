@@ -17,6 +17,14 @@ content-type: application/json
     "userId" : 1
     
 }
-### Lendo os clients
-GET http://localhost:3000/clients HTTP/1.1
+### Lendo os clients com nome Marcius
+GET http://localhost:3000/clients?name=Marcius HTTP/1.1
+content-type: application/json
+
+### Lendo o email
+GET http://localhost:3000/clients?name=Marcius&email=marcius@gmail.com HTTP/1.1
+content-type: application/json
+
+### Lendo o  preço
+GET http://localhost:3000/clients?name=Marcius&email=marcius@gmail.com&number=700 HTTP/1.1
 content-type: application/json
