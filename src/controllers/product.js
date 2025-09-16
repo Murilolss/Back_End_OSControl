@@ -23,5 +23,10 @@ export const ProductController ={
         }catch(error){
             next(error);
         }
+    },
+    async index(req, res, next){
+        const product = await prisma.product.findMany()
+
+        res.status(200).json(product)
     }
 }

@@ -28,5 +28,11 @@ export const ClientController ={
     }catch(error){
         next(error);
     }   
-   }
+   },
+   async index(req, res, next){
+    const client = await prisma.client.findMany()
+
+    res.status(200).json(client)
+}
+   
 }

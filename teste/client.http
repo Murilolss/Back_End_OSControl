@@ -1,3 +1,4 @@
+### criando um client
 POST http://localhost:3000/clients HTTP/1.1
 content-type: application/json
 
@@ -16,5 +17,8 @@ content-type: application/json
     "userId" : 1
     
 }
+###criando um usuario
+GET http://localhost:3000/clients HTTP/1.1
+content-type: application/json
 
 
