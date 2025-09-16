@@ -5,7 +5,7 @@ export const OrderController = {
         try {
             const { salePrice, servicePrice, productPrice, userId, serviceId, clientId } = req.body;
             
-            const order = prisma.order.create({
+            const order = await prisma.order.create({
                 data: { 
                     salePrice: Number(salePrice), 
                     servicePrice: Number(servicePrice), 
