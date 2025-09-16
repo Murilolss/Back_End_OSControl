@@ -24,7 +24,17 @@ export const UserController = {
     },
 
     async index(req, res, next){
-        const users = await prisma.user.findMany()
+
+        let query = {}
+
+        if (req.query.email){
+            query = {name: req.query.email}
+        }
+        
+
+        const users = await prisma.user.findMany({
+            where: query
+    })
 
         res.status(200).json(users)
 
