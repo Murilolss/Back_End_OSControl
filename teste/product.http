@@ -20,21 +20,21 @@ GET  http://localhost:3000/products HTTP/1.1
 content-type: application/json
 
 ### ler products e name
-GET  http://localhost:3000/products?name=MSIB450 HTTP/1.1
+GET  http://localhost:3000/products?name=MSI B450 HTTP/1.1
 content-type: application/json
 
 ### ler products, name e category
-GET  http://localhost:3000/products?name=MSIB450&category=placaMãe HTTP/1.1
+GET  http://localhost:3000/products?name=MSIB450&category=placa Mãe HTTP/1.1
 content-type: application/json
 
 ### ler products, name, category e purchasePrice
-GET  http://localhost:3000/products?name=MSIB450&category=placaMãe&purchasePrice=10 HTTP/1.1
+GET  http://localhost:3000/products?name=MSI B450&category=placa Mãe&purchasePrice=10 HTTP/1.1
 content-type: application/json
 
 ### ler products, name, category, purchasePrice e salePrice
-GET  http://localhost:3000/products?name=MSIB450&category=placaMãe&purchasePrice=10&salePrice=20 HTTP/1.1
+GET  http://localhost:3000/products?name=MSI B450&category=placa Mãe&purchasePrice=10&salePrice=20 HTTP/1.1
 content-type: application/json
 
 ### ler products, name, category, purchasePrice, salePrice isActive
-GET  http://localhost:3000/products?name=MSIB450&category=placaMãe&purchasePrice=10&salePrice=20&isActive HTTP/1.1
+GET  http://localhost:3000/products?name=MSI B450&category=placa Mãe&purchasePrice=10&salePrice=20&isActive HTTP/1.1
 content-type: application/json

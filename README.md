@@ -14,3 +14,5 @@ CRUD
 
 ASYNC
 // asincrono nome_da_função(recebendo, responder, próximo)
+
+route.get('/:id', UserController.index); Significa que é dinamico e vira uma variavel

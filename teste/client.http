@@ -54,14 +54,14 @@ GET http://localhost:3000/clients?name=Marcius&document=111.222.333.44&cep=12345
 content-type: application/json
 
 ### Lendo clients, name, document, cep, phone, email, address, number, neighborhood e state
-GET http://localhost:3000/clients?name=Marcius&document=111.222.333.44&cep=12345-678&phone=16-12345-6789&email=marcius@gmail.com&address=Rua Epscopal&number=700&neighborhood=Centro&state=São-Paulo HTTP/1.1
+GET http://localhost:3000/clients?name=Marcius&document=111.222.333.44&cep=12345-678&phone=16 12345-6789&email=marcius@gmail.com&address=Rua Epscopal&number=700&neighborhood=Centro&state=São Paulo HTTP/1.1
 content-type: application/json
 
 ### Lendo clients, name, document, cep, phone, email, address, number, neighborhood, state e city
-GET http://localhost:3000/clients?name=Marcius&document=111.222.333.44&cep=12345-678&phone=16-12345-6789&email=marcius@gmail.com&address=Rua Epscopal&number=700&neighborhood=Centro&state=São-Paulo&city=São-Carlos HTTP/1.1
+GET http://localhost:3000/clients?name=Marcius&document=111.222.333.44&cep=12345-678&phone=16-12345-6789&email=marcius@gmail.com&address=Rua Epscopal&number=700&neighborhood=Centro&state=São Paulo&city=São Carlos HTTP/1.1
 content-type: application/json
 
 ### Lendo clients, name, document, cep, phone, email, address, number, neighborhood, state, city e isActive
-GET http://localhost:3000/clients?name=Marcius&document=111.222.333.44&cep=12345-678&phone=16-12345-6789&email=marcius@gmail.com&address=Rua Epscopal&number=700&neighborhood=Centro&state=São-Paulo&city=São-Carlos&isActive=true HTTP/1.1
+GET http://localhost:3000/clients?name=Marcius&document=111.222.333.44&cep=12345-678&phone=16-12345-6789&email=marcius@gmail.com&address=Rua Epscopal&number=700&neighborhood=Centro&state=São Paulo&city=São Carlos&isActive=true HTTP/1.1
 content-type: application/json
 

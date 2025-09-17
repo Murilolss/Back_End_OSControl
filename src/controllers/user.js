@@ -23,7 +23,7 @@ export const UserController = {
         }
     },
 
-    async index(req, res, next){
+    async index(req, res, _next){
 
         let query = {}
 
@@ -38,5 +38,36 @@ export const UserController = {
 
         res.status(200).json(users)
 
+    },
+
+    async show(req, res, _next){
+        try{
+    
+            const id = Number(req.params.id);
+            
+            let user = await prisma.user.findFirstOrThrow({where: {id}})
+            
+            res.status(200).json(user)
+        }
+        catch(err){
+            res.status(404).json({error: "Não encontrado"})
+        }
+
+    },
+
+    async del(req, res, _next){
+        try{
+    
+            const id = Number(req.params.id);
+            
+            let user = await prisma.user.delete({where: {id}})
+            
+            res.status(200).json(user)
+        }
+        catch(err){
+            res.status(404).json({error: "Não encontrado"})
+        }
+
     }
+
 }
