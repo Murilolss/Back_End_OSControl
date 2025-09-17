@@ -26,14 +26,46 @@ export const ProductController ={
     },
 
     async index(req, res, next){
-        let query = {}
 
-        if (req.query.name){
-            query = {name: req.query.name}
+        try{
+
+            let query = {}
+    
+            if (req.query.name){
+                query = {name: req.query.name}
+            }
+    
+            if(req.query.category){
+                query = {category: req.query.category}
+            }
+    
+            if(req.query.purchasePrice){
+                query = {purchasePrice: req.query.purchasePrice}
+            }
+    
+            if(req.query.salePrice){
+                query = {salePrice: req.query.salePrice}
+            }
+    
+            if(req.query.isActive){
+                query = {isActive: req.query.isActive}
+            }
+    
+            const product = await prisma.product.findMany({
+                where: query
+        });
+
+        if(product.length == 0){
+            res.status(404).json("Não encontrado")
+        }
+        else{
+            res.status(200).json(product)
         }
 
-        const product = await prisma.product.findMany()
+        }
+        catch(error){
+            next(error)
+        }
+        }
 
-        res.status(200).json(product)
-    }
 }
