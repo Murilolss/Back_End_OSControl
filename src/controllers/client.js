@@ -30,6 +30,13 @@ export const ClientController ={
     }   
    },
    async index(req, res, next){
+
+    let query = {}
+
+        if (req.query.name){
+            query = {name: req.query.name}
+        }
+
     const client = await prisma.client.findMany()
 
     res.status(200).json(client)

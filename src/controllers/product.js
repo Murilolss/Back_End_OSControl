@@ -24,7 +24,14 @@ export const ProductController ={
             next(error);
         }
     },
+
     async index(req, res, next){
+        let query = {}
+
+        if (req.query.name){
+            query = {name: req.query.name}
+        }
+
         const product = await prisma.product.findMany()
 
         res.status(200).json(product)

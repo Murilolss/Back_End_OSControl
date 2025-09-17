@@ -21,6 +21,13 @@ export const SignatureController = {
     },
 
     async index(req, res, next){
+
+        let query = {}
+
+        if (req.query.type){
+            query = {name: req.query.type}
+        }
+        
         const signature = await prisma.user.findMany()
 
         res.status(200).json(signature)

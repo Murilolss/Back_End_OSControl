@@ -22,6 +22,13 @@ export const ShopController = {
     },
 
     async index(req, res, next){
+
+        let query = {}
+
+        if (req.query.amount){
+            query = {name: req.query.amount}
+        }
+
         const shops = await prisma.user.findMany()
 
         res.status(200).json(shops)
