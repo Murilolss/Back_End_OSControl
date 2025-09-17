@@ -22,15 +22,35 @@ export const SignatureController = {
 
     async index(req, res, next){
 
-        let query = {}
+        try{
+            
+            let query = {}
+    
+            if (req.query.type){
+                query = {name: req.query.type}
+            }
+    
+            if (req.query.isActive){
+                query = {isActive: req.query.isActive}
+            }
+            
+            const signature = await prisma.user.findMany({
+                where: query
+            });
 
-        if (req.query.type){
-            query = {name: req.query.type}
+            if(signature.length == 0){
+                res.status(404).json("Não encontrado")
+            }
+            else{
+                res.status(200).json(signature)
+            }
+    
+           
+    
         }
-        
-        const signature = await prisma.user.findMany()
+        catch(error){
+            next(error);
+        }
+        }
 
-        res.status(200).json(signature)
-
-    }
 }

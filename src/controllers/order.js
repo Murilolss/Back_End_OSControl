@@ -1,6 +1,7 @@
 import prisma from '../prisma.js';
 
 export const OrderController = {
+    //C - CREATE, INSERT, POST, SET, STORE
     async store(req, res, next) {
         try {
             const { salePrice, servicePrice, productPrice, userId, serviceId, clientId } = req.body;
@@ -22,24 +23,67 @@ export const OrderController = {
             next(error);
         }
     },
+    //R - READ, SELECT, GET, findMany
     async index(req, res, next) { 
         try {
+            let query = {}
+
+            if (req.query.saleMax && req.query.saleMin) {
+                query.salePrice = { gte: Number(req.query.saleMin), lte: Number(req.query.saleMax)}
+            }
+            else if (req.query.saleMax) {
+                query.salePrice = {gte: Number(req.query.saleMin)}
+            }
+            else if (req.query.saleMin) {
+                query.salePrice = {lte: Number(req.query.saleMax)}
+            }
+            if (req.query.productPrice ) {
+                query.productPrice =  req.query.productPrice
+            }
+
             const orders = await prisma.order.findMany({
-                where: {
-                    OR: [
-                        {salePrice: Number(req.query.salePrice)}, 
-                        {servicePrice: Number(req.query.servicePrice)}, 
-                        {productPrice: Number(req.query.productPrice)}
-                    ]
-                }
+                where: query
             });
             if (orders.length === 0) {
-                return res.status(404).json({ message: "Nada foi achado" })
+                return res.status(404).json({ message: "Nada encontrado" })
+            } else {
+                res.status(200).json(orders)
             }
-            res.status(200).json(orders)
         }
         catch(error){
             next(error);
         }
     },
+    //R - READ, SELECT, GET, find
+    async show(req, res, _next) {
+        try {
+
+            const id = Number(req.params.id)
+            
+            let order = await prisma.order.findFirstOrThrow({
+                where: { id }
+            });
+            
+            res.status(200).json(order)
+
+        }
+        catch(err){
+            res.status(404).json({ error: "Erro interno ao buscar orders" });
+        };
+    },
+
+    async del(req, res, _next) {
+        try {
+            const id = Number(req.params.id)
+            
+            let order = await prisma.order.delete({
+                where: { id }
+            });
+            
+            res.status(200).json(order)
+        }
+        catch(err){
+            res.status(404).json({ error: "Erro interno ao buscar orders" });
+        }
+    }
 }
