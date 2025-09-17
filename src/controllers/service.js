@@ -29,22 +29,37 @@ export const ServiceController = {
             let query = {}
 
             if (req.query.nameService) {
-                query = {nameService: (req.query.nameService)}
+                query.nameService = req.query.nameService
+                query = {nameService: {contains: req.query.nameService} }
             }
-            if (Number(req.query.price)) {
-                query = {price: Number(req.query.price)}
+
+            if (req.query.priceMax && req.query.priceMin) {
+                query.price = { gte: Number(req.query.priceMin), lte: Number(req.query.priceMax)}
             }
-            if (req.query.isActive) {
-                query = {isActive: (req.query.isActive)}
+            else if (req.query.priceMax) {
+                query.price = {gte: Number(req.query.priceMin)}
+            }
+            else if (req.query.priceMin) {
+                query.price = {lte: Number(req.query.priceMax)}
+            }
+
+            if (req.query.isActive ) {
+                query.isActive =  req.query.isActive === "true" || req.query.isActive === true
             }
 
             const services = await prisma.service.findMany({
                 where: query
             });
-            res.status(200).json(services)
+
+            if (services.length == 0){
+                res.status(404).json("Nada encontrado")
+            } else {
+                res.status(200).json(services)
+            }
+
         }
         catch(error){
-            next(error);
+            res.status(500).json({ error: "Erro interno ao buscar services" });
         }
     }
 }
