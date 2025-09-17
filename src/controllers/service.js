@@ -30,7 +30,7 @@ export const ServiceController = {
 
             if (req.query.nameService) {
                 query.nameService = req.query.nameService
-                query = {nameService: {contains: req.query.nameService} }
+             // query = {nameService: {contains: req.query.nameService} }
             }
 
             if (req.query.priceMax && req.query.priceMin) {

@@ -32,23 +32,36 @@ export const ProductController ={
             let query = {}
     
             if (req.query.name){
-                query = {name: req.query.name}
+                query.name = req.query.name
             }
     
             if(req.query.category){
-                query = {category: req.query.category}
+                query.category = req.query.category
             }
     
-            if(req.query.purchasePrice){
-                query = {purchasePrice: req.query.purchasePrice}
+            if(req.query.purchasePriceMax && req.query.purchasePriceMin){
+                query.purchasePriceMax = {gte: Number(req.query.purchasePriceMin), lte: Number(req.query.purchasePriceMax)}
             }
-    
-            if(req.query.salePrice){
-                query = {salePrice: req.query.salePrice}
+            else if (req.query.purchasePriceMin) {
+                query.purchasePrice = {gte: Number(req.query.purchasePriceMin)}
             }
-    
+            else if (req.query.purchasePriceMax) {
+                query.purchasePrice = {lte: Number(req.query.purchasePriceMax)}
+            }
+
+
+            if(req.query.salePriceMax && req.query.salePriceMin){
+                query.salePriceMax = {gte: Number(req.query.salePriceMin), lte: Number(req.query.purchasePriceMax)}
+            }
+            else if (req.query.salePriceMin) {
+                query.salePrice = {gte: Number(req.query.salePriceMin)}
+            }
+            else if (req.query.salePriceMax) {
+                query.salePrice = {lte: Number(req.query.salePriceMax)}
+            }
+
             if(req.query.isActive){
-                query = {isActive: req.query.isActive}
+                query.isActive =  req.query.isActive === "true" || req.query.isActive === true
             }
     
             const product = await prisma.product.findMany({
@@ -66,6 +79,34 @@ export const ProductController ={
         catch(error){
             next(error)
         }
+    },
+
+    async show(req, res, next){
+        try{
+        const id = Number(req.params.id);
+    
+        let product = await prisma.product.findFirstOrThrow({where: {id}})
+            
+            res.status(200).json(product)
         }
+        catch(err){
+            res.status(404).json({error: "Não encontrado"})
+        }
+    
+    },
+
+    async del(req, res, _next){
+        try {
+            const id = Number(req.params.id);
+
+            const product = await prisma.product.delete({
+                where: { id }
+            });
+
+            res.status(200).json(product);
+        } catch (err) {
+            res.status(404).json({error: "Não encontrado"});
+        }
+    }
 
 }
