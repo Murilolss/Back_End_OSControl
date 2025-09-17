@@ -38,3 +38,7 @@ content-type: application/json
 ### ler products, name, category, purchasePrice, salePrice isActive
 GET  http://localhost:3000/products?name=MSI B450&category=placa Mãe&purchasePrice=10&salePrice=20&isActive HTTP/1.1
 content-type: application/json
+
+### ler todos os product
+DELETE  http://localhost:3000/products/1 HTTP/1.1
+content-type: application/json
