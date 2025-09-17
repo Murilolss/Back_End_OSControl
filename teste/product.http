@@ -35,6 +35,6 @@ content-type: application/json
 GET  http://localhost:3000/products?name=MSIB450&category=placaMãe&purchasePrice=10&salePrice=20 HTTP/1.1
 content-type: application/json
 
-### ler products, name, category, purchasePrice, salePrice isActive
-GET  http://localhost:3000/products?name=MSIB450&category=placaMãe&purchasePrice=10&salePrice=20&isActive HTTP/1.1
+### ler products, name, category, purchasePrice, salePrice e isActive
+GET  http://localhost:3000/products?name=MSIB450&category=placaMãe&purchasePrice=10&salePrice=20&isActive=true HTTP/1.1
 content-type: application/json

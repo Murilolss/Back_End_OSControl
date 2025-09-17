@@ -23,15 +23,41 @@ export const ShopController = {
 
     async index(req, res, next){
 
-        let query = {}
+        try{
 
-        if (req.query.amount){
-            query = {name: req.query.amount}
+            let query = {}
+    
+            if (req.query.price){
+                query = {price: req.query.price}
+            }
+    
+            if (req.query.amount){
+                query = {amount: req.query.amount}
+            }
+    
+            if (req.query.product){
+                query = {product: req.query.product}
+            }
+    
+            
+    
+            const shops = await prisma.user.findMany({
+                where: query
+            });
+
+            if(shops.length == 0){
+                res.status(404).json("Não encontrado")
+            }
+            else{
+                res.status(200).json(shops)
+            }
+    
+          
+    
+        }
+        catch(error){
+            next(error);
+        }
         }
 
-        const shops = await prisma.user.findMany()
-
-        res.status(200).json(shops)
-
-    }
 }
