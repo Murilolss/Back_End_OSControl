@@ -25,7 +25,22 @@ export const ServiceController = {
     
     async index(req, res, next) { 
         try {
-            const services = await prisma.service.findMany();
+
+            let query = {}
+
+            if (req.query.nameService) {
+                query = {nameService: (req.query.nameService)}
+            }
+            if (Number(req.query.price)) {
+                query = {price: Number(req.query.price)}
+            }
+            if (req.query.isActive) {
+                query = {isActive: (req.query.isActive)}
+            }
+
+            const services = await prisma.service.findMany({
+                where: query
+            });
             res.status(200).json(services)
         }
         catch(error){
