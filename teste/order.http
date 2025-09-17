@@ -27,3 +27,12 @@ content-Type: application/json
 ### Ler saleprice, servicePrice e productPrice
 GET http://localhost:3000/orders?salePrice=20&servicePrice=29&productPrice=10 HTTP/1.1
 content-Type: application/json
+
+### Ler um order pelo id
+GET http://localhost:3000/orders/10 HTTP/1.1
+content-Type: application/json
+
+
+### Deletar orders pelo id
+DELETE http://localhost:3000/orders/4 HTTP/1.1
+content-Type: application/json

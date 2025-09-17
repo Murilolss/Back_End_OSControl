@@ -36,10 +36,10 @@ export const ServiceController = {
             if (req.query.priceMax && req.query.priceMin) {
                 query.price = { gte: Number(req.query.priceMin), lte: Number(req.query.priceMax)}
             }
-            else if (req.query.priceMax) {
+            else if (req.query.priceMin) {
                 query.price = {gte: Number(req.query.priceMin)}
             }
-            else if (req.query.priceMin) {
+            else if (req.query.priceMax) {
                 query.price = {lte: Number(req.query.priceMax)}
             }
 
@@ -58,8 +58,38 @@ export const ServiceController = {
             }
 
         }
-        catch(error){
+        catch(err){
             res.status(500).json({ error: "Erro interno ao buscar services" });
+        }
+    },
+    async show(req, res, _next) {
+        try {
+
+            const id = Number(req.params.id)
+            
+            let service = await prisma.service.findFirstOrThrow({
+                where: { id }
+            });
+            
+            res.status(200).json(service)
+
+        }
+        catch(err){
+            res.status(404).json({ error: "Erro interno ao buscar services" });
+        };
+    },
+    async del(req, res, _next) {
+        try {
+            const id = Number(req.params.id)
+            
+            let service = await prisma.service.delete({
+                where: { id }
+            });
+            
+            res.status(200).json(service)
+        }
+        catch(err){
+            res.status(404).json({ error: "Erro interno ao buscar orders" });
         }
     }
 }
