@@ -36,10 +36,10 @@ export const ServiceController = {
             if (req.query.priceMax && req.query.priceMin) {
                 query.price = { gte: Number(req.query.priceMin), lte: Number(req.query.priceMax)}
             }
-            else if (req.query.priceMax) {
+            else if (req.query.priceMin) {
                 query.price = {gte: Number(req.query.priceMin)}
             }
-            else if (req.query.priceMin) {
+            else if (req.query.priceMax) {
                 query.price = {lte: Number(req.query.priceMax)}
             }
 
