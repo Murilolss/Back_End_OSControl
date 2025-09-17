@@ -25,8 +25,8 @@ export const ClientController ={
 
      res.status(201).json(client);
 
-    }catch(error){
-        next(error);
+    }catch(err){
+        next(err);
     }   
    },
    async index(req, res, next){
@@ -93,8 +93,8 @@ export const ClientController ={
     
 }
     }
-    catch(error){
-        next(error);
+    catch(err){
+        next(err);
     }
    
     }
