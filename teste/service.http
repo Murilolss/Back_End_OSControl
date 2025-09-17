@@ -27,3 +27,7 @@ Content-type: application/json
 ### Ler a service isActive, name e price
 GET http://localhost:3000/services?isActive=true&nameService=testee&price=20 HTTP/1.1
 Content-type: application/json
+
+### Ler o price (com max e min)
+GET http://localhost:3000/services?priceMax=30&priceMin=20 HTTP/1.1
+Content-type: application/json
