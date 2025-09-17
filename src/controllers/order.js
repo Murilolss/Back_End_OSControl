@@ -70,5 +70,20 @@ export const OrderController = {
         catch(err){
             res.status(404).json({ error: "Erro interno ao buscar orders" });
         };
+    },
+
+    async del(req, res, _next) {
+        try {
+            const id = Number(req.params.id)
+            
+            let order = await prisma.order.delete({
+                where: { id }
+            });
+            
+            res.status(200).json(order)
+        }
+        catch(err){
+            res.status(404).json({ error: "Erro interno ao buscar orders" });
+        }
     }
 }

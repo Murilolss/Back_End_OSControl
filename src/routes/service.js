@@ -6,5 +6,6 @@ const route = new Router();
 route.post('/', ServiceController.store);
 route.get('/', ServiceController.index);
 route.get('/:id', ServiceController.show);
+route.delete('/:id', ServiceController.del);
 
 export default route;
