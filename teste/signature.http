@@ -21,4 +21,16 @@ Content-Type: application/json
 GET http://localhost:3000/signatures?type=Basic&isActive=true HTTP/1.1
 Content-Type: application/json
 
+### Deletando Todas as Assinaturas
+PUT  http://localhost:3000/signatures/1 HTTP/1.1
+Content-Type: application/json
+
+### Atualizndo Todas as Assinaturas
+PUT  http://localhost:3000/signatures/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "type" : "Premium",
+}
+
     

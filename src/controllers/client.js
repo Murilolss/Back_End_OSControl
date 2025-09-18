@@ -75,9 +75,9 @@ export const ClientController ={
             query.city =  req.query.city
         } 
 
-        if (req.query.isActive){
-            query.isActive = req.query.isActive
-        } 
+        if (req.query.isActive) {
+            query.isActive = req.query.isActive === "true" || req.query.isActive === true
+        }
 
 
     const clients = await prisma.client.findMany({
@@ -122,6 +122,68 @@ export const ClientController ={
             });
 
             res.status(200).json(client);
+        } catch (err) {
+            res.status(404).json({error: "Não encontrado"});
+        }
+    },
+
+    async update(req, res, _next){
+        try {
+
+            let body = {}
+
+            if (req.body.name) {
+                body.name = req.body.name
+            }
+
+            if (req.body.document) {
+                body.document = req.body.document
+            }
+
+            if (req.body.cep) {
+                body.cep = req.body.cep
+            }
+
+            if (req.body.phone) {
+                body.phone = req.body.phone
+            }
+
+            if (req.body.email) {
+                body.email = req.body.email
+            }
+
+            if (req.body.address) {
+                body.address = req.body.address
+            }
+
+            if (req.body.number) {
+                body.number = req.body.number
+            }
+
+            if (req.body.neighborhood) {
+                body.neighborhood = neighborhood
+            }
+
+            if (req.body.state) {
+                body.state = state
+            }
+
+            if (req.body.city) {
+                body.city = city
+            }
+
+            if (req.body.isActive) {
+                body.isActive = Boolean(req.body.isActive)
+            }
+            
+            
+            const id = Number(req.params.id);
+
+            const clientUpdate = await prisma.client.update({ 
+                where:  {id} ,
+                data: body })
+
+            res.status(200).json(clientUpdate);
         } catch (err) {
             res.status(404).json({error: "Não encontrado"});
         }

@@ -92,13 +92,34 @@ export const UserController = {
     async update(req, res, _next) {
         
         try {
-        
-            const id = Number(req.params.id);
-            const document = (req.query.document)
 
-            const userUpdate = await prisma.user.update({ 
+            let body = {}
+
+            if (req.body.email) {
+                body.email = req.body.email
+            }
+
+            if (req.body.document) {
+                body.document = req.body.document
+            }
+
+            if (req.body.phone) {
+                body.phone = req.body.phone
+            }
+
+            if (req.body.signature) {
+                body.signature = req.body.signature
+            }
+
+            if (req.body.isActive) {
+                body.isActive = Boolean(req.body.isActive)
+            }
+
+            const id = Number(req.params.id);
+
+            let userUpdate = await prisma.user.update({ 
                 where:  {id} ,
-                data: {document}})
+                data: body })
 
             res.status(200).json(userUpdate)
         }

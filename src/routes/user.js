@@ -7,7 +7,7 @@ route.post('/', UserController.store);
 route.get('/', UserController.index);
 route.get('/:id', UserController.show);
 route.delete('/:id', UserController.del);
-route.patch('/:id', UserController.update);
+route.put('/:id', UserController.update);
 
 
 export default route;

@@ -80,9 +80,38 @@ export const ShopController = {
 
             const id = Number(req.params.id);
 
-            let shop = await prisma.signature.delete({ where: { id } })
+            let signature = await prisma.shop.delete({ where: { id } })
 
-            res.status(200).json(shop)
+            res.status(200).json(signature)
+        }
+        catch (err) {
+            res.status(404).json({ error: "Não encontrado" })
+        }
+
+    },
+
+    async update(req, res, _next) {
+        try {
+
+            let body = {}
+    
+            if (req.query.amount){
+                body.amount = req.body.amount
+            }
+    
+            if (req.body.product){
+                body.product = req.body.product
+            }
+
+            let id = Number(req.params.id);
+
+            const shopUpdate = await prisma.shop.update({ 
+                where:  {id} ,
+                data: body })
+
+            
+
+            res.status(200).json(shopUpdate)
         }
         catch (err) {
             res.status(404).json({ error: "Não encontrado" })

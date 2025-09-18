@@ -69,3 +69,17 @@ content-type: application/json
 GET http://localhost:3000/clients?name=Marcius&document=111.222.333.44&cep=12345-678&phone=16-12345-6789&email=marcius@gmail.com&address=Rua Epscopal&number=700&neighborhood=Centro&state=São Paulo&city=São Carlos&isActive=true HTTP/1.1
 content-type: application/json
 
+### Atualizando os clients por id
+DELETE   http://localhost:3000/clients/1 HTTP/1.1
+content-type: application/json
+
+### Atualizando os clients por id
+PUT  http://localhost:3000/clients/1 HTTP/1.1
+content-type: application/json
+
+{
+    "name" : "Murilo",
+    "document" : "111.922.393.44",
+    "cep" : "12345-000"    
+}
+

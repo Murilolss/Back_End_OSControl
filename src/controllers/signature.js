@@ -80,6 +80,36 @@ export const SignatureController = {
             res.status(404).json({ error: "Não encontrado" })
         }
 
-    }
+    },
+
+    async update(req, res, _next) {
+        try {
+
+            let body = {}
+
+            if (req.query.type) {
+                body.type = req.query.type
+            }
+
+            if (req.body.isActive) {
+                body.isActive = req.body.isActive
+            }
+
+            const id = Number(req.params.id);
+
+            let signatureUpdate = await prisma.signature.update({
+                where: {id},
+                data: body });
+
+            res.status(200).json(signatureUpdate)
+        }
+        catch (err) {
+            res.status(404).json({ error: "Não encontrado" })
+        }
+
+    },
+
+    
 
 }
+

@@ -107,6 +107,55 @@ export const ProductController ={
         } catch (err) {
             res.status(404).json({error: "Não encontrado"});
         }
+    },
+
+    async update(req, res, _next){
+        try{
+
+            let body = {}
+
+            if (req.body.name) {
+                body.name = req.body.name
+            }
+
+            if (req.body.category) {
+                body.category = req.body.category
+            }
+
+            if (req.body.descripition) {
+                body.descripition = req.body.descripition
+            }
+
+            if (req.body.salesUnit) {
+                body.salesUnit = req.body.salesUnit
+            }
+
+            if (req.body.purchasePrice) {
+                body.purchasePrice = req.body.purchasePrice
+            }
+
+            if (req.body.salePrice) {
+                body.salePrice = req.body.salePrice
+            }
+
+            if (req.body.observations) {
+                body.observations = req.body.observations
+            }
+
+            if (req.body.isActive) {
+                body.isActive = Boolean(req.body.isActive)
+            }
+
+            const id = Number(req.params.id);
+
+            let productUpdate = await prisma.product.update({ 
+                where:  {id} ,
+                data: body })
+
+            res.status(200).json(productUpdate);
+        } catch (err) {
+            res.status(404).json({error: "Não encontrado"});
+        }
     }
 
 }
