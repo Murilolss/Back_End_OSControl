@@ -74,6 +74,8 @@ export const OrderController = {
 
     async del(req, res, _next) {
         try {
+
+            
             const id = Number(req.params.id)
             
             let order = await prisma.order.delete({
@@ -85,5 +87,34 @@ export const OrderController = {
         catch(err){
             res.status(404).json({ error: "Erro interno ao buscar orders" });
         }
+    },
+    
+    async update(req, res, _next) {
+        try {
+            let body = {}
+        
+            if (req.body.salePrice) {
+                body.salePrice = Number(req.body.salePrice)
+            }
+            if (req.body.servicePrice) {
+                body.servicePrice = Number(req.body.servicePrice)
+            }
+            if (req.body.productPrice) {
+                body.productPrice = Number(req.body.productPrice)
+            }
+
+            const id = Number(req.params.id)
+            
+            let updateOrder = await prisma.order.update({
+                where: { id },
+                data: body
+            });
+            
+            res.status(200).json(updateOrder)
+        }
+        catch(err){
+            res.status(404).json({ error: "Erro interno ao buscar orders" });
+        }
     }
 }
+    

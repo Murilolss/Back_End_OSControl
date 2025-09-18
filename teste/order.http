@@ -36,3 +36,15 @@ content-Type: application/json
 ### Deletar orders pelo id
 DELETE http://localhost:3000/orders/4 HTTP/1.1
 content-Type: application/json
+
+
+### Atualizar orders pelo id
+
+PUT http://localhost:3000/orders/1 HTTP/1.1
+content-Type: application/json
+
+{
+    "salePrice" : 24,
+    "servicePrice" : 30,
+    "productPrice" : 14
+}

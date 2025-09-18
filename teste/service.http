@@ -41,3 +41,17 @@ content-Type: application/json
 ### Deletar services pelo id
 DELETE http://localhost:3000/services/2 HTTP/1.1
 content-Type: application/json
+
+
+### Atualizar services pelo id
+
+PUT http://localhost:3000/services/1 HTTP/1.1
+content-Type: application/json
+
+{
+    "nameService" : "teste1",
+    "price" : 25,
+    "description" : "blebleble",
+    "observations" : "blebleble2",
+    "isActive" : false
+}
