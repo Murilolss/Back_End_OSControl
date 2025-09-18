@@ -112,5 +112,19 @@ export const ClientController ={
         res.status(404).json({error: "Não encontrado"})
     }
 
+    },
+
+    async del(req, res, _next){
+        try {
+            const id = Number(req.params.id);
+
+            const product = await prisma.product.delete({
+                where: { id }
+            });
+
+            res.status(200).json(client);
+        } catch (err) {
+            res.status(404).json({error: "Não encontrado"});
+        }
     }
 }
