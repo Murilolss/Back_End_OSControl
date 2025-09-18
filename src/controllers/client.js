@@ -28,7 +28,7 @@ export const ClientController ={
     }catch(err){
         next(err);
     }   
-   },
+    },
    async index(req, res, next){
 
     try{
@@ -97,9 +97,8 @@ export const ClientController ={
         next(err);
     }
     
-},
+    },
    
-
     async show(req, res, next){
         try{
         const id = Number(req.params.id);

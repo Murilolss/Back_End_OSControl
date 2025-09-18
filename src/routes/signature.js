@@ -5,5 +5,7 @@ const route  = new Router();
 
 route.post('/', SignatureController.store);
 route.get('/', SignatureController.index);
+route.get('/:id', SignatureController.show);
+route.delete('/:id', SignatureController.del);
 
 export default route;
