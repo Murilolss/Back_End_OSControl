@@ -103,7 +103,7 @@ export const ServiceController = {
                 body.nameService = req.body.nameService
             }
             if (req.body.price) {
-                body.price = Number(req.body.nameService)
+                body.price = Number(req.body.price)
             }
             if (req.body.description) {
                 body.description = req.body.description
@@ -117,12 +117,12 @@ export const ServiceController = {
 
             const id = Number(req.params.id)
             
-            let updateOrder = await prisma.service.update({
+            let updateService = await prisma.service.update({
                 where: { id },
                 data: body
             });
             
-            res.status(200).json(updateOrder)
+            res.status(200).json(updateService)
         }
         catch(err){
             res.status(404).json({ error: "Erro interno ao buscar orders" });
