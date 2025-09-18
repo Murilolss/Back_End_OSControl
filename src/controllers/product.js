@@ -32,7 +32,7 @@ export const ProductController ={
             let query = {}
     
             if (req.query.name){
-                query.name = req.query.name
+                query.name = {contains: req.query.name}
             }
     
             if(req.query.category){
