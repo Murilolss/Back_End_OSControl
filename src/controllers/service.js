@@ -62,6 +62,7 @@ export const ServiceController = {
             res.status(500).json({ error: "Erro interno ao buscar services" });
         }
     },
+
     async show(req, res, _next) {
         try {
 
@@ -78,6 +79,7 @@ export const ServiceController = {
             res.status(404).json({ error: "Erro interno ao buscar services" });
         };
     },
+
     async del(req, res, _next) {
         try {
             const id = Number(req.params.id)
@@ -87,6 +89,40 @@ export const ServiceController = {
             });
             
             res.status(200).json(service)
+        }
+        catch(err){
+            res.status(404).json({ error: "Erro interno ao buscar orders" });
+        }
+    },
+
+    async update(req, res, _next) {
+        try {
+            let body = {}
+
+            if (req.body.nameService) {
+                body.nameService = req.body.nameService
+            }
+            if (req.body.price) {
+                body.price = Number(req.body.price)
+            }
+            if (req.body.description) {
+                body.description = req.body.description
+            }
+            if (req.body.observations) {
+                body.observations = req.body.observations
+            }
+            if (req.body.isActive) {
+                body.isActive =  Boolean(req.body.isActive)
+            }
+
+            const id = Number(req.params.id)
+            
+            let updateService = await prisma.service.update({
+                where: { id },
+                data: body
+            });
+            
+            res.status(200).json(updateService)
         }
         catch(err){
             res.status(404).json({ error: "Erro interno ao buscar orders" });
