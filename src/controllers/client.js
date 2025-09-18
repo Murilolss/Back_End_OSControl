@@ -118,7 +118,7 @@ export const ClientController ={
         try {
             const id = Number(req.params.id);
 
-            const product = await prisma.product.delete({
+            const client = await prisma.client.delete({
                 where: { id }
             });
 
