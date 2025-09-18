@@ -117,7 +117,7 @@ export const UserController = {
 
             const id = Number(req.params.id);
 
-            let userUpdate = await prisma.user.update({ 
+            const userUpdate = await prisma.user.update({ 
                 where:  {id} ,
                 data: body })
 

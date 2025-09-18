@@ -28,20 +28,20 @@ export const ShopController = {
             let query = {}
     
             if (req.query.price){
-                query = {price: req.query.price}
+                query.price = req.query.price
             }
     
             if (req.query.amount){
-                query = {amount: req.query.amount}
+                query.amount = req.query.amount
             }
     
             if (req.query.product){
-                query = {product: req.query.product}
+                query.product = req.query.product
             }
     
             
     
-            const shops = await prisma.user.findMany({
+            const shops = await prisma.shop.findMany({
                 where: query
             });
 
@@ -95,12 +95,12 @@ export const ShopController = {
 
             let body = {}
     
-            if (req.query.amount){
+            if (req.body.amount){
                 body.amount = req.body.amount
             }
     
-            if (req.body.product){
-                body.product = req.body.product
+            if (req.body.salePrice){
+                body.salePrice = req.body.salePrice
             }
 
             let id = Number(req.params.id);

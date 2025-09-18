@@ -117,7 +117,7 @@ export const ServiceController = {
 
             const id = Number(req.params.id)
             
-            let updateService = await prisma.service.update({
+            const updateService = await prisma.service.update({
                 where: { id },
                 data: body
             });

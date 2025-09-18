@@ -105,7 +105,7 @@ export const OrderController = {
 
             const id = Number(req.params.id)
             
-            let updateOrder = await prisma.order.update({
+            const updateOrder = await prisma.order.update({
                 where: { id },
                 data: body
             });

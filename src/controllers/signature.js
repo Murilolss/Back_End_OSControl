@@ -31,10 +31,10 @@ export const SignatureController = {
             }
 
             if (req.query.isActive) {
-                query.isActive = req.query.isActive === "true" || req.query.isActive === true
+                query.isActive = Boolean(req.query.isActive)
             }
 
-            const signature = await prisma.user.findMany({
+            const signature = await prisma.signature.findMany({
                 where: query
             });
 
@@ -87,17 +87,17 @@ export const SignatureController = {
 
             let body = {}
 
-            if (req.query.type) {
-                body.type = req.query.type
+            if (req.body.type) {
+                body.type = req.body.type
             }
 
             if (req.body.isActive) {
-                body.isActive = req.body.isActive
+                body.isActive = Boolean(req.body.isActive)
             }
 
             const id = Number(req.params.id);
 
-            let signatureUpdate = await prisma.signature.update({
+            const signatureUpdate = await prisma.signature.update({
                 where: {id},
                 data: body });
 

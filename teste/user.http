@@ -4,9 +4,9 @@ Content-Type: application/json
 
 {
     "email" : "murilo@gmail.com",
-    "password" : "12345678",
-    "document" : "111.222.333-44",
-    "phone" : "16 99999-9999",
+    "password" : "12345",
+    "document" : "111.222.33-44",
+    "phone" : "16 99999-999",
     "birth" : "1970-01-01T00:00:00.000Z",
     "signature" : "Basic",
     "isActive" : true
@@ -45,12 +45,12 @@ GET http://localhost:3000/users/1 HTTP/1.1
 Content-Type: application/json
 
 ### Atualizando o user pelo id
-PUT   http://localhost:3000/users/1 HTTP/1.1
+PUT   http://localhost:3000/users/2 HTTP/1.1
 Content-Type: application/json
 
 {
-    "email" : "murilo@gmail.com",
-    "document" : "151.622.393-88",
-    "isActive" : true
+    "email" : "myu@gmail.com",
+    "document" : "151.622.793-88",
+    "isActive" : false
 }
 

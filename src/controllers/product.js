@@ -148,7 +148,7 @@ export const ProductController ={
 
             const id = Number(req.params.id);
 
-            let productUpdate = await prisma.product.update({ 
+            const productUpdate = await prisma.product.update({ 
                 where:  {id} ,
                 data: body })
 
