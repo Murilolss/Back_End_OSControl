@@ -4,6 +4,17 @@ export const ClientController ={
      async store(req, res, next ){
         try{
         const { name, document, cep, phone, email, address, number, neighborhood, state, city, isActive, userId   } = req.body;
+
+        let user = await prisma.user.findFirst({
+            where: {id: Number(userId)}
+        });
+
+        if(!user){
+            res.status(301).json({
+                'error': "Usuario não encontrado"
+            });
+            return
+        }
     
         const client = await prisma.client.create({
             data: { 

@@ -4,6 +4,17 @@ export const ProductController ={
     async store(req, res, next ){
         try{
         const { name, category, description,  salesUnit, purchasePrice , salePrice, observations, isActive,userId  } = req.body;
+
+        let user = await prisma.user.findFirst({
+            where: {id: Number(userId)}
+        });
+
+        if(!user){
+            res.status(301).json({
+                'error': "Usuario não encontrado"
+            });
+            return
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     
         const product =  await prisma.product.create({
                 data: { 
