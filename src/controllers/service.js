@@ -4,6 +4,17 @@ export const ServiceController = {
     async store(req, res, next){
         try{
             const { nameService, price, description, observations, isActive, userId } = req.body;
+
+            const error = {}
+            
+            let user = await prisma.user.findFirst({
+                where: {id: Number(userId)}
+            });
+            
+            if (!user) {
+                res.status(301).json({ message: "error: Usuário informado não existe" })
+            }
+
             
             const service = await prisma.service.create({
                 data : { 
