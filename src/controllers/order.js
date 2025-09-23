@@ -5,8 +5,39 @@ export const OrderController = {
     async store(req, res, next) {
         try {
             const { salePrice, servicePrice, productPrice, userId, serviceId, clientId } = req.body;
+
+            const error = {}
             
-            const order = await prisma.order.create({
+            let user = await prisma.order.findFirst({
+                where: {id: Number(userId)}
+            });
+            
+            if (!user) {
+                error.user = { message: "error: Usuário informado não existe" }
+            }
+
+            let service = await prisma.order.findFirst({
+                where: {id: Number(serviceId)}
+            });
+        
+            if (!service) {
+                error.service = { message: "error: Serviço informado não existe" }
+            }
+
+            let client = await prisma.order.findFirst({
+                where: {id: Number(clientId)}
+            });
+        
+            if (!client) {
+                error.client = { message: "error: Cliente informado não existe" }
+            }
+
+            if (Object.keys(error).length > 0) {
+                res.status(301).json(error);
+                return;
+            }
+            
+            const create = await prisma.order.create({
                 data: { 
                     salePrice: Number(salePrice), 
                     servicePrice: Number(servicePrice), 
@@ -17,7 +48,7 @@ export const OrderController = {
                 }
             });
             // respondendo 201-criado encapsulando no formato json(order)
-            res.status(201).json(order)
+            res.status(201).json(create)
         }
         catch(error){
             next(error);
