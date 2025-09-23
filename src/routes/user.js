@@ -6,8 +6,8 @@ const route = new Router();
 route.post('/', UserController.store);
 route.get('/', UserController.index);
 route.get('/:id', UserController.show);
-route.delete('/:id', UserController.del);
 route.put('/:id', UserController.update);
+route.delete('/:id', UserController.del);
 
 
 export default route;
