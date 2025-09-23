@@ -17,23 +17,3 @@ Content-Type: application/json
 GET http://localhost:3000/shops?salePrice=30 HTTP/1.1
 Content-Type: application/json
 
-### Ler o price e amount
-GET http://localhost:3000/shops?salePrice=30&amount=1 HTTP/1.1
-Content-Type: application/json
-
-### Ler o price, amout e id do product
-GET http://localhost:3000/shops?salePrice=30&amount=1&productId=1 HTTP/1.1
-Content-Type: application/json
-
-### atualizando os Shops
-DELETE   http://localhost:3000/shops/1 HTTP/1.1
-Content-Type: application/json
-
-### atualizando os Shops
-PUT  http://localhost:3000/shops/1 HTTP/1.1
-Content-Type: application/json
-
-{
-    "amount": 5,
-    "salePrice" : 67
-}

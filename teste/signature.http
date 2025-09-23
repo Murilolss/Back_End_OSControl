@@ -17,20 +17,5 @@ Content-Type: application/json
 GET http://localhost:3000/signatures?type=Basic HTTP/1.1
 Content-Type: application/json
 
-### Ler o type e isActive
-GET http://localhost:3000/signatures?type=Basic&isActive=true HTTP/1.1
-Content-Type: application/json
-
-### Deletando Todas as Assinaturas
-DELETE   http://localhost:3000/signatures/2 HTTP/1.1
-Content-Type: application/json
-
-### Atualizndo Todas as Assinaturas
-PUT http://localhost:3000/signatures/1 HTTP/1.1
-Content-Type: application/json
-
-{
-    "type" : "Premium"
-}
 
     
