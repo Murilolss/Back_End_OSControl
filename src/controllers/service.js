@@ -34,7 +34,7 @@ export const ServiceController = {
         }
     },
     
-    async index(req, res, next) { 
+    async index(req, res, _next) { 
         try {
 
             let query = {}
