@@ -6,6 +6,14 @@ export const SignatureController = {
 
             const { type, isActive, userId } = req.body;
 
+            let user = await prisma.user.findFirst({
+                where: {id: Number(userId)}
+                });
+                
+                if (!user){
+                res.status(301).json({'error': "Usuario informado Não existe"})
+                }
+
             const signature = await prisma.signature.create({
                 data: {
                     type,
@@ -50,6 +58,63 @@ export const SignatureController = {
         catch (error) {
             next(error);
         }
+    },
+
+    async show(req, res, _next) {
+        try {
+
+            const id = Number(req.params.id);
+
+            let signature = await prisma.signature.findFirstOrThrow({ where: { id } })
+
+            res.status(200).json(signature)
+        }
+        catch (err) {
+            res.status(404).json({ error: "Não encontrado" })
+        }
+
+    },
+
+    async del(req, res, _next) {
+        try {
+
+            const id = Number(req.params.id);
+
+            let signature = await prisma.signature.delete({ where: { id } })
+
+            res.status(200).json(signature)
+        }
+        catch (err) {
+            res.status(404).json({ error: "Não encontrado" })
+        }
+
+    },
+
+    async update(req, res, _next) {
+        try {
+
+            let body = {}
+
+            if (req.body.type) {
+                body.type = req.body.type
+            }
+
+            if (req.body.isActive) {
+                body.isActive = Boolean(req.body.isActive)
+            }
+
+            const id = Number(req.params.id);
+
+            const signatureUpdate = await prisma.signature.update({
+                where: {id},
+                data: body });
+
+            res.status(200).json(signatureUpdate)
+        }
+        catch (err) {
+            res.status(404).json({ error: "Não encontrado" })
+        }
+
     },
 
 }
