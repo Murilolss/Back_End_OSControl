@@ -8,7 +8,7 @@ export const OrderController = {
 
             const error = {}
             
-            let user = await prisma.order.findFirst({
+            let user = await prisma.user.findFirst({
                 where: {id: Number(userId)}
             });
             
@@ -16,7 +16,7 @@ export const OrderController = {
                 error.user = { message: "error: Usuário informado não existe" }
             }
 
-            let service = await prisma.order.findFirst({
+            let service = await prisma.service.findFirst({
                 where: {id: Number(serviceId)}
             });
         
@@ -24,7 +24,7 @@ export const OrderController = {
                 error.service = { message: "error: Serviço informado não existe" }
             }
 
-            let client = await prisma.order.findFirst({
+            let client = await prisma.client.findFirst({
                 where: {id: Number(clientId)}
             });
         
