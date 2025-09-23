@@ -6,6 +6,29 @@ export const ShopController = {
 
         const{ orderId, productId, amount, salePrice} = req.body;
 
+        const error = {}
+
+            let order = await prisma.order.findFirst({
+                where: {id: Number(orderId)}
+            });
+            
+            if (!order) {
+                error.order = { message: "error: Usuário informado não existe" }
+            }
+
+            let product = await prisma.product.findFirst({
+                where: {id: Number(productId)}
+            });
+
+            if (!product) {
+                error.product = { message: "error: Usuário informado não existe" }
+            }
+        
+            if (Object.keys(error).length > 0) {
+                res.status(301).json(error);
+                return;
+            }
+
         const shop = await prisma.shop.create({
             data:{ 
                 orderId: Number(orderId),
