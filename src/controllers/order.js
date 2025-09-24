@@ -4,7 +4,7 @@ export const OrderController = {
     //C - CREATE, INSERT, POST, SET, STORE
     async store(req, res, next) {
         try {
-            const { salePrice, servicePrice, productPrice, userId, serviceId, clientId } = req.body;
+            const { servicePrice, productPrice, userId, serviceId, clientId } = req.body;
 
             const error = {}
             

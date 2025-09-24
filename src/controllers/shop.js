@@ -4,7 +4,7 @@ export const ShopController = {
     async store(req, res, next){
     try{ 
 
-        const{ orderId, productId, amount, salePrice} = req.body;
+        const{ orderId, productId, amount } = req.body;
 
         const error = {}
 
@@ -13,7 +13,7 @@ export const ShopController = {
             });
             
             if (!order) {
-                error.order = { message: "error: Usuário informado não existe" }
+                error.order = { message: "error: A Ordem de Serviço informado não existe" }
             }
 
             let product = await prisma.product.findFirst({
@@ -21,7 +21,7 @@ export const ShopController = {
             });
 
             if (!product) {
-                error.product = { message: "error: Usuário informado não existe" }
+                error.product = { message: "error: O Produto informado não existe" }
             }
         
             if (Object.keys(error).length > 0) {

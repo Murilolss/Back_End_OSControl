@@ -14,13 +14,24 @@ generator client {
 //Murilo Leandro
 model User {
   id Int @id @default (autoincrement())
-
+  name String
+  lasName String @map("last_name")
   email String @unique
   password String
+  companyName String @map("company_name")
+  corporateReason String? @map("corporate_reason")
   document String @unique
+  stateRegistration String? @map("state_registration") 
+  cep String
+  address String
+  number Int
+  neighborhood String
+  state String
+  city String
   phone String
+  site String?
   birth DateTime
-  signature String
+  
   isActive Boolean @map("is_active")
 
   createdAt DateTime @map("created_at") @default(now())
@@ -129,7 +140,7 @@ model Shop{
   id Int @id @default (autoincrement())
 
   amount Int
-  salePrice Float       @map("sale_price")
+  
 
  createdAt DateTime @map("created_at") @default(now())
  updatedAt DateTime @map("updated_at") @updatedAt 
@@ -147,7 +158,7 @@ model Shop{
 model Order{
   id Int @id @default (autoincrement())
 
-  salePrice Float     @map("sale_price")
+  
   servicePrice Float   @map("service_price")
   productPrice Float   @map("product_price")
 

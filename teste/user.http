@@ -3,12 +3,21 @@ POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
 
 {
-    "email" : "murilo@gmail.com",
-    "password" : "12345",
-    "document" : "111.222.33-44",
-    "phone" : "16 99999-999",
-    "birth" : "1970-01-01T00:00:00.000Z",
-    "signature" : "Basic",
+    "name": "Murilo",
+    "lasName": "Leandro",
+    "email": "Murilo@gmail.com",
+    "password": "123456",
+    "companyName": "ML Tech",
+    "document": "111.222.333.44",
+    "cep": "12345-678",
+    "address": "Rua Espcopal",
+    "number": 700,
+    "neighborhood": "Centro",
+    "state": "São Paulo",
+    "city": "São Carlos",
+    "phone": "16 98822-9906",
+    "site": "São Paulo",
+    "birth": "1970-01-01T00:00:00.000Z",
     "isActive" : true
 }
 

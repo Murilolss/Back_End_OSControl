@@ -4,7 +4,6 @@ POST http://localhost:3000/orders HTTP/1.1
 content-Type: application/json
 
 {
-    "salePrice" : 20,
     "servicePrice" : 29,
     "productPrice" : 10,
     "userId" : 1,

@@ -3,16 +3,44 @@ import prisma from '../prisma.js';
 export const UserController = {
     async store(req, res, next) {
         try {
-            const { email, password, document, phone, birth, signature, isActive } = req.body;
+            const { name,
+                    lasName,
+                    email,
+                    password,
+                    companyName,
+                    corporateReason,
+                    document,
+                    stateRegistration,
+                    cep,
+                    address,
+                    number,
+                    neighborhood,
+                    state,
+                    city,
+                    phone,
+                    site,
+                    birth,
+                    isActive } = req.body;
 
             const user = await prisma.user.create({
                 data: {
+                    name,
+                    lasName,
                     email,
                     password,
+                    companyName,
+                    corporateReason,
                     document,
+                    stateRegistration,
+                    cep,
+                    address,
+                    number,
+                    neighborhood,
+                    state,
+                    city,
                     phone,
+                    site,
                     birth,
-                    signature,
                     isActive: Boolean(isActive)
                 }
             });

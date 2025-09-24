@@ -11,7 +11,7 @@ export const ProductController ={
 
         if(!user){
             res.status(301).json({
-                'error': "Usuario não encontrado"
+                'error': " O Usuario não encontrado"
             });
             return
         }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       

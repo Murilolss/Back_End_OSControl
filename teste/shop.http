@@ -6,7 +6,6 @@ content-type: application/json
     "orderId": 1, 
     "productId": 1, 
     "amount": 1, 
-    "salePrice" : 30
 }
 
 ### Ler Todos os Shops
