@@ -15,6 +15,12 @@ export const ServiceController = {
                 res.status(301).json({ message: "error: Usuário informado não existe" })
             }
 
+            if (description.length > 300) {
+                res.status(401).json({ message: "error: Limite de caracteres atingido" })
+            }
+            else if (description.length < 10) {
+                res.status(401).json({ message: "error: Mínimo de 10 caracteres" })
+            }
             
             const service = await prisma.service.create({
                 data : { 
