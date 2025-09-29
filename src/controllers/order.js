@@ -39,7 +39,6 @@ export const OrderController = {
             
             const create = await prisma.order.create({
                 data: { 
-                    salePrice: Number(salePrice), 
                     servicePrice: Number(servicePrice), 
                     productPrice: Number(productPrice), 
                     userId: Number(userId), 
@@ -59,15 +58,15 @@ export const OrderController = {
         try {
             let query = {}
 
-            if (req.query.saleMax && req.query.saleMin) {
-                query.salePrice = { gte: Number(req.query.saleMin), lte: Number(req.query.saleMax)}
-            }
-            else if (req.query.saleMax) {
-                query.salePrice = {gte: Number(req.query.saleMin)}
-            }
-            else if (req.query.saleMin) {
-                query.salePrice = {lte: Number(req.query.saleMax)}
-            }
+        // if (req.query.saleMax && req.query.saleMin) {
+        //     query.salePrice = { gte: Number(req.query.saleMin), lte: Number(req.query.saleMax)}
+        // }
+        // else if (req.query.saleMax) {
+        //     query.salePrice = {gte: Number(req.query.saleMin)}
+        // }
+        // else if (req.query.saleMin) {
+        //     query.salePrice = {lte: Number(req.query.saleMax)}
+        // }
             if (req.query.productPrice ) {
                 query.productPrice =  req.query.productPrice
             }
@@ -124,9 +123,6 @@ export const OrderController = {
         try {
             let body = {}
         
-            if (req.body.salePrice) {
-                body.salePrice = Number(req.body.salePrice)
-            }
             if (req.body.servicePrice) {
                 body.servicePrice = Number(req.body.servicePrice)
             }
