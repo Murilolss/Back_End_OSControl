@@ -4,23 +4,95 @@ export const UserController = {
     async store(req, res, next) {
         try {
             const { name,
-                    lasName,
-                    email,
-                    password,
-                    companyName,
-                    corporateReason,
-                    document,
-                    stateRegistration,
-                    cep,
-                    address,
-                    number,
-                    neighborhood,
-                    state,
-                    city,
-                    phone,
-                    site,
-                    birth,
-                    isActive } = req.body;
+                lasName,
+                email,
+                password,
+                companyName,
+                corporateReason,
+                document,
+                stateRegistration,
+                cep,
+                address,
+                number,
+                neighborhood,
+                state,
+                city,
+                phone,
+                site,
+                birth,
+                isActive } = req.body;
+
+            function validaemail() {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return regex.test(email);
+            }
+
+            function validaCpfCnpj(documento) {
+
+                const doc = String(documento).replace(/[^\d]/g, '');
+
+                if (doc.length === 11) {
+                    if (/^0{11}$/.test(doc)) return false;
+
+                    let soma = 0;
+
+                    for (let i = 1; i <= 9; i++) {
+                        soma += parseInt(doc.substring(i - 1, i)) * (11 - i);
+                    }
+                    let resto = (soma * 10) % 11;
+                    if (resto === 10 || resto === 11) resto = 0;
+                    if (resto !== parseInt(doc.substring(9, 10))) return false;
+
+
+                    soma = 0;
+                    for (let i = 1; i <= 10; i++) {
+                        soma += parseInt(doc.substring(i - 1, i)) * (12 - i);
+                    }
+                    resto = (soma * 10) % 11;
+                    if (resto === 10 || resto === 11) resto = 0;
+                    return resto === parseInt(doc.substring(10, 11));
+                }
+
+
+                if (doc.length === 14) {
+                    const b = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+                    if (/^0{14}$/.test(doc)) return false;
+
+
+                    let n = 0;
+                    for (let i = 0; i < 12; i++) {
+                        n += doc[i] * b[i + 1];
+                    }
+                    if (doc[12] != ((n % 11) < 2 ? 0 : 11 - (n % 11))) return false;
+
+
+                    n = 0;
+                    for (let i = 0; i <= 12; i++) {
+                        n += doc[i] * b[i];
+                    }
+                    return doc[13] == ((n % 11) < 2 ? 0 : 11 - (n % 11));
+                }
+
+
+                return false;
+            }
+
+            
+
+
+
+
+            if (!validaCpfCnpj(document)) {
+                return (res.status(300).json('CNPJ Ou CPF inválido'))
+            }
+
+            if (!validaemail(email)) {
+                return (res.status(300).json('Email Inválido'))
+            }
+
+            if (!validaTelefone(phone)) {
+                return (res.status(300).json('Telefone Inválido'))
+            }
 
             const user = await prisma.user.create({
                 data: {
@@ -118,7 +190,7 @@ export const UserController = {
     },
 
     async update(req, res, _next) {
-        
+
         try {
 
             let body = {}
@@ -145,9 +217,10 @@ export const UserController = {
 
             const id = Number(req.params.id);
 
-            const userUpdate = await prisma.user.update({ 
-                where:  {id} ,
-                data: body })
+            const userUpdate = await prisma.user.update({
+                where: { id },
+                data: body
+            })
 
             res.status(200).json(userUpdate)
         }
