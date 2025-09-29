@@ -1,9 +1,51 @@
 import prisma from '../prisma.js';
 
+function validarEmail(email) {
+    const emailClean = email.replace(/[\s]/g, "");
+
+    let regex =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+
+    if (emailClean.length == 0) {
+        return false;
+    } else {
+        return regex.test(emailClean);
+    }
+}
+
+function validarCPFouCNPJ(document) {
+    const documentClean = document.replace(/[\s]/g, "");
+
+    let regex = /^(?:\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}|\d{14})$/;
+
+    if (document.length == 0) {
+        return false;
+    } else {
+        return regex.test(documentClean);
+    }
+}
+
+function validarponhe(phone) {
+    const phoneClean = phone.replace()
+}
+          
 export const ClientController ={
      async store(req, res, next ){
+
+
         try{
         const { name, document, cep, phone, email, address, number, neighborhood, state, city, isActive, userId   } = req.body;
+
+
+          if (!validarEmail(email)) {
+            return res.status(401).json({ error: "E-mail inválido" });
+          }
+
+          if(!validarCPFouCNPJ(document)){
+            return res.status(402).json({ error: "CPF ou CNPJ invalido" })
+          }
+
+          
+
 
         let user = await prisma.user.findFirst({
             where: {id: Number(userId)}
