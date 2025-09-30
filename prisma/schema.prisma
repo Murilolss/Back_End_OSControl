@@ -15,7 +15,7 @@ generator client {
 model User {
   id Int @id @default (autoincrement())
   name String
-  lasName String @map("last_name")
+  lastName String @map("last_name")
   email String @unique
   password String
   companyName String @map("company_name")
@@ -30,7 +30,7 @@ model User {
   city String
   phone String
   site String?
-  birth DateTime
+  birth DateTime?
   
   isActive Boolean @map("is_active")
 
