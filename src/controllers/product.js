@@ -5,6 +5,8 @@ export const ProductController ={
         try{
         const { name, category, description,  salesUnit, purchasePrice , salePrice, observations, isActive,userId  } = req.body;
 
+        
+
         let user = await prisma.user.findFirst({
             where: {id: Number(userId)}
         });
