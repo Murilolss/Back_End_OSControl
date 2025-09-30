@@ -24,9 +24,18 @@ function validarCPFouCNPJ(document) {
     }
 }
 
-function validarponhe(phone) {
-    const phoneClean = phone.replace()
+function validarPhone(phone) {
+
+    const phone = phone.replace(/\D/g, "");
+    let regex = /^(\d{10}|\d{11})$/;
+    if (phone.length === 0) {
+        return false;
+    } else {
+        return regex.test(phone);
+    }
+
 }
+
           
 export const ClientController ={
      async store(req, res, next ){
@@ -42,6 +51,10 @@ export const ClientController ={
 
           if(!validarCPFouCNPJ(document)){
             return res.status(402).json({ error: "CPF ou CNPJ invalido" })
+          }
+
+          if(!validarPhone(phone)) {
+            return res.status(401).json({error:"Telefone não encontrado "})
           }
 
           
