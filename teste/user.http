@@ -1,10 +1,12 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc1OTI1OTczMywiZXhwIjoxNzU5Mjg4NTMzfQ.hJrD-o7DK_bNGkKzMksrdK4mNufJgqy6wc6bUDD9efI
+
 ### Criando um Usuario
 POST http://localhost:3000/users HTTP/1.1
 Content-Type: application/json
 
 {
     "name": "Murilo",
-    "lasName": "Leandro",
+    "lastName": "Leandro",
     "email": "Muil0@yahoo.com",
     "password": "123456",
     "companyName": "ML Tech",
@@ -63,5 +65,15 @@ Content-Type: application/json
     "email" : "myu@gmail.com",
     "document" : "151.622.793-88",
     "isActive" : false
+}
+
+### Atualizando o user pelo id
+POST http://localhost:3000/users/login HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{{token}}}
+
+{
+    "email" : "Muil0@yahoo.com",
+    "senha" : "123456"    
 }
 

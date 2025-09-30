@@ -1,10 +1,13 @@
 import prisma from '../prisma.js';
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
 
 export const UserController = {
     async store(req, res, next) {
         try {
             const { name,
-                lasName,
+                lastName,
                 email,
                 password,
                 companyName,
@@ -77,10 +80,7 @@ export const UserController = {
                 return false;
             }
 
-            
-
-
-
+    
 
             if (!validaCpfCnpj(document)) {
                 return (res.status(300).json('CNPJ Ou CPF inválido'))
@@ -90,16 +90,14 @@ export const UserController = {
                 return (res.status(300).json('Email Inválido'))
             }
 
-            if (!validaTelefone(phone)) {
-                return (res.status(300).json('Telefone Inválido'))
-            }
+            const hash = await bcrypt.hash(password, 10);
 
             const user = await prisma.user.create({
                 data: {
                     name,
-                    lasName,
+                    lastName,
                     email,
-                    password,
+                    password: hash,
                     companyName,
                     corporateReason,
                     document,
@@ -229,5 +227,40 @@ export const UserController = {
         }
 
     },
+
+    async login(req, res, next){
+        try{
+            const {email, senha} = req.body;
+            let user = await prisma.user.findFirst({
+                where: {email: email}
+            });
+
+            if(!user){
+                res.status(404).json({error: "Usuário com esse email não encontrado"})
+                return;
+            }
+
+            const ok = await bcrypt.compare(senha, user.password)
+            if(!ok){
+                res.status(404).json({error: "Credenciais inválidas"})
+                return;
+            }
+
+            const token = jwt.sign(
+                { sub: user.id, 
+                email: user.email, 
+                name: user.name},
+                process.env.JWT_SECRET,
+                { expiresIn: '8h'}
+            );
+
+            return res.json({token})
+
+        }
+        catch (e)
+        {
+            next(e)
+        }
+    }
 
 }
