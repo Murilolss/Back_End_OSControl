@@ -67,10 +67,10 @@ Content-Type: application/json
     "isActive" : false
 }
 
-### Atualizando o user pelo id
+### Logando no user 
 POST http://localhost:3000/users/login HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {{{token}}}
+
 
 {
     "email" : "Muil0@yahoo.com",
