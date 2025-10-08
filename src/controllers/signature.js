@@ -32,100 +32,86 @@ export const SignatureController = {
             }
 
 
-            res.status(201).json(signature);
-        } catch (error) {
-            next(error);
-        }
-    },
+      res.status(201).json(signature);
+    } catch (error) {
+      next(error);
+    }
+  },
 
-    async index(req, res, next) {
+  async index(req, res, next) {
+    try {
+      let query = {};
 
-        try {
+      if (req.query.type) {
+        query.type = req.query.type;
+      }
 
-            let query = {}
+      if (req.query.isActive) {
+        query.isActive = Boolean(req.query.isActive);
+      }
 
-            if (req.query.type) {
-                query.type = req.query.type
-            }
+      const signature = await prisma.signature.findMany({
+        where: query,
+      });
 
-            if (req.query.isActive) {
-                query.isActive = Boolean(req.query.isActive)
-            }
+      if (signature.length == 0) {
+        res.status(404).json("Não encontrado");
+      } else {
+        res.status(200).json(signature);
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
 
-            const signature = await prisma.signature.findMany({
-                where: query
-            });
+  async show(req, res, _next) {
+    try {
+      const id = Number(req.params.id);
 
-            if (signature.length == 0) {
-                res.status(404).json("Não encontrado")
-            }
-            else {
-                res.status(200).json(signature)
-            }
+      let signature = await prisma.signature.findFirstOrThrow({
+        where: { id },
+      });
 
+      res.status(200).json(signature);
+    } catch (err) {
+      res.status(404).json({ error: "Não encontrado" });
+    }
+  },
 
-        }
-        catch (error) {
-            next(error);
-        }
-    },
+  async del(req, res, _next) {
+    try {
+      const id = Number(req.params.id);
 
-    async show(req, res, _next) {
-        try {
+      let signature = await prisma.signature.delete({ where: { id } });
 
-            const id = Number(req.params.id);
+      res.status(200).json(signature);
+    } catch (err) {
+      res.status(404).json({ error: "Não encontrado" });
+    }
+  },
 
-            let signature = await prisma.signature.findFirstOrThrow({ where: { id } })
+  async update(req, res, _next) {
+    try {
+      let body = {};
 
-            res.status(200).json(signature)
-        }
-        catch (err) {
-            res.status(404).json({ error: "Não encontrado" })
-        }
+      if (req.body.type) {
+        body.type = req.body.type;
+      }
 
-    },
+      if (req.body.isActive) {
+        body.isActive = Boolean(req.body.isActive);
+      }
 
-    async del(req, res, _next) {
-        try {
+      const id = Number(req.params.id);
 
-            const id = Number(req.params.id);
+      const signatureUpdate = await prisma.signature.update({
+        where: { id },
+        data: body,
+      });
 
-            let signature = await prisma.signature.delete({ where: { id } })
-
-            res.status(200).json(signature)
-        }
-        catch (err) {
-            res.status(404).json({ error: "Não encontrado" })
-        }
-
-    },
-
-    async update(req, res, _next) {
-        try {
-
-            let body = {}
-
-            if (req.body.type) {
-                body.type = req.body.type
-            }
-
-            if (req.body.isActive) {
-                body.isActive = Boolean(req.body.isActive)
-            }
-
-            const id = Number(req.params.id);
-
-            const signatureUpdate = await prisma.signature.update({
-                where: {id},
-                data: body });
-
-            res.status(200).json(signatureUpdate)
-        }
-        catch (err) {
-            res.status(404).json({ error: "Não encontrado" })
-        }
-
-    },
-
-}
-
+      res.status(200).json(signatureUpdate);
+    } catch (err) {
+      res.status(404).json({ error: "Não encontrado" });
+    }
+  },
+};
