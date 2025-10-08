@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc1OTI1OTczMywiZXhwIjoxNzU5Mjg4NTMzfQ.hJrD-o7DK_bNGkKzMksrdK4mNufJgqy6wc6bUDD9efI
+@token = 
 
 ### Criando um Usuario
 POST http://localhost:3000/users HTTP/1.1
@@ -70,7 +70,6 @@ Content-Type: application/json
 ### Logando no user 
 POST http://localhost:3000/users/login HTTP/1.1
 Content-Type: application/json
-
 
 {
     "email" : "Muil0@yahoo.com",

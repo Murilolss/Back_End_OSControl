@@ -14,6 +14,8 @@
 
     "dev": "nodemon src/api.js",
 
+    "seed": "node prisma/seed.js",
+
     "start": "node src/api.js",
 
     "migrate": "prisma migrate dev",

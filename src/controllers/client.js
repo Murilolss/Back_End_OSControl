@@ -24,25 +24,13 @@ function validarCPFouCNPJ(document) {
     }
 }
 
-function validarPhone(phone) {
-
-    const phone = phone.replace(/\D/g, "");
-    let regex = /^(\d{10}|\d{11})$/;
-    if (phone.length === 0) {
-        return false;
-    } else {
-        return regex.test(phone);
-    }
-
-}
-
           
 export const ClientController ={
      async store(req, res, next ){
 
 
         try{
-        const { name, document, cep, phone, email, address, number, neighborhood, state, city, isActive, userId   } = req.body;
+        const { name, document, cep, phone, email, address, number, neighborhood, state, city, isActive} = req.body;
 
 
           if (!validarEmail(email)) {
@@ -61,7 +49,7 @@ export const ClientController ={
 
 
         let user = await prisma.user.findFirst({
-            where: {id: Number(userId)}
+            where: {id: Number(req.logado.id)}
         });
 
         if(!user){
@@ -84,7 +72,7 @@ export const ClientController ={
                 state, 
                 city, 
                 isActive: Boolean(isActive), 
-                userId : Number(userId)
+                userId : Number(req.logado.id)
             }
         
      });

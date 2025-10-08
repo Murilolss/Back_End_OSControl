@@ -3,12 +3,12 @@ import prisma from '../prisma.js';
 export const ProductController ={
     async store(req, res, next ){
         try{
-        const { name, category, description,  salesUnit, purchasePrice , salePrice, observations, isActive,userId  } = req.body;
+        const { name, category, description,  salesUnit, purchasePrice , salePrice, observations, isActive} = req.body;
 
         
 
         let user = await prisma.user.findFirst({
-            where: {id: Number(userId)}
+            where: {id: Number(req.logado.id)}
         });
 
         if(!user){
@@ -28,7 +28,7 @@ export const ProductController ={
                     salePrice : Number(salePrice), 
                     observations, 
                     isActive : Boolean(isActive),
-                    userId : Number(userId)
+                    userId : Number(req.logado.id)
                 }
         });
 

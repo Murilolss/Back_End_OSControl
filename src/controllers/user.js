@@ -261,6 +261,6 @@ export const UserController = {
         {
             next(e)
         }
-    }
+    },
 
 }

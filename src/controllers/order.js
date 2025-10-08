@@ -4,12 +4,12 @@ export const OrderController = {
     //C - CREATE, INSERT, POST, SET, STORE
     async store(req, res, next) {
         try {
-            const { servicePrice, productPrice, userId, serviceId, clientId } = req.body;
+            const { servicePrice, productPrice, serviceId, clientId } = req.body;
 
             const error = {}
             
             let user = await prisma.user.findFirst({
-                where: {id: Number(userId)}
+                where: {id: Number(req.logado.id)}
             });
             
             if (!user) {
@@ -41,7 +41,7 @@ export const OrderController = {
                 data: { 
                     servicePrice: Number(servicePrice), 
                     productPrice: Number(productPrice), 
-                    userId: Number(userId), 
+                    userId: Number(req.logado.id), 
                     serviceId: Number(serviceId), 
                     clientId: Number(clientId) 
                 }

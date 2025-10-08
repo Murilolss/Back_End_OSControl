@@ -1,13 +1,14 @@
 import prisma from '../prisma.js';
+import { connectUserToGroup } from '../../prisma/seed.js';
 
 export const SignatureController = {
     async store(req, res, next) {
         try {
 
-            const { type, isActive, userId } = req.body;
+            const { type, isActive} = req.body;
 
             let user = await prisma.user.findFirst({
-                where: {id: Number(userId)}
+                where: {id: Number(req.logado.id)}
                 });
                 
                 if (!user){
@@ -18,9 +19,18 @@ export const SignatureController = {
                 data: {
                     type,
                     isActive: Boolean(isActive),
-                    userId: Number(userId)
+                    userId: Number(req.logado.id)
                 }
             });
+
+            const premium = await prisma.group.findFirst({
+                where: {name: "Premium"}
+            })
+
+            if (type === "Premium"){
+                await connectUserToGroup({ userId: Number(req.logado.id), groupId: premium.id });
+            }
+
 
             res.status(201).json(signature);
         } catch (error) {

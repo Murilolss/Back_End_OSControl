@@ -3,12 +3,12 @@ import prisma from '../prisma.js';
 export const ServiceController = {
     async store(req, res, next){
         try{
-            const { nameService, price, description, observations, isActive, userId } = req.body;
+            const { nameService, price, description, observations, isActive} = req.body;
 
             const error = {}
             
             let user = await prisma.user.findFirst({
-                where: {id: Number(userId)}
+                where: {id: Number(req.logado.id)}
             });
             
             if (!user) {
@@ -29,7 +29,7 @@ export const ServiceController = {
                     description, 
                     observations, 
                     isActive: Boolean(isActive), 
-                    userId: Number(userId)
+                    userId: Number(req.logado.id)
                 }
             });
             // respondendo 201-criado encapsulando no formato json(service)

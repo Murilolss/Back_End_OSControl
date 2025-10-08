@@ -1,17 +1,20 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc1OTk1NDU2NSwiZXhwIjoxNzU5OTgzMzY1fQ.RJCFn5uaIokdNouIJtwbE9_0CzXyrfaocfLC60jpbhM
+
 ### Criando as Assinaturas
 POST http://localhost:3000/signatures HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "type" : "Basic",
-    "isActive": true,
-    "userId": 1
+    "type" : "Free",
+    "isActive": true
 }
 
 
 ### Ler Todos as Assinaturas
 GET http://localhost:3000/signatures HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### Ler o type 
 GET http://localhost:3000/signatures?type=Basic HTTP/1.1

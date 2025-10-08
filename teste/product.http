@@ -1,6 +1,9 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc1OTk1NTM1MiwiZXhwIjoxNzU5OTg0MTUyfQ.fuebJu7sJmD3zpRoo4RydAqPtp7zvP0e_rtRdGNIu_8
+
 ### Criando um product
 POST http://localhost:3000/products HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
 
 {
     "name" : "MSI B450",
@@ -11,8 +14,6 @@ content-type: application/json
     "salePrice" : 20, 
     "observations" : "Azul",
     "isActive" : true,
-    "userId" : 1
-
 }
 
 ### ler todos os product
