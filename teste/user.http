@@ -20,8 +20,6 @@ Content-Type: application/json
     "city": "São Carlos",
     "phone": "(16) 98250-7881",
     "site": "São Paulo",
-    "birth": "1970-01-01T00:00:00.000Z",
-    "isActive" : true
 }
 
 ### Ler Todos os Usuarios

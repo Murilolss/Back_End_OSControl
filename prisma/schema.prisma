@@ -32,7 +32,7 @@ model User {
   site String?
   birth DateTime?
   
-  isActive Boolean @map("is_active")
+  isActive Boolean @map("is_active") @default(true)
 
   createdAt DateTime @map("created_at") @default(now())
   updatedAt DateTime @map("updated_at") @updatedAt
