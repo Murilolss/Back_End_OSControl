@@ -88,7 +88,7 @@ async function main() {
   // 4) (Opcional) Vincula Users a Groups
   // Se já existir User com id 1 e 2, por exemplo:
   try {
-    await connectUserToGroup({ userId: 1, groupId: groups['Free'].id });
+    // await connectUserToGroup({ userId: 1, groupId: groups['Free'].id });
   } catch {}
 
   console.log('Seed concluído com Roles, Groups, RoleGroup e GroupUser');

@@ -13,7 +13,7 @@ Authorization: Bearer {{token}}
     "purchasePrice" : 10, 
     "salePrice" : 20, 
     "observations" : "Azul",
-    "isActive" : true,
+    "isActive" : true
 }
 
 ### ler todos os product

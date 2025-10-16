@@ -19,7 +19,7 @@ Content-Type: application/json
     "state": "São Paulo",
     "city": "São Carlos",
     "phone": "(16) 98250-7881",
-    "site": "São Paulo",
+    "site": "São Paulo"
 }
 
 ### Ler Todos os Usuarios

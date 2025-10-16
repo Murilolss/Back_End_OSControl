@@ -23,8 +23,10 @@ export const UserController = {
         phone,
         site,
         birth,
-        isActive,
+        
       } = req.body;
+
+      console.log(req.body)
 
       function validaemail() {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -104,7 +106,6 @@ export const UserController = {
           phone,
           site,
           birth,
-          isActive: Boolean(isActive),
         },
       });
 
