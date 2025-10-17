@@ -50,12 +50,8 @@ async function main() {
   // 1) Cria Roles
   const rolesData = [
     { name: 'ADMIN',  description: 'Acesso total ao sistema'},
-    { name: 'EDITOR', description: 'Pode criar/editar conteúdos'},
-    { name: 'VIEWER', description: 'Somente leitura'},
-    { name: 'CREATE', description: 'Pode Criar Alguma função' },
-    { name: 'userdelete', description: 'Pode deletar alguma função' },
+    { name: 'PREMIUM', description: 'Acesso as Todas as funcionalidades'},
     
-
   ];
 
   const roles = {};
@@ -67,7 +63,7 @@ async function main() {
   // 2) Cria Groups
   const groupsData = [
     { name: 'Premium', description: 'Acesso as Todas as funcionalidades'},
-    { name: 'admin', description: 'Pode fazer de tudo no site'}
+    { name: 'Admin', description: 'Pode fazer de tudo no site'}
 
 
   ];
@@ -82,7 +78,8 @@ async function main() {
   // Crie um nome para a unique composta no schema para permitir upsert,
   // ex: @@unique([groupId, roleId], name: "group_role_unique")
   
-  
+  await connectRoleToGroup({ groupId: groups['Admin'].id,        roleId: roles.ADMIN.id });
+  await connectRoleToGroup({ groupId: groups['Premium'].id,        roleId: roles.PREMIUM.id });
   
 
   // 4) (Opcional) Vincula Users a Groups
