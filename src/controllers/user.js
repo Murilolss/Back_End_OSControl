@@ -211,6 +211,7 @@ export const UserController = {
   },
 
   async login(req, res, next) {
+    console.log(req.body)
     try {
       const { email, senha } = req.body;
       let user = await prisma.user.findFirst({
@@ -224,11 +225,18 @@ export const UserController = {
         return;
       }
 
-      const ok = await bcrypt.compare(senha, user.password);
-      if (!ok) {
+      try {
+        console.log("User encontrado: " + JSON.stringify(user))
+        const ok = await bcrypt.compare(senha, user.password);
+        if (!ok) {
+          res.status(404).json({ error: "Credenciais inválidas" });
+          return;
+        }
+
+      } catch(e) {
         res.status(404).json({ error: "Credenciais inválidas" });
         return;
-      }
+      } 
 
       const token = jwt.sign(
         { sub: user.id, email: user.email, name: user.name },
