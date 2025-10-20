@@ -85,7 +85,7 @@ export const UserController = {
         return res.status(300).json("Email Inválido");
       }
 
-      const hash = await bcrypt.hash(password, 10);
+      const hash = await bcrypt.hash(password, 8);
 
       const user = await prisma.user.create({
         data: {
