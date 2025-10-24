@@ -132,12 +132,12 @@ No body é necesario passar as informações do Cliente para serem deletadas.
 "neighborhood" : "Centro",
 "state": "São Paulo",
 "city": "São Carlos"
-```   
+```      
 
 
     
 
-# Ordem de Serviço
+# Ordem de Serviço    
 ## Criar ordem de serviço
 Para Criar uma nova Ordem de Serviço, utiliza-se a Rota de POST / order
 
@@ -171,7 +171,8 @@ Para Atualizar uma Ordem de Serviço, utiliza-se a Rota de PUT /order
 
 É Necessario passar o Cabeçalho content-type: application/json
 
-
+### Requisição
+No body é necesario passar as informações do Cliente para as Ordem de Serviço serem atualizadas 
 
     "servicePrice" : 29,
     "productPrice" : 10,
@@ -179,8 +180,30 @@ Para Atualizar uma Ordem de Serviço, utiliza-se a Rota de PUT /order
     "serviceId" : 1,
     "clientId" : 1
 
+## Resposta
+200 Atualizado com Sucesso!  
+201 Cadastrado com Sucesso !  
+301 Ordem informado não existe !
+404 Erro Interno ao encontrar Ordens de Serviço !   
+ 
 
 
+### Deletar
+
+Para deletar um cliente utiliza-se a rota DELETE / clients
+
+### Cabeçalho
+
+É Necessario passar o Cabeçalho content-type: application/json
+
+### Requisição
+No body é necesario passar as informações do Cliente para serem deletadas. 
+
+    "servicePrice" : 29,
+    "productPrice" : 10,
+    "userId" : 1,
+    "serviceId" : 1,
+    "clientId" : 1
 
 
 ## ---------------------------------------------------------------------
