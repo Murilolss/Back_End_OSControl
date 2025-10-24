@@ -5,7 +5,7 @@ content-type: application/json
 {
     "orderId": 1, 
     "productId": 1, 
-    "amount": 1, 
+    "amount": 1
 }
 
 ### Ler Todos os Shops

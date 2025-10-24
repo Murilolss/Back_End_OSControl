@@ -9,17 +9,18 @@ import serviceRoutes from './routes/service.js'
 import shopRoutes from './routes/shop.js'
 import signatureRoutes from './routes/signature.js'
 import userRoutes from './routes/user.js'
+import { verificaToken } from './middlewares/auth.js';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/clients', clientRoutes)
-app.use('/orders', orderRoutes)
-app.use('/products', productRoutes)
-app.use('/services', serviceRoutes)
+app.use('/clients', verificaToken, clientRoutes)
+app.use('/orders', verificaToken, orderRoutes)
+app.use('/products', verificaToken, productRoutes)
+app.use('/services', verificaToken, serviceRoutes)
 app.use('/shops', shopRoutes)
-app.use('/signatures', signatureRoutes)
+app.use('/signatures', verificaToken, signatureRoutes)
 app.use('/users', userRoutes)
 
 app.use((err, _req, res, _next) => {

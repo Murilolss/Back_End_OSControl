@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc1OTI1OTczMywiZXhwIjoxNzU5Mjg4NTMzfQ.hJrD-o7DK_bNGkKzMksrdK4mNufJgqy6wc6bUDD9efI
+@token = 
 
 ### Criando um Usuario
 POST http://localhost:3000/users HTTP/1.1
@@ -19,9 +19,7 @@ Content-Type: application/json
     "state": "São Paulo",
     "city": "São Carlos",
     "phone": "(16) 98250-7881",
-    "site": "São Paulo",
-    "birth": "1970-01-01T00:00:00.000Z",
-    "isActive" : true
+    "site": "São Paulo"
 }
 
 ### Ler Todos os Usuarios
@@ -67,10 +65,9 @@ Content-Type: application/json
     "isActive" : false
 }
 
-### Atualizando o user pelo id
+### Logando no user 
 POST http://localhost:3000/users/login HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {{{token}}}
 
 {
     "email" : "Muil0@yahoo.com",
