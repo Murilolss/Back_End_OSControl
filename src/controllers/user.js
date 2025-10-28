@@ -23,16 +23,17 @@ export const UserController = {
         phone,
         site,
         birth,
-        
+
       } = req.body;
 
-      console.log(req.body)
-
+      
+      // Verificção de Email Valido
       function validaemail() {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
       }
-
+      
+      // Verificção de CPF/CNPJ Valido
       function validaCpfCnpj(documento) {
         const doc = String(documento).replace(/[^\d]/g, "");
 
@@ -76,15 +77,50 @@ export const UserController = {
 
         return false;
       }
+      
 
       if (!validaCpfCnpj(document)) {
-        return res.status(300).json("CNPJ Ou CPF inválido");
+        return res.status(300).json("CNPJ ou CPF inválido");
       }
+
 
       if (!validaemail(email)) {
         return res.status(300).json("Email Inválido");
       }
 
+
+
+      // Validação de email existente
+      let emaill = await prisma.user.findFirst({
+        where: { email }
+      });
+
+      if (emaill) {
+        return res.status(300).json("Email Já Cadastrado");
+      }
+
+
+      //validação de CPF ou CNPJ existente
+      const documentt = await prisma.user.findFirst({
+        where: { document }
+      })
+      
+      if (documentt) {
+        
+        if (document.length === 11) {
+          return res.status(409).json("O CPF Já está cadastrado");
+        }
+        else if (document.length === 14) {
+          return res.status(409).json("O CNPJ Já está cadastrado");
+        }
+      }
+      
+      //validação de senha de pelo menos 8 Caracterer
+      if (password.length < 8){
+        return res.status(409).json("A Senha deve conter no mínimo 8 caracteres");
+      }
+      
+      
       const hash = await bcrypt.hash(password, 8);
 
       const user = await prisma.user.create({
@@ -224,11 +260,11 @@ export const UserController = {
         return;
       }
 
-        const ok = await bcrypt.compare(senha, user.password);
-        if (!ok) {
-          res.status(404).json({ error: "Usuário ou Senha Incorretos" });
-          return;
-        }
+      const ok = await bcrypt.compare(senha, user.password);
+      if (!ok) {
+        res.status(404).json({ error: "Usuário ou Senha Incorretos" });
+        return;
+      }
 
 
       const token = jwt.sign(
@@ -237,13 +273,12 @@ export const UserController = {
         { expiresIn: "8h" }
       );
 
-            return res.json({token})
+      return res.json({ token })
 
-        }
-        catch (e)
-        {
-            next(e)
-        }
-    },
+    }
+    catch (e) {
+      next(e)
+    }
+  },
 
 }
