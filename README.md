@@ -11,16 +11,16 @@ npm run dev
 
 remover o output do prisma client
 
-CRUD
+# CRUD
 //C - CREATE, INSERT, POST, SET, STORE
 
 
-ASYNC
+# ASYNC
 // asincrono nome_da_função(recebendo, responder, próximo)
 
 route.get('/:id', UserController.index); Significa que é dinamico e vira uma variavel
 
-Criptografia
+# Criptografia
 
 npm install bcrypt express-session nodemailer uuid
 npm install jsonwebtoken
@@ -32,7 +32,7 @@ npm install jsonwebtoken
 OS Control é um aplicativo desenvolvido com a finalidade de facilitar o usuário na organização dos seus clientes no ambito que envolve Ordens de Serviços.
 Esse aplicativo acima sitado está sendo desenvolvido pelos integrantes da turma TI43, sendo Murilo Leandro, Murilo Andrade, leonardo e Marcos.
 
-comandos para subir o **Banco de Dados** *prisma*
+# comandos para subir o **Banco de Dados** *prisma*
 
 npx prisma generate
 npx prisma migrate dev --name init
@@ -41,6 +41,16 @@ npx prisma studio
 npm run dev
 
 remover o output do prisma client
+
+# Tabela de erros dos Enpoints 
+status code:  
+
+301 - Não existe!   
+401 - Email inválido  
+402 - CPF ou  CNPJ Inválido   
+404 - Não Encontrado!   
+500 - Erro Interno
+
 
 ## Modelagem de dados: tabelas, entidades ou estruturas jSON principais
  segue a abaixo link MER
@@ -55,29 +65,55 @@ remover o output do prisma client
 Para Criar um Cliente utiliza-se a Rota de POST /Clients
 
 ### Cabeçalho
+È necessário passar o cabeçalho:
 
-É Necessario passar o Cabeçalho content-type: application/json
+```   
+content-type: application/json
+```
 
 ### Requisição
-No body é necesario passar as informações para o Cadastro do Cliente
+No body é necessário passar as informações para Criar um Cliente.
 
+```json
+    {  
+    "name": "Marcius",
+    "document": "111.222.333.44",
+    "cep": "12345-678",
+    "phone": "16 12345-6789",
+    "email": "marcius@gmail.com",
+    "address": "Rua Epscopal",
+    "number": 700,
+    "neighborhood" : "Centro",
+    "state": "São Paulo",
+    "city": "São Carlos"
+
+    } 
 ```
-"name": "Marcius",
-"document": "111.222.333.44",
-"cep": "12345-678",
-"phone": "16 12345-6789",
-"email": "marcius@gmail.com",
-"address": "Rua Epscopal",
-"number": 700,
-"neighborhood" : "Centro",
-"state": "São Paulo",
-"city": "São Carlos"
+
+### Resposta 
+```json
+    {
+        "name" : "Marcius",
+        "document" : "111.222.333.44",
+        "cep" : "12345-678",
+        "phone" : "16 12345-6789",
+        "email" : "marcius@gmail.com",
+        "address" : "Rua Epscopal",
+        "number" : 700,
+        "neighborhood" : "Centro",
+        "state" : "São Paulo",
+        "city" : "São Carlos",
+        "isActive" : true,
+        "userId" : 1
+        
+    }
 ```
 ### Resposta
-401 Email inválido  
-402 CPF ou  CNPJ Inválido  
-201 Usuário Cadastrado com Sucesso  
-500 Erro Interno
+Status code:  
+
+201 Sucesso !
+
+
 
 ## Atualizar
 
@@ -85,69 +121,107 @@ Para Atualizar um Cliente utiliza-se a Rota de PUT /Clients
 
 ### Cabeçalho
 
-É Necessario passar o Cabeçalho content-type: application/json
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+```
 
 ### Requisição
 No body é necesario passar as informações do Cliente para serem atualizadas 
 
-```
-"name": "Marcius",
-"document": "111.222.333.44",
-"cep": "12345-678",
-"phone": "16 12345-6789",
-"email": "marcius@gmail.com",
-"address": "Rua Epscopal",
-"number": 700,
-"neighborhood" : "Centro",
-"state": "São Paulo",
-"city": "São Carlos"
+```json
+    {  
+    "name": "Marcius",
+    "document": "111.222.333.44",
+    "cep": "12345-678",
+    "phone": "16 12345-6789",
+    "email": "marcius@gmail.com",
+    "address": "Rua Epscopal",
+    "number": 700,
+    "neighborhood" : "Centro",
+    "state": "São Paulo",
+    "city": "São Carlos",
+    "userId": 2
+    } 
 ```
 
 ### Resposta
-201 Cliente Atualizado com Sucesso
-404 Nenhum Usuário Encontrado  
-402 CPF ou  CNPJ Inválido  
-201 Usuário Cadastrado com Sucesso  
-500 Erro Interno
 
-### Deletar
+```json
+    {
+        "name" : "Marcius",
+        "document" : "111.222.333.44",  
+        "phone": "16 12345-6700",
+        "cep" : "12345-000", 
+        "number": 800,
+    }
+
+```
+Status code:  
+
+201  Sucesso!
+
+
+## Deletar
 
 Para deletar um cliente utiliza-se a rota DELETE / clients
 
 ### Cabeçalho
 
-É Necessario passar o Cabeçalho content-type: application/json
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+```
 
 ### Requisição
 No body é necesario passar as informações do Cliente para serem deletadas. 
 
 
+```json
+    {  
+    "name": "Marcius",
+    "document": "111.222.333.44",
+    "cep": "12345-678",
+    "phone": "16 12345-6789",
+    "email": "marcius@gmail.com",
+    "address": "Rua Epscopal",
+    "number": 700,
+    "neighborhood" : "Centro",
+    "state": "São Paulo",
+    "city": "São Carlos",
+    "userId": 2
+    } 
 ```
-"name": "Marcius",
-"document": "111.222.333.44",
-"cep": "12345-678",
-"phone": "16 12345-6789",
-"email": "marcius@gmail.com",
-"address": "Rua Epscopal",
-"number": 700,
-"neighborhood" : "Centro",
-"state": "São Paulo",
-"city": "São Carlos"
-```      
+### Resposta
 
+```
+{
+  "error": "não encontrado"
+}
+```
+status code:  
 
+404 - Não Encontrado!  
     
 
 # Ordem de Serviço    
 ## Criar ordem de serviço
-Para Criar uma nova Ordem de Serviço, utiliza-se a Rota de POST / order
+Para Criar uma nova Ordem de Serviço, utiliza-se a Rota de POST / order.
 
 ### Cabeçalho
 
-É Necessario passar o Cabeçalho content-type: application/json
+É  necessário passar o cabeçalho:
 
+```   
+content-type: application/json
+```
 ### Requisição
-No body é necesario passar as informações para o Cadastro da Ordem de Serviço
+No body é necessário passar as informações, para o Cadastro da Ordem de Serviço.
+
+ ```json
+    {
 
     "servicePrice" : 29,
     "productPrice" : 10,
@@ -155,14 +229,13 @@ No body é necesario passar as informações para o Cadastro da Ordem de Serviç
     "serviceId" : 1,
     "clientId" : 1
   
-## Resposta
+    }
+ ```
+### Resposta
 Status Code:
 
    201: Cadastro com Sucesso!  
-   301: Cliente informado não existe!  
-   404: Nada encontrado!  
-   200: Encontrado com Sucesso!
-
+   
 
 ## Atualizar
 
@@ -170,125 +243,133 @@ Para Atualizar uma Ordem de Serviço, utiliza-se a Rota de PUT /order
 
 ### Cabeçalho
 
-É Necessario passar o Cabeçalho content-type: application/json
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+```
 
 ### Requisição
-No body é necesario passar as informações do Cliente para as Ordem de Serviço serem atualizadas 
+No body é necesario passar as informações, para as Ordens de Serviço serem atualizadas. 
+
+```json
+{
 
     "servicePrice" : 29,
     "productPrice" : 10,
     "userId" : 1,
     "serviceId" : 1,
     "clientId" : 1
-
+}
+```
 ## Resposta
+
+```json
+{
+    "salePrice" : 24,
+    "servicePrice" : 30,
+    "productPrice" : 14
+}
+```
 200 Atualizado com Sucesso!  
-201 Cadastrado com Sucesso !  
-301 Ordem informado não existe !
-404 Erro Interno ao encontrar Ordens de Serviço !   
- 
 
 
-### Deletar
 
-Para deletar um cliente utiliza-se a rota DELETE / clients
+## Deletar
+
+Para deletar uma Ordem de Serviço utiliza-se a rota DELETE / order.
 
 ### Cabeçalho
 
-É Necessario passar o Cabeçalho content-type: application/json
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+```
 
 ### Requisição
-No body é necesario passar as informações do Cliente para serem deletadas. 
+No body é necessário passar o ID para  a Ordem de Serviço ser deletada.
 
-    "servicePrice" : 29,
-    "productPrice" : 10,
-    "userId" : 1,
-    "serviceId" : 1,
+```jason
+{
     "clientId" : 1
 
+}
+  ```
+### Resposta
 
-## ---------------------------------------------------------------------
+```
+{
+  "error": "não encontrado"
+}
+```
+status code:  
 
-
-## Product
-
-# Rota
-Post /product
-
-# requisição
- Query:
- nenhum parâmetro
-
- body:
- data: { 
-                    name, string;
-                    category, string;
-                    description, string;
-                    salesUnit, string;
-                    purchasePrice : Number(purchasePrice), 
-                    salePrice : Number(salePrice), 
-                    observations, string;
-                    isActive : Boolean(isActive),
-                    userId : Number(userId)
-                }
-
-# requisição
-Query: identificador do produto
+404 - Não Encontrado!   
 
 
-## Resposta
-Status Code:
-
-. 201: Produto criado com Sucesso!
-. 301: Falha ao enontrar produto!
-. 404: Produto não encontrado!
-
-# Rota
-Get/product/id
-
-                {
-                    "name" : "MSI B450",
-                    "category" : "Placa Mãe",
-                    "description" : "127v",
-                    "salesUnit" : "UN", 
-                    "purchasePrice" : 10, 
-                    "salePrice" : 20, 
-                    "observations" : "Azul",
-                    "isActive" : true,
-                    "userId" : 1
-
-                }
-
-## Resposta
-Status Code:
-
-. 200: Produto encontrado com Sucesso!
-. 404: Produto não encontrado!
 
 
-## -------------------------------------------------------------------
+# Produto
+## Criar um produto
 
-## service
-Cria um novo serviço
+Para Criar uma Produto, utiliza-se a Rota de POST / product.
 
-# Rota
-Post /order
+### Cabeçalho
 
-# requisição
- Query:
- nenhum parâmetro
+É  necessário passar o cabeçalho:
 
- body:
+```   
+content-type: application/json
+```
+### Requisição
+No body é necessário passar as informações, para  criar um produto.
 
- Data : { 
-                    nameService,
-                    price: Number(price), 
-                    description, string;
-                    observations, string;
-                    isActive: Boolean(isActive), 
-                    userId: Number(userId)
-                }
 
+
+
+
+
+
+
+### Resposta
+
+```json
+{
+  "id": 1,
+  "name": "MSI B450",
+  "category": "Placa Mãe",
+  "description": "127v",
+  "salesUnit": "UN",
+  "purchasePrice": 10,
+  "salePrice": 20,
+  "observations": "Azul",
+  "isActive": true,
+  "createdAt": "2025-10-29T20:18:16.769Z",
+  "updatedAt": "2025-10-29T20:18:16.769Z",
+  "userId": 1
+}
+```
+
+
+
+# Service
+
+
+
+
+
+ {
+  "id": 2,
+  "nameService": "limpeza",
+  "price": 20,
+  "description": "limnpeza cpu",
+  "observations": "ultima limpeza 2 anos",
+  "isActive": true,
+  "createdAt": "2025-10-29T19:55:37.667Z",
+  "updatedAt": "2025-10-29T19:55:37.667Z",
+  "userId": 1
+ }
 
 ## Resposta
 Status Code:
