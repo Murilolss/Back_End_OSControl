@@ -43,10 +43,6 @@ export const ClientController ={
         return res.status(402).json({ error: "CPF ou CNPJ invalido" });
       }
 
-      if (!validarPhone(phone)) {
-        return res.status(401).json({ error: "Telefone não encontrado " });
-      }
-
         let user = await prisma.user.findFirst({
             where: {id: Number(req.logado.id)}
         });
