@@ -325,13 +325,18 @@ content-type: application/json
 ### Requisição
 No body é necessário passar as informações, para  criar um produto.
 
-
-
-
-
-
-
-
+```json
+{
+    "name" : "MSI B450",
+    "category" : "Placa Mãe",
+    "description" : "127v",
+    "salesUnit" : "UN", 
+    "purchasePrice" : 10, 
+    "salePrice" : 20, 
+    "observations" : "Azul",
+    "isActive" : true
+}
+```
 ### Resposta
 
 ```json
@@ -350,6 +355,15 @@ No body é necessário passar as informações, para  criar um produto.
   "userId": 1
 }
 ```
+## Resposta
+Status Code:
+
+   201: Cadastro com Sucesso!  
+   
+
+
+
+
 
 
 
