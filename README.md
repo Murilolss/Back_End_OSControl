@@ -45,11 +45,15 @@ remover o output do prisma client
 # Tabela de erros dos Enpoints 
 status code:  
 
+200 - Deletado!
 301 - Não existe!   
-401 - Email inválido  
-402 - CPF ou  CNPJ Inválido   
+400 - Campo Não Preenchido!  
+401 - Email inválido! 
+402 - CPF ou  CNPJ Inválido!  
 404 - Não Encontrado!   
-500 - Erro Interno
+409 - Duplicidade!
+422 - Campo inválido!  
+500 - Erro Interno!
 
 
 ## Modelagem de dados: tabelas, entidades ou estruturas jSON principais
@@ -58,21 +62,24 @@ status code:
 
 
 
-# Cliente
+# Cliet
 
-## Criar Cliente
+## Criar Client
 
-Para Criar um Cliente utiliza-se a Rota de POST /Clients
+Para Criar um Client utiliza-se a Rota de POST /Clients
 
 ### Cabeçalho
-È necessário passar o cabeçalho:
 
-```   
+É  necessário passar o cabeçalho:
+
+```
 content-type: application/json
+Authorization: Bearer {{token}}
+
 ```
 
 ### Requisição
-No body é necessário passar as informações para Criar um Cliente.
+No body é necessário passar as informações para criar um Client.
 
 ```json
     {  
@@ -92,54 +99,57 @@ No body é necessário passar as informações para Criar um Cliente.
 
 ### Resposta 
 ```json
-    {
-        "name" : "Marcius",
-        "document" : "111.222.333.44",
-        "cep" : "12345-678",
-        "phone" : "16 12345-6789",
-        "email" : "marcius@gmail.com",
-        "address" : "Rua Epscopal",
-        "number" : 700,
-        "neighborhood" : "Centro",
-        "state" : "São Paulo",
-        "city" : "São Carlos",
-        "isActive" : true,
-        "userId" : 1
-        
-    }
+    {  
+    "name": "Marcius",
+    "document": "111.222.333.44",
+    "cep": "12345-678",
+    "phone": "16 12345-6789",
+    "email": "marcius@gmail.com",
+    "address": "Rua Epscopal",
+    "number": 700,
+    "neighborhood" : "Centro",
+    "createdAt": "2025-10-29T20:18:20.769Z",
+    "updatedAt": "2025-10-29T20:18:20.769Z",
+    "state": "São Paulo",
+    "city": "São Carlos",
+    "userId": 2
+    } 
 ```
 ### Resposta
 Status code:  
 
-201 Sucesso !
+201 Criado com Sucesso !
 
 
 
 ## Atualizar
 
-Para Atualizar um Cliente utiliza-se a Rota de PUT /Clients
+Para Atualizar um Client utiliza-se a Rota de PUT /Clients
 
 ### Cabeçalho
 
 É  necessário passar o cabeçalho:
-
 ```   
 content-type: application/json
+Authorization: Bearer {{token}}
+
 ```
 
 ### Requisição
-No body é necesario passar as informações do Cliente para serem atualizadas 
+No body é necesário passar as informações do Client para serem atualizadas 
 
 ```json
     {  
-    "name": "Marcius",
-    "document": "111.222.333.44",
+    "name": "Marcos",
+    "document": "286.334.278-93",
     "cep": "12345-678",
     "phone": "16 12345-6789",
-    "email": "marcius@gmail.com",
+    "email": "mhcurila@gmail.com",
     "address": "Rua Epscopal",
     "number": 700,
     "neighborhood" : "Centro",
+    "createdAt": "2025-10-29T20:18:20.769Z",
+    "updatedAt": "2025-10-29T20:18:20.769Z",
     "state": "São Paulo",
     "city": "São Carlos",
     "userId": 2
@@ -149,23 +159,29 @@ No body é necesario passar as informações do Cliente para serem atualizadas
 ### Resposta
 
 ```json
-    {
-        "name" : "Marcius",
-        "document" : "111.222.333.44",  
-        "phone": "16 12345-6700",
-        "cep" : "12345-000", 
-        "number": 800,
-    }
-
+    {  
+    "name": "Marcos",
+    "document": "286.334.278-93",
+    "cep": "13570-760",
+    "phone": "16 12345-6717",
+    "email": "mhcurila@gmail.com",
+    "address": "Rua Epscopal",
+    "number": 800,
+    "neighborhood" : "Centro",
+    "createdAt": "2025-10-29T20:18:21.769Z",
+    "updatedAt": "2025-10-29T20:18:21.769Z",
+    "state": "São Paulo",
+    "city": "São Carlos",
+    "userId": 2
+    } 
 ```
 Status code:  
 
-201  Sucesso!
-
+201 Atualizado com Sucesso!
 
 ## Deletar
 
-Para deletar um cliente utiliza-se a rota DELETE / clients
+Para deletar um client, utiliza-se a rota DELETE / Client.
 
 ### Cabeçalho
 
@@ -173,42 +189,45 @@ Para deletar um cliente utiliza-se a rota DELETE / clients
 
 ```   
 content-type: application/json
+Authorization: Bearer {{token}}
+
 ```
 
 ### Requisição
-No body é necesario passar as informações do Cliente para serem deletadas. 
+Na URL é necessário passar o ID, para o Client ser deletado.
 
+```json
+
+http://localhost:3000/client/1
+
+```
+### Resposta
 
 ```json
     {  
-    "name": "Marcius",
-    "document": "111.222.333.44",
-    "cep": "12345-678",
-    "phone": "16 12345-6789",
-    "email": "marcius@gmail.com",
+    "name": "Marcos",
+    "document": "286.334.278-93",
+    "cep": "13570-760",
+    "phone": "16 12345-6717",
+    "email": "mhcurila@gmail.com",
     "address": "Rua Epscopal",
-    "number": 700,
+    "number": 800,
     "neighborhood" : "Centro",
+    "createdAt": "2025-10-29T20:18:21.769Z",
+    "updatedAt": "2025-10-29T20:18:21.769Z",
     "state": "São Paulo",
     "city": "São Carlos",
     "userId": 2
     } 
 ```
-### Resposta
+Status code:  
+200 - Deletado!
 
-```
-{
-  "error": "não encontrado"
-}
-```
-status code:  
 
-404 - Não Encontrado!  
-    
 
-# Ordem de Serviço    
-## Criar ordem de serviço
-Para Criar uma nova Ordem de Serviço, utiliza-se a Rota de POST / order.
+# Order Service    
+## Criar Order Service
+Para Criar uma Order Service, utiliza-se a Rota de POST / order.
 
 ### Cabeçalho
 
@@ -216,11 +235,15 @@ Para Criar uma nova Ordem de Serviço, utiliza-se a Rota de POST / order.
 
 ```   
 content-type: application/json
+Authorization: Bearer {{token}}
+
 ```
 ### Requisição
-No body é necessário passar as informações, para o Cadastro da Ordem de Serviço.
+No body é necessário passar as informações, para o Cadastro da Order Service.
 
- ```json
+
+
+```json
     {
 
     "servicePrice" : 29,
@@ -232,52 +255,88 @@ No body é necessário passar as informações, para o Cadastro da Ordem de Serv
     }
  ```
 ### Resposta
+
+
+```json
+    {
+
+        "servicePrice" : 29,
+        "productPrice" : 10,
+        "userId" : 1,
+        "isActive": true,
+        "createdAt": "2025-10-29T20:18:30.769Z",
+        "updatedAt": "2025-10-29T20:18:30.769Z",
+        "userId": 1,
+        "serviceId" : 1,
+        "clientId" : 1
+  
+    }
+ ```
+### Resposta
+
+
 Status Code:
 
-   201: Cadastro com Sucesso!  
+201: Criado com Sucesso!  
    
-
+ 
 ## Atualizar
 
-Para Atualizar uma Ordem de Serviço, utiliza-se a Rota de PUT /order
+
+
+Para Atualizar uma Order Service, utiliza-se a Rota de PUT /order.
 
 ### Cabeçalho
 
 É  necessário passar o cabeçalho:
-
 ```   
 content-type: application/json
+Authorization: Bearer {{token}}
+
 ```
 
 ### Requisição
-No body é necesario passar as informações, para as Ordens de Serviço serem atualizadas. 
+No body é necesario passar as informações, para as Order Service serem atualizadas. 
 
 ```json
-{
+    {
 
-    "servicePrice" : 29,
-    "productPrice" : 10,
-    "userId" : 1,
-    "serviceId" : 1,
-    "clientId" : 1
-}
-```
+        "servicePrice" : 29,
+        "productPrice" : 10,
+        "userId" : 1,
+        "isActive": true,
+        "createdAt": "2025-10-29T20:18:30.769Z",
+        "updatedAt": "2025-10-29T20:18:30.769Z",
+        "userId": 1,
+        "serviceId" : 1,
+        "clientId" : 1
+  
+    }
+ ```
 ## Resposta
 
 ```json
-{
-    "salePrice" : 24,
-    "servicePrice" : 30,
-    "productPrice" : 14
-}
-```
-200 Atualizado com Sucesso!  
+    {
+
+        "servicePrice" : 40,
+        "productPrice" : 12,
+        "userId" : 1,
+        "isActive": true,
+        "createdAt": "2025-10-29T20:18:32.769Z",
+        "updatedAt": "2025-10-29T20:18:32.769Z",
+        "userId": 1,
+        "serviceId" : 1,
+        "clientId" : 1
+  
+    }
+ ```
+201 Atualizado com Sucesso!  
 
 
 
 ## Deletar
 
-Para deletar uma Ordem de Serviço utiliza-se a rota DELETE / order.
+Para deletar uma Order Service, utiliza-se a rota DELETE / order.
 
 ### Cabeçalho
 
@@ -285,32 +344,42 @@ Para deletar uma Ordem de Serviço utiliza-se a rota DELETE / order.
 
 ```   
 content-type: application/json
+Authorization: Bearer {{token}}
+
 ```
 
 ### Requisição
-No body é necessário passar o ID para  a Ordem de Serviço ser deletada.
+Na URL é necessário passar o ID, para a Order ser deletada.
 
-```jason
-{
-    "clientId" : 1
+```json
 
-}
-  ```
+http://localhost:3000/order/1
+
+```
 ### Resposta
 
-```
-{
-  "error": "não encontrado"
-}
-```
-status code:  
+```json
+    {
 
-404 - Não Encontrado!   
+        "servicePrice" : 40,
+        "productPrice" : 12,
+        "userId" : 1,
+        "isActive": true,
+        "createdAt": "2025-10-29T20:18:33.769Z",
+        "updatedAt": "2025-10-29T20:18:33.769Z",
+        "userId": 1,
+        "serviceId" : 1,
+        "clientId" : 1
+  
+    }
+ ```
+Status Code:  
+200- Deletado!
 
 
 
 
-# Produto
+# Product
 ## Criar um produto
 
 Para Criar uma Produto, utiliza-se a Rota de POST / product.
@@ -318,12 +387,13 @@ Para Criar uma Produto, utiliza-se a Rota de POST / product.
 ### Cabeçalho
 
 É  necessário passar o cabeçalho:
-
 ```   
 content-type: application/json
+Authorization: Bearer {{token}}
+
 ```
 ### Requisição
-No body é necessário passar as informações, para  criar um produto.
+No body é necessário passar as informações, para  criar um product.
 
 ```json
 {
@@ -350,29 +420,151 @@ No body é necessário passar as informações, para  criar um produto.
   "salePrice": 20,
   "observations": "Azul",
   "isActive": true,
-  "createdAt": "2025-10-29T20:18:16.769Z",
-  "updatedAt": "2025-10-29T20:18:16.769Z",
+  "createdAt": "2025-10-29T20:18:35.769Z",
+  "updatedAt": "2025-10-29T20:18:35.769Z",
   "userId": 1
 }
 ```
 ## Resposta
 Status Code:
 
-   201: Cadastro com Sucesso!  
+   201: Criado com Sucesso!  
    
 
+## Atualizar
+
+Para Atualizar um Product, utiliza-se a Rota de PUT / product.
+
+### Cabeçalho
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+Authorization: Bearer {{token}}
+
+```
+
+### Requisição
+No body é necesario passar as informações, para  o Product ser 
+atualizado. 
+
+### Resposta
+
+```json
+{
+  "id": 1,
+  "name": "MSI B450",
+  "category": "Placa Mãe",
+  "description": "127v",
+  "salesUnit": "UN",
+  "purchasePrice": 10,
+  "salePrice": 20,
+  "observations": "Azul",
+  "isActive": true,
+  "createdAt": "2025-10-29T20:18:35.769Z",
+  "updatedAt": "2025-10-29T20:18:35.769Z",
+  "userId": 1
+}
+```
+### Resposta
+
+```json
+{
+  "id": 1,
+  "name": "Gforce B540",
+  "category": "Placa Mãe",
+  "description": "bivolt",
+  "salesUnit": "UN",
+  "purchasePrice": 12,
+  "salePrice": 25,
+  "observations": "Azul",
+  "isActive": true,
+  "createdAt": "2025-10-29T20:18:36.769Z",
+  "updatedAt": "2025-10-29T20:18:36.769Z",
+  "userId": 1
+}
+```
 
 
+## Deletar
+
+Para deletar um Product, utiliza-se a rota DELETE / product.
+
+### Cabeçalho
+
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+Authorization: Bearer {{token}}
+
+```
+
+### Requisição
+Na URL é necessário passar o ID, para o Product ser deletado.
+
+```json
+
+http://localhost:3000/product/1.
 
 
+```
+### Resposta
+
+```json
+{
+  "id": 1,
+  "name": "Gforce B540",
+  "category": "Placa Mãe",
+  "description": "bivolt",
+  "salesUnit": "UN",
+  "purchasePrice": 12,
+  "salePrice": 25,
+  "observations": "Azul",
+  "isActive": true,
+  "createdAt": "2025-10-29T20:18:37.769Z",
+  "updatedAt": "2025-10-29T20:18:37.769Z",
+  "userId": 1
+}
+```
+status code:  
+
+200 - Deletado!   
 
 
 # Service
 
+## Criar um Service
+
+Para Criar um Service, utiliza-se a Rota de POST / Service.
+
+### Cabeçalho
+
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+Authorization: Bearer {{token}}
+
+```
+### Requisição
+No body é necessário passar as informações, para  criar um Service.
+
+```json
+    {
+        "nameService" : "limpeza",
+        "price" : 20, 
+        "description" : "limpeza cpu", 
+        "observations" : "ultima limpeza 2 anos", 
+        "isActive" : true
+    }
+```
 
 
 
+### Resposta
 
+```json
  {
   "id": 2,
   "nameService": "limpeza",
@@ -384,199 +576,280 @@ Status Code:
   "updatedAt": "2025-10-29T19:55:37.667Z",
   "userId": 1
  }
+```
 
 ## Resposta
 Status Code:
 
-. 201: Serviço criado com Sucesso!
-. 301: usuario informado não existe!
-. 404: Erro interno !
-. 500: Erro interno ao buscar serviços!
+   201: Criado com Sucesso!  
+   
 
-# Rota
-Get/service/id
+## Atualizar
 
-                {
-                    "nameService" : "testee",
-                    "price" : 20, 
-                    "description" : "blabla", 
-                    "observations" : "blabla2", 
-                    "isActive" : true, 
-                    "userId" : 1
-                }
+Para Atualizar um Service, utiliza-se a Rota de PUT / Service.
 
-# requisição
-Query: identificador do serviço
+### Cabeçalho
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+Authorization: Bearer {{token}}
+
+```
+
+### Requisição
+No body é necessário passar as informações, para  o Service ser 
+atualizado. 
+
+```json
+ {
+  "id": 2,
+  "nameService": "limpeza",
+  "price": 20,
+  "description": "limnpeza cpu",
+  "observations": "ultima limpeza 2 anos",
+  "isActive": true,
+  "createdAt": "2025-10-29T19:55:37.667Z",
+  "updatedAt": "2025-10-29T19:55:37.667Z",
+  "userId": 1
+ }
+```
+### Resposta
+
+```json
+ {
+  "id": 2,
+  "nameService": "limpeza",
+  "price": 20,
+  "description": "limnpeza cpu",
+  "observations": "concluído",
+  "isActive": true,
+  "createdAt": "2025-10-29T19:55:40.667Z",
+  "updatedAt": "2025-10-29T19:55:40.667Z",
+  "userId": 1
+ }
+```          
+
+## Deletar
+
+Para deletar uma Order Service, utiliza-se a rota DELETE / Service.
+
+### Cabeçalho
+
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+Authorization: Bearer {{token}}
+
+```
+
+### Requisição
+Na URL é necessário passar o ID, para o Service ser deletado.
+
+```json
+
+http://localhost:3000/service/1.
 
 
+```
+### Resposta
+
+```json
+ {
+  "id": 2,
+  "nameService": "limpeza",
+  "price": 20,
+  "description": "limnpeza cpu",
+  "observations": "concluído",
+  "isActive": true,
+  "createdAt": "2025-10-29T19:55:40.667Z",
+  "updatedAt": "2025-10-29T19:55:40.667Z",
+  "userId": 1
+ }
+```          
+status code:  
+
+200 - Deletado!   
+
+# Signature
+
+## Criar uma Signature
+
+Para Criar uma Signature, utiliza-se a Rota de POST / Signature.
+
+### Cabeçalho
+
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+Authorization: Bearer {{token}}
+
+```
+### Requisição
+No body é necessário passar as informações, para  criar uma Signature Free.
+
+```json
+    {
+        
+    "type" : "Free",
+    "isActive": true
+
+    }
+```
+
+
+
+### Resposta
+
+```json
+ {
+  "id": 1,
+  "type": "Free",
+  "isActive": true,
+  "createdAt": "2025-10-30T20:16:31.827Z",
+  "updatedAt": "2025-10-30T20:16:31.827Z",
+  "userId": 1
+}
+ 
+```
+
+### Requisição
+No body é necessário passar as informações, para  criar uma Signature Premium.
+
+```json
+    {
+        
+    "type" : "Premium",
+    "isActive": true
+
+    }
+```
+
+
+
+### Resposta
+
+```json
+ {
+  "id": 1,
+  "type": "Premium",
+  "isActive": true,
+  "createdAt": "2025-10-30T20:16:35.827Z",
+  "updatedAt": "2025-10-30T20:16:35.827Z",
+  "userId": 1
+}
+ 
+```
 ## Resposta
 Status Code:
 
-. 200: Serviço encontrado com Sucesso!
-. 400: Serviço não encontrado!
+   201: Criado com Sucesso!  
+   
+
+## Atualizar
+
+Para Atualizar uma Signature, utiliza-se a Rota de PUT / Signature.
+
+### Cabeçalho
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+Authorization: Bearer {{token}}
+
+```
+
+### Requisição
+No body é necessário passar as informações, para  a Signature ser 
+atualizada. 
+
+```json
+ {
+  "id": 1,
+  "type": "free",
+  "isActive": true,
+  "createdAt": "2025-10-30T20:16:35.827Z",
+  "updatedAt": "2025-10-30T20:16:35.827Z",
+  "userId": 1
+}
+ 
+```
+### Resposta
+
+```json
+ {
+  "id": 1,
+  "type": "Premium",
+  "isActive": true,
+  "createdAt": "2025-10-30T20:16:40.827Z",
+  "updatedAt": "2025-10-30T20:16:40.827Z",
+  "userId": 1
+}
+ 
+```
+
+## Deletar
+
+Para deletar uma Signature, utiliza-se a rota DELETE / Signature.
+
+### Cabeçalho
+
+É  necessário passar o cabeçalho:
+
+```   
+content-type: application/json
+Authorization: Bearer {{token}}
+
+```
+
+### Requisição
+Na URL é necessário passar o ID, para o Service ser deletado.
+
+```json
+
+http://localhost:3000/signature/1.
 
 
-## -----------------------------------------------------------------------
-
-## Shop
-Cria uma nova Compra
-
-# Rota
-Post /shop
-
-# requisição
- Query:
- nenhum parâmetro
-
- body: 
- data:{ 
-                orderId: Number(orderId),
-                productId: Number(productId),
-                amount: Number(amount),
-                salePrice: Number(salePrice)
-            }
-
- ## Resposta
-Status Code:  
-
-. 200  Encontrado com sucesso!
-. 201 Erro ao encontrar !
+```
+### Resposta
 
 
-# Rota
-Get/shop/id
-
-                {
-                    "orderId": 1, 
-                    "productId": 1, 
-                    "amount": 1, 
-                }
-
-# requisição
-Query: identificador da compra
-
-
-## Resposta
-Status Code:
-
-. 200: Encontrado com Sucesso!
-. 404: Não encontrado!
-
-## --------------------------------------------------------------------
-
-## Shop
-Cria uma nova Assinatura
-
-# Rota
-Post /signature
-
-# requisição
- Query:
- nenhum parâmetro
-
- body: 
- data: {
-                    type,
-                    isActive: Boolean(isActive),
-                    userId: Number(userId)
-                }
-## Resposta
-Status Code:  
-
-. 200  Encontrado com sucesso!
-. 404  Não encontrado !
-
-
-# Rota
-Get/signature/id
-
-                {
-                    "type" : "Basic",
-                    "isActive": true,
-                    "userId": 1
-                }
-
-# requisição
-Query: identificador da assinatura
-
-
-## Resposta
-Status Code:
-
-. 200: Encontrado com Sucesso!
-. 404: Não encontrado!
-
-## --------------------------------------------------------------------
-
-## service
-Cria um novo usuário
-
-# Rota
-Post / user
-
-# requisição
- Query:
- nenhum parâmetro
-
- body:
-                data: {
-                    name, string;
-                    lastName, string;
-                    email, string ;
-                    password: hash, number;
-                    companyName, string;
-                    corporateReason, string;
-                    document, string;
-                    stateRegistration, string;
-                    cep, number;
-                    address, string;
-                    number, number; 
-                    neighborhood, string;
-                    state, string;
-                    city, string;
-                    phone, string;
-                    site, string;
-                    birth, string;
-                    isActive: Boolean(isActive)
-                }
-
-## Resposta
-Status Code:  
-
-. 201  Encontrado com sucesso!
-. 404  Não encontrado !
-
-
-# Rota
-Get/user/id
-
-                {
-                "name": "Murilo",
-                "lastName": "Leandro",
-                "email": "Muil0@yahoo.com",
-                "password": "123456",
-                "companyName": "ML Tech",
-                "document": "67.681.940/0001-64",
-                "corporateReason": "Murilo ltda",
-                "cep": "12345-678",
-                "address": "Rua Espcopal",
-                "number": 700,
-                "neighborhood": "Centro",
-                "state": "São Paulo",
-                "city": "São Carlos",
-                "phone": "(16) 98250-7881",
-                "site": "São Paulo",
-                "birth": "1970-01-01T00:00:00.000Z",
-                "isActive" : true
-            }
-# requisição
-Query: identificador do usuário
-
-## Resposta
-Status Code:
-
-. 200: Encontrado com Sucesso!
-. 404: Não encontrado!
+```json
+ {
+  "id": 1,
+  "type": "Premium",
+  "isActive": true,
+  "createdAt": "2025-10-30T20:16:40.827Z",
+  "updatedAt": "2025-10-30T20:16:40.827Z",
+  "userId": 1
+}
+ 
+```
+staus Code:
+200 - Deletado!
 
 
 
+
+
+
+
+
+
+
+
+Anotações:
+
+"createdAt": "2025-10-30T19:35:52.524Z",
+"updatedAt": "2025-10-30T19:35:52.524Z",
+
+```json
+{
+  "error": "não encontrado"
+}
+```
+status code:  
+
+404 - Não Encontrado!   
