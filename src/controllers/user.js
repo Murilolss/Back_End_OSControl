@@ -26,13 +26,33 @@ export const UserController = {
 
       } = req.body;
 
-      
+
       // Verificção de Email Valido
       function validaemail() {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
       }
-      
+
+      function campoVazio(campo) {
+        // Se for null, undefined ou vazio
+        if (campo === null || campo === undefined) {
+          return true;
+        }
+
+        // Se for string, verifica se tem texto (ignora espaços)
+        if (typeof campo === "string") {
+          return campo.trim().length === 0;
+        }
+
+        // Se for número, verifica se é NaN ou se é igual a 0 (caso queira considerar 0 como "vazio")
+        if (typeof campo === "number") {
+          return isNaN(campo);
+        }
+
+        // Se for qualquer outro tipo (ex: objeto, array), considera "não vazio"
+        return false;
+      }
+
       // Verificção de CPF/CNPJ Valido
       function validaCpfCnpj(documento) {
         const doc = String(documento).replace(/[^\d]/g, "");
@@ -77,50 +97,100 @@ export const UserController = {
 
         return false;
       }
-      
+
+
+
+      if (campoVazio(name)) {
+        return res.status(400).json(`O Campo Nome está Vazio`);
+      }
+
+      if (campoVazio(lastName)) {
+        return res.status(400).json(`O Campo Sobrenome está Vazio`);
+      }
+
+      if (campoVazio(document)) {
+        return res.status(400).json(`O Campo CPF ou CNPJ está Vazio`);
+      }
+
+      //validação de CPF ou CNPJ existente
+      const documentt = await prisma.user.findFirst({
+        where: { document }
+      })
+
+      if (documentt) {
+
+        if (document.length === 14) {
+          return res.status(409).json("O CPF Já está cadastrado");
+        }
+        else if (document.length === 18) {
+          return res.status(409).json("O CNPJ Já está cadastrado");
+        }
+      }
 
       if (!validaCpfCnpj(document)) {
-        return res.status(300).json("CNPJ ou CPF inválido");
+        return res.status(422).json("CNPJ ou CPF inválido");
       }
 
+      if (campoVazio(companyName)) {
+        return res.status(400).json(`O Campo Nome da Empresa está Vazio`);
+      }
 
+      if (campoVazio(cep)) {
+        return res.status(400).json(`O Campo CEP está Vazio`);
+      }
+
+      if (campoVazio(address)) {
+        return res.status(400).json(`O Campo Endereço está Vazio`);
+      }
+
+      if (campoVazio(number)) {
+        return res.status(400).json(`O Campo Número está Vazio`);
+      }
+
+      if (campoVazio(neighborhood)) {
+        return res.status(400).json(`O Campo Bairro está Vazio`);
+      }
+
+      if (campoVazio(state)) {
+        return res.status(400).json(`O Campo Estado está Vazio`);
+      }
+
+      if (campoVazio(city)) {
+        return res.status(400).json(`O Campo Cidade está Vazio`);
+      }
+      
+      if (campoVazio(phone)) {
+        return res.status(400).json(`O Campo Telefone está Vazio`);
+      }
+      
+      if (campoVazio(email)) {
+        return res.status(400).json(`O Campo Email está Vazio`);
+      }
+      
       if (!validaemail(email)) {
-        return res.status(300).json("Email Inválido");
+        return res.status(422).json("Email Inválido");
       }
-
-
-
+      
       // Validação de email existente
       let emaill = await prisma.user.findFirst({
         where: { email }
       });
 
       if (emaill) {
-        return res.status(300).json("Email Já Cadastrado");
+        return res.status(409).json("Email Já Cadastrado");
+      }
+
+      if (campoVazio(password)) {
+        return res.status(400).json(`O Campo Senha está Vazio`);
       }
 
 
-      //validação de CPF ou CNPJ existente
-      const documentt = await prisma.user.findFirst({
-        where: { document }
-      })
-      
-      if (documentt) {
-        
-        if (document.length === 11) {
-          return res.status(409).json("O CPF Já está cadastrado");
-        }
-        else if (document.length === 14) {
-          return res.status(409).json("O CNPJ Já está cadastrado");
-        }
-      }
-      
       //validação de senha de pelo menos 8 Caracterer
-      if (password.length < 8){
-        return res.status(409).json("A Senha deve conter no mínimo 8 caracteres");
+      if (password.length < 8) {
+        return res.status(422).json("A Senha deve conter no mínimo 8 caracteres");
       }
-      
-      
+
+
       const hash = await bcrypt.hash(password, 8);
 
       const user = await prisma.user.create({
@@ -145,7 +215,7 @@ export const UserController = {
         },
       });
 
-      res.status(201).json(user);
+      res.status(200).json("Usuário Cadastrado Com Sucesso");
     } catch (error) {
       next(error);
     }
