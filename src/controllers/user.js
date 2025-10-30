@@ -99,7 +99,6 @@ export const UserController = {
       }
 
 
-
       if (campoVazio(name)) {
         return res.status(400).json(`O Campo Nome está Vazio`);
       }
@@ -326,13 +325,13 @@ export const UserController = {
       if (!user) {
         res
           .status(404)
-          .json({ error: "Usuário com esse email não encontrado" });
+          .json("Usuário com esse email não encontrado");
         return;
       }
 
       const ok = await bcrypt.compare(senha, user.password);
       if (!ok) {
-        res.status(404).json({ error: "Usuário ou Senha Incorretos" });
+        res.status(404).json("Usuário ou Senha Incorretos");
         return;
       }
 
