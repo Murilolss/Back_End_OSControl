@@ -1,76 +1,191 @@
 import prisma from "../prisma.js";
 
-function validarEmail(email) {
-  const emailClean = email.replace(/[\s]/g, "");
+export const ClientController = {
+  async store(req, res, next) {
+    try {
+      const { name, document, cep, phone, email, address, number, neighborhood, state, city, isActive } = req.body;
 
-  let regex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-
-  if (emailClean.length == 0) {
-    return false;
-  } else {
-    return regex.test(emailClean);
-  }
-}
-
-function validarCPFouCNPJ(document) {
-  const documentClean = document.replace(/[\s]/g, "");
-
-  let regex =
-    /^(?:\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}|\d{14})$/;
-
-  if (document.length == 0) {
-    return false;
-  } else {
-    return regex.test(documentClean);
-  }
-}
-
-          
-export const ClientController ={
-     async store(req, res, next ){
-
-
-        try{
-        const { name, document, cep, phone, email, address, number, neighborhood, state, city, isActive} = req.body;
-
-
-      if (!validarEmail(email)) {
-        return res.status(401).json({ error: "E-mail inválido" });
-      }
-
-      if (!validarCPFouCNPJ(document)) {
-        return res.status(402).json({ error: "CPF ou CNPJ invalido" });
-      }
-
-        let user = await prisma.user.findFirst({
-            where: {id: Number(req.logado.id)}
-        });
-
-        if(!user){
-            res.status(301).json({
-                'error': "O Usuario não encontrado"
-            });
-            return
+      function campoVazio(campo) {
+        // Se for null, undefined ou vazio
+        if (campo === null || campo === undefined) {
+          return true;
         }
-    
-        const client = await prisma.client.create({
-            data: { 
-                name, 
-                document,
-                cep, 
-                phone, 
-                email, 
-                address, 
-                number : Number(number),
-                neighborhood, 
-                state, 
-                city, 
-                isActive: Boolean(isActive), 
-                userId : Number(req.logado.id)
-            }
-        
-     });
+
+        // Se for string, verifica se tem texto (ignora espaços)
+        if (typeof campo === "string") {
+          return campo.trim().length === 0;
+        }
+
+        // Se for número, verifica se é NaN ou se é igual a 0 (caso queira considerar 0 como "vazio")
+        if (typeof campo === "number") {
+          return isNaN(campo);
+        }
+
+        // Se for qualquer outro tipo (ex: objeto, array), considera "não vazio"
+        return false;
+      }
+
+      // Verificção de CPF/CNPJ Valido
+      function validaCpfCnpj(documento) {
+        const doc = String(documento).replace(/[^\d]/g, "");
+
+        if (doc.length === 11) {
+          if (/^(\d)\1{10}$/.test(doc)) return false;
+
+          let soma = 0;
+
+          for (let i = 1; i <= 9; i++) {
+            soma += parseInt(doc.substring(i - 1, i)) * (11 - i);
+          }
+          let resto = (soma * 10) % 11;
+          if (resto === 10 || resto === 11) resto = 0;
+          if (resto !== parseInt(doc.substring(9, 10))) return false;
+
+          soma = 0;
+          for (let i = 1; i <= 10; i++) {
+            soma += parseInt(doc.substring(i - 1, i)) * (12 - i);
+          }
+          resto = (soma * 10) % 11;
+          if (resto === 10 || resto === 11) resto = 0;
+          return resto === parseInt(doc.substring(10, 11));
+        }
+
+        if (doc.length === 14) {
+          const b = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+          if (/^(\d)\1{13}$/.test(doc)) return false;
+
+          let n = 0;
+          for (let i = 0; i < 12; i++) {
+            n += doc[i] * b[i + 1];
+          }
+          if (doc[12] != (n % 11 < 2 ? 0 : 11 - (n % 11))) return false;
+
+          n = 0;
+          for (let i = 0; i <= 12; i++) {
+            n += doc[i] * b[i];
+          }
+          return doc[13] == (n % 11 < 2 ? 0 : 11 - (n % 11));
+        }
+
+        return false;
+      }
+
+      // Verificção de Email Valido
+      function validaemail() {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+      }
+
+      if (campoVazio(name)) {
+        return res.status(400).json(`Preencha o campo Nome`);
+      }
+
+      if (campoVazio(document)) {
+        return res.status(400).json(`Preencha o campo CPF ou CNPJ`);
+      }
+
+      //validação de CPF ou CNPJ existente
+      const documentt = await prisma.client.findFirst({
+        where: { document }
+      })
+
+      if (documentt) {
+
+        if (document.length === 14) {
+          return res.status(409).json("O CPF Já está cadastrado");
+        }
+        else if (document.length === 18) {
+          return res.status(409).json("O CNPJ Já está cadastrado");
+        }
+      }
+
+
+      if (!validaCpfCnpj(document)) {
+        return res.status(422).json("CNPJ ou CPF inválido");
+      }
+
+      if (campoVazio(cep)) {
+        return res.status(400).json(`Preencha o campo CEP`);
+      }
+
+      if (campoVazio(address)) {
+        return res.status(400).json(`Preencha o campo Endereço`);
+      }
+
+      if (campoVazio(number)) {
+        return res.status(400).json(`Preencha o campo Número`);
+      }
+
+      if (campoVazio(neighborhood)) {
+        return res.status(400).json(`Preencha o campo Bairro`);
+
+      }
+      if (campoVazio(state)) {
+        return res.status(400).json(`Preencha o campo Estado`);
+      }
+
+      if (campoVazio(city)) {
+        return res.status(400).json(`Preencha o campo Cidade`);
+      }
+
+      if (campoVazio(phone)) {
+        return res.status(400).json(`Preencha o campo Telefone`);
+      }
+
+      //validação de CPF ou CNPJ existente
+      const phonee = await prisma.client.findFirst({
+        where: { phone }
+      })
+
+      if (phonee) {
+        return res.status(422).json(`O Telefone já está cadastrado`);
+      }
+
+      if (campoVazio(email)) {
+        return res.status(400).json(`Preencha o campo Email`);
+      }
+
+      if (!validaemail(email)) {
+        return res.status(422).json("Email Inválido");
+      }
+
+      // Validação de email existente
+      let emaill = await prisma.client.findFirst({
+        where: { email }
+      });
+
+      if (emaill) {
+        return res.status(409).json("Já existe um Cliente cadastrado com esse Email");
+      }
+
+      let user = await prisma.user.findFirst({
+        where: { id: Number(req.logado.id) }
+      });
+
+      if (!user) {
+        res.status(301).json({
+          'error': "O Usuario não encontrado"
+        });
+        return
+      }
+
+      const client = await prisma.client.create({
+        data: {
+          name,
+          document,
+          cep,
+          phone,
+          email,
+          address,
+          number: Number(number),
+          neighborhood,
+          state,
+          city,
+          isActive: Boolean(isActive),
+          userId: Number(req.logado.id)
+        }
+
+      });
 
       res.status(201).json(client);
     } catch (err) {
