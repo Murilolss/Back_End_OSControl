@@ -34,26 +34,76 @@ Esse aplicativo acima sitado está sendo desenvolvido pelos integrantes da turma
 
 # comandos para subir o **Banco de Dados** *prisma*
 
-npx prisma generate
-npx prisma migrate dev --name init
-npx prisma db push  --force-reset
+npx prisma generate  
+npx prisma migrate dev --name init  
+npx prisma db push  --force-reset 
 npx prisma studio
 npm run dev
 
-remover o output do prisma client
 
 # Tabela de erros dos Enpoints 
 status code:  
+ 
 
-200 - Deletado!
-301 - Não existe!   
-400 - Campo Não Preenchido!  
-401 - Email inválido! 
-402 - CPF ou  CNPJ Inválido!  
+301 - O usuário precisa estar logado para fazer uma ação!   
+400 - Campo Não Preenchido!    
+422 - CPF / CNPJ/ e-mail/ CEP Inválido!  
 404 - Não Encontrado!   
-409 - Duplicidade!
-422 - Campo inválido!  
+409 - Duplicidade!    
 500 - Erro Interno!
+
+# Exemplos de ações ao qual será retornado algum dos status code acima!!
+
+ 
+
+```json
+301 - O usuário precisa estar logado para fazer uma ação!
+
+{
+  "error": "O usuário precisa estar logado para fazer uma ação"
+}
+```
+
+```json
+400 - Campo Não Preenchido!
+
+{
+  "error": "Campo Não Preenchido!"
+}
+```
+
+```json
+422 - CPF / CNPJ/ e-mail/ CEP Inválido!  
+
+{
+  "error": "CPF / CNPJ/ e-mail/ CEP Inválido! "
+}
+```
+
+```json
+404 - Não Encontrado!  
+
+{
+  "error": "não encontrado"
+}
+```
+
+```json
+409 -  Duplicidade! 
+
+{
+  "error": "Duplicidade! "
+}
+```
+
+```json
+500 - Erro Interno!!  
+
+{
+  "error": "Erro Interno!"
+}
+```
+
 
 
 ## Modelagem de dados: tabelas, entidades ou estruturas jSON principais
@@ -62,7 +112,7 @@ status code:
 
 
 
-# Cliet
+# Client
 
 ## Criar Client
 
@@ -97,7 +147,8 @@ No body é necessário passar as informações para criar um Client.
     } 
 ```
 
-### Resposta 
+### Resposta - 201
+Criado com Sucesso.
 ```json
     {  
     "name": "Marcius",
@@ -115,12 +166,6 @@ No body é necessário passar as informações para criar um Client.
     "userId": 2
     } 
 ```
-### Resposta
-Status code:  
-
-201 Criado com Sucesso !
-
-
 
 ## Atualizar
 
@@ -156,7 +201,8 @@ No body é necesário passar as informações do Client para serem atualizadas
     } 
 ```
 
-### Resposta
+### Resposta - 201
+Atualizado com Sucesso.
 
 ```json
     {  
@@ -175,9 +221,6 @@ No body é necesário passar as informações do Client para serem atualizadas
     "userId": 2
     } 
 ```
-Status code:  
-
-201 Atualizado com Sucesso!
 
 ## Deletar
 
@@ -225,7 +268,7 @@ Status code:
 
 
 
-# Order Service    
+# Order    
 ## Criar Order Service
 Para Criar uma Order Service, utiliza-se a Rota de POST / order.
 
@@ -254,7 +297,8 @@ No body é necessário passar as informações, para o Cadastro da Order Service
   
     }
  ```
-### Resposta
+### Resposta - 201
+Criado com Sucesso.
 
 
 ```json
@@ -272,17 +316,8 @@ No body é necessário passar as informações, para o Cadastro da Order Service
   
     }
  ```
-### Resposta
 
-
-Status Code:
-
-201: Criado com Sucesso!  
-   
- 
 ## Atualizar
-
-
 
 Para Atualizar uma Order Service, utiliza-se a Rota de PUT /order.
 
@@ -313,7 +348,8 @@ No body é necesario passar as informações, para as Order Service serem atuali
   
     }
  ```
-## Resposta
+### Resposta - 201
+Atualizado com Sucesso.
 
 ```json
     {
@@ -330,7 +366,7 @@ No body é necesario passar as informações, para as Order Service serem atuali
   
     }
  ```
-201 Atualizado com Sucesso!  
+
 
 
 
@@ -376,9 +412,6 @@ http://localhost:3000/order/1
 Status Code:  
 200- Deletado!
 
-
-
-
 # Product
 ## Criar um produto
 
@@ -407,7 +440,8 @@ No body é necessário passar as informações, para  criar um product.
     "isActive" : true
 }
 ```
-### Resposta
+### Resposta - 201
+Criado com Sucesso.
 
 ```json
 {
@@ -425,11 +459,7 @@ No body é necessário passar as informações, para  criar um product.
   "userId": 1
 }
 ```
-## Resposta
-Status Code:
 
-   201: Criado com Sucesso!  
-   
 
 ## Atualizar
 
@@ -466,7 +496,8 @@ atualizado.
   "userId": 1
 }
 ```
-### Resposta
+### Resposta - 201
+Atualizado com Sucesso.
 
 ```json
 {
@@ -562,7 +593,8 @@ No body é necessário passar as informações, para  criar um Service.
 
 
 
-### Resposta
+### Resposta - 201
+Criado com Sucesso.
 
 ```json
  {
@@ -578,11 +610,6 @@ No body é necessário passar as informações, para  criar um Service.
  }
 ```
 
-## Resposta
-Status Code:
-
-   201: Criado com Sucesso!  
-   
 
 ## Atualizar
 
@@ -614,7 +641,8 @@ atualizado.
   "userId": 1
  }
 ```
-### Resposta
+### Resposta - 201
+Atualizado com Sucesso.
 
 ```json
  {
@@ -632,7 +660,7 @@ atualizado.
 
 ## Deletar
 
-Para deletar uma Order Service, utiliza-se a rota DELETE / Service.
+Para deletar uma Order, utiliza-se a rota DELETE / service.
 
 ### Cabeçalho
 
@@ -701,7 +729,8 @@ No body é necessário passar as informações, para  criar uma Signature Free.
 
 
 
-### Resposta
+### Resposta - 201
+Criado com Sucesso.
 
 ```json
  {
@@ -728,8 +757,8 @@ No body é necessário passar as informações, para  criar uma Signature Premiu
 ```
 
 
-
-### Resposta
+### Resposta - 201
+Criado com Sucesso.
 
 ```json
  {
@@ -741,12 +770,8 @@ No body é necessário passar as informações, para  criar uma Signature Premiu
   "userId": 1
 }
  
-```
-## Resposta
-Status Code:
+```  
 
-   201: Criado com Sucesso!  
-   
 
 ## Atualizar
 
@@ -776,7 +801,8 @@ atualizada.
 }
  
 ```
-### Resposta
+### Resposta - 201
+Atualizado com Sucesso.
 
 ```json
  {
@@ -805,7 +831,7 @@ Authorization: Bearer {{token}}
 ```
 
 ### Requisição
-Na URL é necessário passar o ID, para o Service ser deletado.
+Na URL é necessário passar o ID, para a Signature ser deletada.
 
 ```json
 
@@ -828,28 +854,4 @@ http://localhost:3000/signature/1.
  
 ```
 staus Code:
-200 - Deletado!
-
-
-
-
-
-
-
-
-
-
-
-Anotações:
-
-"createdAt": "2025-10-30T19:35:52.524Z",
-"updatedAt": "2025-10-30T19:35:52.524Z",
-
-```json
-{
-  "error": "não encontrado"
-}
-```
-status code:  
-
-404 - Não Encontrado!   
+200 - Deletado!.
