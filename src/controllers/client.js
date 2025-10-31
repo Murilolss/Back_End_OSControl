@@ -285,6 +285,7 @@ export const ClientController = {
     try {
       let body = {};
 
+
       if (req.body.name) {
         body.name = req.body.name;
       }
@@ -314,20 +315,104 @@ export const ClientController = {
       }
 
       if (req.body.neighborhood) {
-        body.neighborhood = neighborhood;
+        body.neighborhood = req.body.neighborhood;
       }
 
       if (req.body.state) {
-        body.state = state;
+        body.state = req.body.state;
       }
-
+      
       if (req.body.city) {
-        body.city = city;
+        body.city = req.body.city;
       }
-
+      
       if (req.body.isActive) {
         body.isActive = Boolean(req.body.isActive);
       }
+      
+      function campoVazio(campo) {
+        // Se for null, undefined ou vazio
+        if (campo === null || campo === undefined) {
+          return true;
+        }
+        
+        // Se for string, verifica se tem texto (ignora espaços)
+        if (typeof campo === "string") {
+          return campo.trim().length === 0;
+        }
+        
+        // Se for número, verifica se é NaN ou se é igual a 0 (caso queira considerar 0 como "vazio")
+        if (typeof campo === "number") {
+          return isNaN(campo);
+        }
+        
+        // Se for qualquer outro tipo (ex: objeto, array), considera "não vazio"
+        return false;
+      }
+
+      function validaemail() {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(body.email);
+      }
+
+
+      if (campoVazio(body.name)) {
+        return res.status(400).json(`Preencha o campo Nome`);
+      }
+
+      if (campoVazio(body.document)) {
+        return res.status(400).json(`Preencha o campo CPF ou CNPJ`);
+      }
+
+
+      if (campoVazio(body.cep)) {
+        return res.status(400).json(`Preencha o campo CEP`);
+      }
+
+
+      if (campoVazio(body.address)) {
+        return res.status(400).json(`Preencha o campo Endereço`);
+      }
+
+      if (campoVazio(body.number)) {
+        return res.status(400).json(`Preencha o campo Número`);
+      }
+
+      if (campoVazio(body.neighborhood)) {
+        return res.status(400).json(`Preencha o campo Bairro`);
+
+      }
+      if (campoVazio(body.state)) {
+        return res.status(400).json(`Preencha o campo Estado`);
+      }
+
+      if (campoVazio(body.city)) {
+        return res.status(400).json(`Preencha o campo Cidade`);
+      }
+
+      if (campoVazio(body.phone)) {
+        return res.status(400).json(`Preencha o campo Telefone`);
+      }
+
+      //validação de CPF ou CNPJ existente
+      const phonee = await prisma.client.findFirst({
+        where: { phone: body.phone, NOT: {id: Number(req.params.id)} }
+      })
+
+      if (phonee) {
+        return res.status(422).json(`O Telefone já está cadastrado`);
+      }
+
+      if (campoVazio(body.email)) {
+        return res.status(400).json(`Preencha o campo Email`);
+      }
+
+      if (!validaemail(body.email)) {
+        return res.status(422).json("Email Inválido");
+      }
+// 90987654334
+      
+
 
       const id = Number(req.params.id);
 
