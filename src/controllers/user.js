@@ -204,7 +204,7 @@ export const UserController = {
           stateRegistration,
           cep,
           address,
-          number,
+          number: Number(number),
           neighborhood,
           state,
           city,
@@ -331,8 +331,7 @@ export const UserController = {
 
       const ok = await bcrypt.compare(senha, user.password);
       if (!ok) {
-        res.status(404).json("Usuário ou Senha Incorretos");
-        return;
+        return res.status(404).json("Usuário ou Senha Incorretos");
       }
 
 

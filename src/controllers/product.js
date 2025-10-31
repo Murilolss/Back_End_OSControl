@@ -1,34 +1,84 @@
 import prisma from "../prisma.js";
 
-export const ProductController ={
-    async store(req, res, next ){
-      try{
-        const { name, category, description,  salesUnit, purchasePrice , salePrice, observations, isActive} = req.body;
+export const ProductController = {
+  async store(req, res, next) {
+    try {
+      const { name, category, description, salesUnit, purchasePrice, salePrice, observations, isActive } = req.body;
 
-        let user = await prisma.user.findFirst({
-            where: {id: Number(req.logado.id)}
-        });
+      function campoVazio(campo) {
+        // Se for null, undefined ou vazio
+        if (campo === null || campo === undefined) {
+          return true;
+        }
+
+        // Se for string, verifica se tem texto (ignora espaços)
+        if (typeof campo === "string") {
+          return campo.trim().length === 0;
+        }
+
+        // Se for número, verifica se é NaN ou se é igual a 0 (caso queira considerar 0 como "vazio")
+        if (typeof campo === "number") {
+          return isNaN(campo);
+        }
+
+        // Se for qualquer outro tipo (ex: objeto, array), considera "não vazio"
+        return false;
+      }
+
+      let user = await prisma.user.findFirst({
+        where: { id: Number(req.logado.id) }
+      });
+
+      if (!user) {
+        return res.status(301).json({ error: "O Usuário Precisa estar Logado Para Criar um Produto" });
+      }
+
+      if (campoVazio(name)) {
+        return res.status(400).json({ error: "Preencha o Nome do Serviço" });
+      }
+
+      if (campoVazio(category)) {
+        return res.status(400).json({ error: "Preencha a Categria" });
+      }
+
+      if (campoVazio(description)) {
+        return res.status(400).json({ error: "Preencha Descrição" });
+      }
+
+      if (description.length > 300) {
+        return res.status(401).json({ error: "Limite de caracteres atingido" })
+      }
+      else if (description.length < 10) {
+        res.status(400).json({ error: "A descrição precisa ter no mínimo de 10 caracteres" })
+      }
+
+      if (campoVazio(salesUnit)) {
+        return res.status(400).json({ error: "Preencha a Unidade de Venda" });
+      }
+
+      if (campoVazio(purchasePrice)) {
+        return res.status(400).json({ error: "Preencha o Preço de Compra" });
+      }
+      if (campoVazio(salePrice)) {
+        return res.status(400).json({ error: "Preencha o Preço de Venda" });
+      }
 
 
-        if(!user){
-            return res.status(301).json({error: "O Usuário Precisa estar Logado Para Editar um Serviço"});
-        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-    
-        const product =  await prisma.product.create({
-                data: { 
-                    name, 
-                    category, 
-                    description, 
-                    salesUnit, 
-                    purchasePrice : Number(purchasePrice), 
-                    salePrice : Number(salePrice), 
-                    observations, 
-                    isActive : Boolean(isActive),
-                    userId : Number(req.logado.id)
-                }
-        });
+      const product = await prisma.product.create({
+        data: {
+          name,
+          category,
+          description,
+          salesUnit,
+          purchasePrice: Number(purchasePrice),
+          salePrice: Number(salePrice),
+          observations,
+          isActive: Boolean(isActive),
+          userId: Number(req.logado.id)
+        }
+      });
 
-      res.status(201).json(product);
+      return res.status(201).json({message: "Produto Cadastrado com Sucesso!"});
     } catch (error) {
       next(error);
     }
@@ -115,6 +165,15 @@ export const ProductController ={
 
   async update(req, res, _next) {
     try {
+
+      let user = await prisma.user.findFirst({
+        where: { id: Number(req.logado.id) }
+      });
+
+      if (!user) {
+        return res.status(301).json({ error: "O Usuário Precisa estar Logado Para Criar um Produto" });
+      }
+
       let body = {};
 
       if (req.body.name) {
@@ -125,8 +184,8 @@ export const ProductController ={
         body.category = req.body.category;
       }
 
-      if (req.body.descripition) {
-        body.descripition = req.body.descripition;
+      if (req.body.description) {
+        body.description = req.body.description;
       }
 
       if (req.body.salesUnit) {
@@ -134,11 +193,11 @@ export const ProductController ={
       }
 
       if (req.body.purchasePrice) {
-        body.purchasePrice = req.body.purchasePrice;
+        body.purchasePrice = Number(req.body.purchasePrice);
       }
 
       if (req.body.salePrice) {
-        body.salePrice = req.body.salePrice;
+        body.salePrice = Number(req.body.salePrice);
       }
 
       if (req.body.observations) {
@@ -149,6 +208,53 @@ export const ProductController ={
         body.isActive = Boolean(req.body.isActive);
       }
 
+      function campoVazio(campo) {
+        // Se for null, undefined ou vazio
+        if (campo === null || campo === undefined) {
+          return true;
+        }
+
+        // Se for string, verifica se tem texto (ignora espaços)
+        if (typeof campo === "string") {
+          return campo.trim().length === 0;
+        }
+
+        // Se for número, verifica se é NaN ou se é igual a 0 (caso queira considerar 0 como "vazio")
+        if (typeof campo === "number") {
+          return isNaN(campo);
+        }
+
+        // Se for qualquer outro tipo (ex: objeto, array), considera "não vazio"
+        return false;
+      }
+
+      if (campoVazio(body.name)) {
+        return res.status(400).json({ error: "Preencha o Nome do Serviço" });
+      }
+
+      if (campoVazio(body.category)) {
+        return res.status(400).json({ error: "Preencha a Categria" });
+      }
+
+      if (campoVazio(body.description)) {
+        return res.status(400).json({ error: "Preencha Descrição" });
+      }
+      
+      if (body.description.length > 300) {
+        return res.status(401).json({ error: "Limite de caracteres atingido" })
+      }
+      else if (body.description.length < 10) {
+        res.status(400).json({ error: "A descrição precisa ter no mínimo de 10 caracteres" })
+      }
+
+      if (campoVazio(body.salesUnit)) {
+        return res.status(400).json({ error: "Preencha a Unidade de Venda" });
+      }
+
+      if (campoVazio(body.purchasePrice)) {
+        return res.status(400).json({ error: "Preencha o Preço de Venda" });
+      }
+
       const id = Number(req.params.id);
 
       const productUpdate = await prisma.product.update({
@@ -156,10 +262,10 @@ export const ProductController ={
         data: body,
       });
 
-      res.status(200).json(productUpdate);
+      res.status(200).json({ message: "Produto Atualizado com Sucesso!" });
     } catch (err) {
       res.status(404).json({ error: "Não encontrado" });
     }
   },
-  
+
 };

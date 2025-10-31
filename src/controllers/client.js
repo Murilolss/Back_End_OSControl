@@ -143,7 +143,7 @@ export const ClientController = {
       }
 
       if (campoVazio(email)) {
-        return res.status(400).json({error:`Preencha o campo Email`});
+        return res.status(400).json({error:"Preencha o campo Email"});
       }
 
       if (!validaemail(email)) {
@@ -186,7 +186,7 @@ export const ClientController = {
 
       });
 
-      res.status(201).json({message: "Cliente Cadastrado com Sucesso!"});
+      return res.status(201).json({message: "Cliente Cadastrado com Sucesso!"});
     } catch (err) {
       next(err);
     }
@@ -274,9 +274,9 @@ export const ClientController = {
         where: { id },
       });
 
-      res.status(201).json({message: "Cliente Deletado com Sucesso!"});
+      res.status(200).json({message: "Cliente Deletado com Sucesso!"});
     } catch (err) {
-      res.status(404).json({ error: "Não encontrado" });
+      res.status(404).json({ error: "Erro ao Deletar Cliente" });
     }
   },
 
@@ -310,7 +310,7 @@ export const ClientController = {
       }
 
       if (req.body.number) {
-        body.number = req.body.number;
+        body.number = Number(req.body.number);
       }
 
       if (req.body.neighborhood) {
@@ -325,9 +325,6 @@ export const ClientController = {
         body.city = req.body.city;
       }
       
-      if (req.body.isActive) {
-        body.isActive = Boolean(req.body.isActive);
-      }
       
       // Validação Para Campo Vazio
       function campoVazio(campo) {
@@ -379,7 +376,7 @@ export const ClientController = {
           return res.status(409).json({error:"Já existe um Cliente Cadastrado com esse CNPJ"});
         }
       }
-
+      
       if (campoVazio(body.cep)) {
         return res.status(400).json({error:"Preencha o campo CEP"});
       }
@@ -411,11 +408,11 @@ export const ClientController = {
 
 
       //validação de Telefone existente
-      const phone = await prisma.client.findFirst({
+      const phonee = await prisma.client.findFirst({
         where: { phone: body.phone, NOT: {id: Number(req.params.id)} }
       })
 
-      if (phone) {
+      if (phonee) {
         return res.status(422).json({error:"Já existe umm Cliente Cadastrado com esse Telefone"});
       }
       
@@ -428,23 +425,24 @@ export const ClientController = {
       }
       
       //validação de Email existente
-      const email = await prisma.client.findFirst({
+      const emaill = await prisma.client.findFirst({
         where: { email: body.email, NOT: {id: Number(req.params.id)} }
       })
 
-      if (email) {
-        return res.status(422).json({error:"Já existe umm Cliente Cadastrado com esse Email"});
+      if (emaill) {
+        return res.status(422).json({error:"Já existe um Cliente Cadastrado com esse Email"});
       }
 
       
       const id = Number(req.params.id);
-
+      
       const clientUpdate = await prisma.client.update({
         where: { id },
         data: body,
       });
+      
 
-      res.status(200).json({message: "Dados do Cliente com Sucesso!"});
+      return res.status(200).json({message: "Dados do Cliente Alterado com Sucesso!"});
     } catch (err) {
       res.status(404).json({error: "Não encontrado" });
     }
