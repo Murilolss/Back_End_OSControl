@@ -5,6 +5,7 @@ export const ClientController = {
     try {
       const { name, document, cep, phone, email, address, number, neighborhood, state, city, isActive } = req.body;
 
+      // Validação de Campo Vazio
       function campoVazio(campo) {
         // Se for null, undefined ou vazio
         if (campo === null || campo === undefined) {
@@ -25,7 +26,7 @@ export const ClientController = {
         return false;
       }
 
-      // Verificção de CPF/CNPJ Valido
+      // Verificação de CPF/CNPJ Valido
       function validaCpfCnpj(documento) {
         const doc = String(documento).replace(/[^\d]/g, "");
 
@@ -70,18 +71,18 @@ export const ClientController = {
         return false;
       }
 
-      // Verificção de Email Valido
+      // Verificação de Email Valido
       function validaemail() {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
       }
 
       if (campoVazio(name)) {
-        return res.status(400).json(`Preencha o campo Nome`);
+        return res.status(400).json({error:"Preencha o campo Nome"});
       }
 
       if (campoVazio(document)) {
-        return res.status(400).json(`Preencha o campo CPF ou CNPJ`);
+        return res.status(400).json({error:"Preencha o campo CPF ou CNPJ"});
       }
 
       //validação de CPF ou CNPJ existente
@@ -92,44 +93,44 @@ export const ClientController = {
       if (documentt) {
 
         if (document.length === 14) {
-          return res.status(409).json("O CPF Já está cadastrado");
+          return res.status(409).json({error:"Já existe um Cliente Cadastrado com esse CPF"});
         }
         else if (document.length === 18) {
-          return res.status(409).json("O CNPJ Já está cadastrado");
+          return res.status(409).json({error:"Já existe um Cliente Cadastrado com esse CNPJ"});
         }
       }
 
 
       if (!validaCpfCnpj(document)) {
-        return res.status(422).json("CNPJ ou CPF inválido");
+        return res.status(422).json({error:"CNPJ ou CPF inválido"});
       }
 
       if (campoVazio(cep)) {
-        return res.status(400).json(`Preencha o campo CEP`);
+        return res.status(400).json({error:"Preencha o campo CEP"});
       }
 
       if (campoVazio(address)) {
-        return res.status(400).json(`Preencha o campo Endereço`);
+        return res.status(400).json({error: "Preencha o campo Endereço"});
       }
 
       if (campoVazio(number)) {
-        return res.status(400).json(`Preencha o campo Número`);
+        return res.status(400).json({error:"Preencha o campo Número"});
       }
 
       if (campoVazio(neighborhood)) {
-        return res.status(400).json(`Preencha o campo Bairro`);
+        return res.status(400).json({error: "Preencha o campo Bairro"});
 
       }
       if (campoVazio(state)) {
-        return res.status(400).json(`Preencha o campo Estado`);
+        return res.status(400).json({error: "Preencha o campo Estado"});
       }
 
       if (campoVazio(city)) {
-        return res.status(400).json(`Preencha o campo Cidade`);
+        return res.status(400).json({error: "Preencha o campo Cidade"});
       }
 
       if (campoVazio(phone)) {
-        return res.status(400).json(`Preencha o campo Telefone`);
+        return res.status(400).json({error: "Preencha o campo Telefone"});
       }
 
       //validação de CPF ou CNPJ existente
@@ -138,15 +139,15 @@ export const ClientController = {
       })
 
       if (phonee) {
-        return res.status(422).json(`O Telefone já está cadastrado`);
+        return res.status(422).json({error:"Já existe umm Cliente Cadastrado com esse Telefone"});
       }
 
       if (campoVazio(email)) {
-        return res.status(400).json(`Preencha o campo Email`);
+        return res.status(400).json({error:`Preencha o campo Email`});
       }
 
       if (!validaemail(email)) {
-        return res.status(422).json("Email Inválido");
+        return res.status(422).json({error:"Email Inválido"});
       }
 
       // Validação de email existente
@@ -155,7 +156,7 @@ export const ClientController = {
       });
 
       if (emaill) {
-        return res.status(409).json("Já existe um Cliente cadastrado com esse Email");
+        return res.status(409).json({error:"Já existe um Cliente cadastrado com esse Email"});
       }
 
       let user = await prisma.user.findFirst({
@@ -163,9 +164,7 @@ export const ClientController = {
       });
 
       if (!user) {
-        res.status(301).json({
-          'error': "O Usuario não encontrado"
-        });
+        res.status(301).json({error: "O Usuário Precisa estar Logado Para Editar um Serviço"});
         return
       }
 
@@ -187,7 +186,7 @@ export const ClientController = {
 
       });
 
-      res.status(201).json(client);
+      res.status(201).json({message: "Cliente Cadastrado com Sucesso!"});
     } catch (err) {
       next(err);
     }
@@ -275,7 +274,7 @@ export const ClientController = {
         where: { id },
       });
 
-      res.status(200).json(client);
+      res.status(201).json({message: "Cliente Deletado com Sucesso!"});
     } catch (err) {
       res.status(404).json({ error: "Não encontrado" });
     }
@@ -330,6 +329,7 @@ export const ClientController = {
         body.isActive = Boolean(req.body.isActive);
       }
       
+      // Validação Para Campo Vazio
       function campoVazio(campo) {
         // Se for null, undefined ou vazio
         if (campo === null || campo === undefined) {
@@ -350,6 +350,7 @@ export const ClientController = {
         return false;
       }
 
+      // Validação de Email
       function validaemail() {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(body.email);
@@ -357,63 +358,85 @@ export const ClientController = {
 
 
       if (campoVazio(body.name)) {
-        return res.status(400).json(`Preencha o campo Nome`);
+        return res.status(400).json({error:"Preencha o campo Nome"});
       }
-
+      
       if (campoVazio(body.document)) {
-        return res.status(400).json(`Preencha o campo CPF ou CNPJ`);
+        return res.status(400).json({error:"Preencha o campo CPF ou CNPJ"});
       }
+      
+      //validação de CPF ou CNPJ existente
+      const document = await prisma.client.findFirst({
+        where: { document: body.document, NOT: {id: Number(req.params.id)} }
+      })
 
+      if (document) {
+
+        if (body.document.length === 14) {
+          return res.status(409).json({error:"Já existe um Cliente Cadastrado com esse CPF"});
+        }
+        else if (body.document.length === 18) {
+          return res.status(409).json({error:"Já existe um Cliente Cadastrado com esse CNPJ"});
+        }
+      }
 
       if (campoVazio(body.cep)) {
-        return res.status(400).json(`Preencha o campo CEP`);
+        return res.status(400).json({error:"Preencha o campo CEP"});
       }
 
 
       if (campoVazio(body.address)) {
-        return res.status(400).json(`Preencha o campo Endereço`);
+        return res.status(400).json({error:"Preencha o campo Endereço"});
       }
 
       if (campoVazio(body.number)) {
-        return res.status(400).json(`Preencha o campo Número`);
+        return res.status(400).json({error:"Preencha o campo Número"});
       }
 
       if (campoVazio(body.neighborhood)) {
-        return res.status(400).json(`Preencha o campo Bairro`);
+        return res.status(400).json({error:"Preencha o campo Bairro"});
 
       }
       if (campoVazio(body.state)) {
-        return res.status(400).json(`Preencha o campo Estado`);
+        return res.status(400).json({error:"Preencha o campo Estado"});
       }
 
       if (campoVazio(body.city)) {
-        return res.status(400).json(`Preencha o campo Cidade`);
+        return res.status(400).json({error:"Preencha o campo Cidade"});
       }
 
       if (campoVazio(body.phone)) {
-        return res.status(400).json(`Preencha o campo Telefone`);
+        return res.status(400).json({error:"Preencha o campo Telefone"});
       }
 
-      //validação de CPF ou CNPJ existente
-      const phonee = await prisma.client.findFirst({
+
+      //validação de Telefone existente
+      const phone = await prisma.client.findFirst({
         where: { phone: body.phone, NOT: {id: Number(req.params.id)} }
       })
 
-      if (phonee) {
-        return res.status(422).json(`O Telefone já está cadastrado`);
+      if (phone) {
+        return res.status(422).json({error:"Já existe umm Cliente Cadastrado com esse Telefone"});
       }
-
-      if (campoVazio(body.email)) {
-        return res.status(400).json(`Preencha o campo Email`);
-      }
-
-      if (!validaemail(body.email)) {
-        return res.status(422).json("Email Inválido");
-      }
-// 90987654334
       
+      if (campoVazio(body.email)) {
+        return res.status(400).json({error:"Preencha o campo Email"});
+      }
+      
+      if (!validaemail(body.email)) {
+        return res.status(422).json({erro:"Email Inválido"});
+      }
+      
+      //validação de Email existente
+      const email = await prisma.client.findFirst({
+        where: { email: body.email, NOT: {id: Number(req.params.id)} }
+      })
 
+      if (email) {
+        return res.status(422).json({error:"Já existe umm Cliente Cadastrado com esse Email"});
+      }
 
+      
       const id = Number(req.params.id);
 
       const clientUpdate = await prisma.client.update({
@@ -421,9 +444,9 @@ export const ClientController = {
         data: body,
       });
 
-      res.status(200).json(clientUpdate);
+      res.status(200).json({message: "Dados do Cliente com Sucesso!"});
     } catch (err) {
-      res.status(404).json({ error: "Não encontrado" });
+      res.status(404).json({error: "Não encontrado" });
     }
   },
 };

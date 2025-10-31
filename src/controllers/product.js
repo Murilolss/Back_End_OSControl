@@ -11,10 +11,7 @@ export const ProductController ={
 
 
         if(!user){
-            res.status(301).json({
-                'error': " O Usuario não encontrado"
-            });
-            return
+            return res.status(301).json({error: "O Usuário Precisa estar Logado Para Editar um Serviço"});
         }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     
         const product =  await prisma.product.create({
