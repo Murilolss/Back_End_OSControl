@@ -1,3 +1,5 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVyaWxvQGdtYWlsLmNvbSIsIm5hbWUiOiJNdXJpbG8iLCJpYXQiOjE3NjIwMjM2MjAsImV4cCI6MTc2MjA1MjQyMH0.tzFUL-N6yRhsnd6SuZOg65RtpMYWE3E4V5H9LwMt_jg
+
 ### criando um client
 POST http://localhost:3000/clients HTTP/1.1
 content-type: application/json
@@ -20,6 +22,7 @@ content-type: application/json
 ### Lendo os clients
 GET http://localhost:3000/clients HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
 
 ### Lendo os clients lpor id
 GET http://localhost:3000/clients/1 HTTP/1.1

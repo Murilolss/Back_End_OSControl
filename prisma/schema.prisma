@@ -3,7 +3,7 @@
 
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -66,8 +66,10 @@ model Signature{
 //Leonardo
 model Client {
   id Int @id @default (autoincrement())
-
-  name String
+  name String?
+  lastName String? @map("last_name")
+  companyName String? @map("company_name")
+  corporateReason String? @map("corporate_reason")
   document String  @unique
   cep String
   phone String
@@ -77,7 +79,7 @@ model Client {
   neighborhood String
   state String
   city String
-  isActive Boolean @map("is_active")
+  isActive Boolean @map("is_active") @default(true)
 
   createdAt DateTime @map("created_at") @default(now())
   updatedAt DateTime @map("updated_at") @updatedAt
@@ -99,7 +101,7 @@ model Service {
   price Float 
   description String
   observations String
-  isActive Boolean @map("is_active")
+  isActive Boolean @map("is_active") @default(true)
 
   createdAt DateTime @map("created_at") @default(now())
   updatedAt DateTime @map("updated_at") @updatedAt 
@@ -119,10 +121,11 @@ model Product {
   category String
   description String
   salesUnit String      @map("sales_unit")
+  quantity Int
   purchasePrice Float  @map("purchase_price")
   salePrice Float      @map("sale_price")
   observations String
-  isActive Boolean      @map("is_active")
+  isActive Boolean      @map("is_active") @default(true)
 
 
  createdAt DateTime @map("created_at") @default(now())

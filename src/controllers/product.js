@@ -3,7 +3,7 @@ import prisma from "../prisma.js";
 export const ProductController = {
   async store(req, res, next) {
     try {
-      const { name, category, description, salesUnit, purchasePrice, salePrice, observations, isActive } = req.body;
+      const { name, category, description, salesUnit, purchasePrice, salePrice, observations, quantity } = req.body;
 
       function campoVazio(campo) {
         // Se for null, undefined ou vazio
@@ -49,11 +49,19 @@ export const ProductController = {
         return res.status(401).json({ error: "Limite de caracteres atingido" })
       }
       else if (description.length < 10) {
-        res.status(400).json({ error: "A descrição precisa ter no mínimo de 10 caracteres" })
+        return res.status(400).json({ error: "A descrição precisa ter no mínimo de 10 caracteres" })
       }
 
       if (campoVazio(salesUnit)) {
         return res.status(400).json({ error: "Preencha a Unidade de Venda" });
+      }
+
+      if (campoVazio(quantity)) {
+        return res.status(400).json({ error: "Preencha o Campo Quantidade" });
+      }
+
+      if (Number(quantity) <= 0) {
+        return res.status(400).json({ error: "A Quantidade Precisa ser no mínimo de 1 Produto" });
       }
 
       if (campoVazio(purchasePrice)) {
@@ -73,12 +81,12 @@ export const ProductController = {
           purchasePrice: Number(purchasePrice),
           salePrice: Number(salePrice),
           observations,
-          isActive: Boolean(isActive),
+          quantity: Number(quantity),
           userId: Number(req.logado.id)
         }
       });
 
-      return res.status(201).json({message: "Produto Cadastrado com Sucesso!"});
+      return res.status(201).json({ message: "Produto Cadastrado com Sucesso!" });
     } catch (error) {
       next(error);
     }
@@ -118,17 +126,12 @@ export const ProductController = {
         query.salePrice = { lte: Number(req.query.salePriceMax) };
       }
 
-      if (req.query.isActive) {
-        query.isActive =
-          req.query.isActive === "true" || req.query.isActive === true;
-      }
-
       const product = await prisma.product.findMany({
         where: query,
       });
 
       if (product.length == 0) {
-        res.status(404).json("Não encontrado");
+        res.status(404).json({ error: "Nenhum Produto Encontrado" });
       } else {
         res.status(200).json(product);
       }
@@ -157,7 +160,7 @@ export const ProductController = {
         where: { id },
       });
 
-      res.status(200).json(product);
+      res.status(200).json({message: "Produto Deletado com Sucesso!"});
     } catch (err) {
       res.status(404).json({ error: "Não encontrado" });
     }
@@ -200,12 +203,12 @@ export const ProductController = {
         body.salePrice = Number(req.body.salePrice);
       }
 
-      if (req.body.observations) {
-        body.observations = req.body.observations;
+      if (req.body.quantity) {
+        body.quantity = Number(req.body.quantity);
       }
 
-      if (req.body.isActive) {
-        body.isActive = Boolean(req.body.isActive);
+      if (req.body.observations) {
+        body.observations = req.body.observations;
       }
 
       function campoVazio(campo) {
@@ -239,7 +242,7 @@ export const ProductController = {
       if (campoVazio(body.description)) {
         return res.status(400).json({ error: "Preencha Descrição" });
       }
-      
+
       if (body.description.length > 300) {
         return res.status(401).json({ error: "Limite de caracteres atingido" })
       }
@@ -250,10 +253,23 @@ export const ProductController = {
       if (campoVazio(body.salesUnit)) {
         return res.status(400).json({ error: "Preencha a Unidade de Venda" });
       }
-
+      
       if (campoVazio(body.purchasePrice)) {
+        return res.status(400).json({ error: "Preencha o Preço de Compra" });
+      }
+
+      if (campoVazio(body.salePrice)) {
         return res.status(400).json({ error: "Preencha o Preço de Venda" });
       }
+
+      if (campoVazio(body.quantity)) {
+        return res.status(400).json({ error: "Preencha o Campo Quantidade" });
+      }
+
+      if (Number(body.quantity) <= 0) {
+        return res.status(400).json({ error: "A Quantidade Precisa ser no mínimo de 1 Produto" });
+      }
+
 
       const id = Number(req.params.id);
 

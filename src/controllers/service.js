@@ -3,7 +3,7 @@ import prisma from "../prisma.js";
 export const ServiceController = {
   async store(req, res, next) {
     try {
-      const { nameService, price, description, observations, isActive } = req.body;
+      const { nameService, price, description, observations } = req.body;
 
       const error = {}
 
@@ -61,7 +61,6 @@ export const ServiceController = {
           price: Number(price),
           description,
           observations,
-          isActive: Boolean(isActive),
           userId: Number(req.logado.id)
         }
       });
@@ -94,17 +93,12 @@ export const ServiceController = {
         query.price = { lte: Number(req.query.priceMax) };
       }
 
-      if (req.query.isActive) {
-        query.isActive =
-          req.query.isActive === "true" || req.query.isActive === true;
-      }
-
       const services = await prisma.service.findMany({
         where: query,
       });
 
       if (services.length == 0) {
-        res.status(404).json("Nada encontrado");
+        res.status(404).json({error: "Nenhum Serviço Encontrado"});
       } else {
         res.status(200).json(services);
       }
@@ -157,10 +151,7 @@ export const ServiceController = {
       if (req.body.observations) {
         body.observations = req.body.observations;
       }
-      if (req.body.isActive) {
-        body.isActive = Boolean(req.body.isActive);
-      }
-
+      
       // Validação de Campo Vazio
       function campoVazio(campo) {
         // Se for null, undefined ou vazio

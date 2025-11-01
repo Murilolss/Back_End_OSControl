@@ -209,7 +209,7 @@ export const UserController = {
           companyName,
           corporateReason,
           document,
-          stateRegistration: Number(stateRegistration),
+          stateRegistration,
           cep,
           address,
           number: Number(number),
