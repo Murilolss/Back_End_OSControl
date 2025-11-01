@@ -130,6 +130,14 @@ export const UserController = {
         return res.status(422).json("CNPJ ou CPF inválido");
       }
 
+      if (document.length === 18 && campoVazio(corporateReason)) {
+        return res.status(400).json(`O Campo Razão Social está Vazio`);
+      }
+
+      if (document.length === 18 && campoVazio(stateRegistration)) {
+        return res.status(400).json(`Preencha o Campo Inscrição Estadual`);
+      }
+
       if (campoVazio(companyName)) {
         return res.status(400).json(`O Campo Nome da Empresa está Vazio`);
       }
@@ -157,19 +165,19 @@ export const UserController = {
       if (campoVazio(city)) {
         return res.status(400).json(`O Campo Cidade está Vazio`);
       }
-      
+
       if (campoVazio(phone)) {
         return res.status(400).json(`O Campo Telefone está Vazio`);
       }
-      
+
       if (campoVazio(email)) {
         return res.status(400).json(`O Campo Email está Vazio`);
       }
-      
+
       if (!validaemail(email)) {
         return res.status(422).json("Email Inválido");
       }
-      
+
       // Validação de email existente
       let emaill = await prisma.user.findFirst({
         where: { email }
@@ -201,7 +209,7 @@ export const UserController = {
           companyName,
           corporateReason,
           document,
-          stateRegistration,
+          stateRegistration: Number(stateRegistration),
           cep,
           address,
           number: Number(number),
