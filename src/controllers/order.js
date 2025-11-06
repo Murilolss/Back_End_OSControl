@@ -94,6 +94,13 @@ export const OrderController = {
 
       const orders = await prisma.order.findMany({
         where: query,
+        include: {
+          client: true,
+          service: true,
+          shops: {
+            include: { product: true }
+          }
+        }
       });
       if (orders.length === 0) {
         return res.status(404).json({ message: "Nada encontrado" });
