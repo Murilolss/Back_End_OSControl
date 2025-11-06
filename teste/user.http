@@ -8,9 +8,9 @@ Content-Type: application/json
     "name": "Murilo",
     "lastName": "Leandro",
     "email": "Muil0@yahoo.com",
-    "password": "123456",
+    "password": "12345678",
     "companyName": "ML Tech",
-    "document": "67.681.940/0001-64",
+    "document": "56785431808",
     "corporateReason": "Murilo ltda",
     "cep": "12345-678",
     "address": "Rua Espcopal",
@@ -71,6 +71,6 @@ Content-Type: application/json
 
 {
     "email" : "Muil0@yahoo.com",
-    "senha" : "123456"    
+    "senha" : "12345678"    
 }
 

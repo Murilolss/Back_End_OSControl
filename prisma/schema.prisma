@@ -144,6 +144,7 @@ model Shop{
   id Int @id @default (autoincrement())
 
   amount Int
+  salePrice Float      @map("sale_price")
   
 
  createdAt DateTime @map("created_at") @default(now())
@@ -162,23 +163,27 @@ model Shop{
 model Order{
   id Int @id @default (autoincrement())
 
-  
-  servicePrice Float   @map("service_price")
-  productPrice Float   @map("product_price")
+  equipment    String  
+  defect       String  
+  report       String  
+  guarantee    String  
+  status       String  
+  dateDelivery String  @map("date_delivery")
+  dateRecipt   String  @map("date_recipt")
 
  createdAt DateTime @map("created_at") @default(now())
  updatedAt DateTime @map("updated_at") @updatedAt 
 
   shops     Shop[]
 
-  userId     Int      @map("user_id")
-  serviceId  Int      @map("service_id")
-  clientId   Int      @map("client_id")
+  userId        Int      @map("user_id")
+  serviceId     Int      @map("service_id")
+  clientId      Int      @map("client_id")
   
 
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  service    Service  @relation(fields: [serviceId], references: [id])
-  client     Client   @relation(fields: [clientId], references: [id])
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  service     Service  @relation(fields: [serviceId], references: [id])
+  client      Client   @relation(fields: [clientId], references: [id])
 
 
   @@map("orders")

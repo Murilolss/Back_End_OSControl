@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc1OTk1NTM1MiwiZXhwIjoxNzU5OTg0MTUyfQ.fuebJu7sJmD3zpRoo4RydAqPtp7zvP0e_rtRdGNIu_8
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc2MjQzODM2NCwiZXhwIjoxNzYyNDY3MTY0fQ.kBb1GQXBJcj3QeHtWHOhKV8Lubtb8sgHIJTno5ZfmdY
 
 ### Criando um product
 POST http://localhost:3000/products HTTP/1.1
@@ -6,12 +6,13 @@ content-type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "name" : "MSI B450",
+    "name" : "550",
     "category" : "Placa Mãe",
-    "description" : "127v",
+    "description" : "127vasdasdasdasd",
     "salesUnit" : "UN", 
-    "purchasePrice" : 10, 
-    "salePrice" : 20, 
+    "purchasePrice" : 16, 
+    "salePrice" : 90, 
+    "quantity": 9,
     "observations" : "Azul",
     "isActive" : true
 }
@@ -19,6 +20,7 @@ Authorization: Bearer {{token}}
 ### ler todos os product
 GET  http://localhost:3000/products HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
 
 ### ler products e name
 GET  http://localhost:3000/products?name=MSI B450 HTTP/1.1

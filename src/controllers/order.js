@@ -1,20 +1,20 @@
 import prisma from "../prisma.js";
 
 export const OrderController = {
-    //C - CREATE, INSERT, POST, SET, STORE
-    async store(req, res, next) {
-        try {
-            const { servicePrice, productPrice, serviceId, clientId } = req.body;
+  //C - CREATE, INSERT, POST, SET, STORE
+  async store(req, res, next) {
+    try {
+      const { serviceId, clientId, equipment, defect, report, guarantee, status, dateDelivery, dateRecipt, products } = req.body;
 
-            const error = {}
-            
-            let user = await prisma.user.findFirst({
-                where: {id: Number(req.logado.id)}
-            });
-            
-            if (!user) {
-                error.user = { message: "error: Usuário informado não existe" }
-            }
+      const error = {}
+
+      let user = await prisma.user.findFirst({
+        where: { id: Number(req.logado.id) }
+      });
+
+      if (!user) {
+        error.user = { message: "error: Usuário informado não existe" }
+      }
 
       let service = await prisma.service.findFirst({
         where: { id: Number(serviceId) },
@@ -32,31 +32,52 @@ export const OrderController = {
         error.client = { message: "error: Cliente informado não existe" };
       }
 
-            if (Object.keys(error).length > 0) {
-                res.status(301).json(error);
-                return;
-            }
-            
-            const create = await prisma.order.create({
-                data: { 
-                    servicePrice: Number(servicePrice), 
-                    productPrice: Number(productPrice), 
-                    userId: Number(req.logado.id), 
-                    serviceId: Number(serviceId), 
-                    clientId: Number(clientId) 
-                }
-            });
-            // respondendo 201-criado encapsulando no formato json(order)
-            res.status(201).json(create)
+      if (Object.keys(error).length > 0) {
+        res.status(301).json(error);
+        return;
+      }
+
+      const create = await prisma.order.create({
+        data: {
+          userId: Number(req.logado.id),
+          serviceId: Number(serviceId),
+          clientId: Number(clientId),
+          equipment,
+          defect,
+          report,
+          guarantee,
+          status,
+          dateDelivery,
+          dateRecipt,
+
+          shops: {
+            create: products.map((p) => ({
+              productId: p.productId,
+              amount: p.amount,
+              salePrice: p.salePrice
+            }))
+          }
+        },
+        include: {
+          shops: {
+            include: { product: true }
+          },
+          client: true,
+          service: true
         }
-        catch(error){
-            next(error);
-        }
-    },
-    //R - READ, SELECT, GET, findMany
-    async index(req, res, next) { 
-        try {
-            let query = {}
+
+      });
+      // respondendo 201-criado encapsulando no formato json(order)
+      res.status(201).json(create)
+    }
+    catch (error) {
+      next(error);
+    }
+  },
+  //R - READ, SELECT, GET, findMany
+  async index(req, res, next) {
+    try {
+      let query = {}
 
       // if (req.query.saleMax && req.query.saleMin) {
       //     query.salePrice = { gte: Number(req.query.saleMin), lte: Number(req.query.saleMax)}

@@ -1,13 +1,12 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc1OTk1NTM1MiwiZXhwIjoxNzU5OTg0MTUyfQ.fuebJu7sJmD3zpRoo4RydAqPtp7zvP0e_rtRdGNIu_8
-
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc2MjQzODM2NCwiZXhwIjoxNzYyNDY3MTY0fQ.kBb1GQXBJcj3QeHtWHOhKV8Lubtb8sgHIJTno5ZfmdY
 ### Criando um service
 POST http://localhost:3000/services HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "nameService" : "testee",
-    "price" : 20, 
+    "nameService" : "abc",
+    "price" : 90, 
     "description" : "blablasdflkjsdfiosjoglkdfosjdofjsodmf", 
     "observations" : "blabla2", 
     "isActive" : true

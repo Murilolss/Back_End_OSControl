@@ -1,31 +1,56 @@
-### Criando uma order
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc2MjQzODM2NCwiZXhwIjoxNzYyNDY3MTY0fQ.kBb1GQXBJcj3QeHtWHOhKV8Lubtb8sgHIJTno5ZfmdY
 
+### Criando uma order
 POST http://localhost:3000/orders HTTP/1.1
 content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "servicePrice" : 29,
-    "productPrice" : 10,
-    "userId" : 1,
-    "serviceId" : 1,
-    "clientId" : 1
+  "userId": 1,
+  "clientId": 2,
+  "serviceId": 2,
+  "serviceId": 1,
+  "equipment": "Placa Mãe B550",
+  "defect": "Não liga",
+  "report": "Falta de tensão no VRM",
+  "guarantee": "90 dias",
+  "dateRecipt": "2025-11-06T00:00:00Z",
+  "dateDelivery": "2025-11-06T00:00:00Z",
+  "status": "Em andamento",
+  "products": [
+    {
+      "productId": 1,
+      "amount": 1,
+      "salePrice": 270.0
+    },
+    {
+      "productId": 2,
+      "amount": 4,
+      "salePrice": 70.0
+    }
+  ]
 }
+
 
 ### Ler todas orders
 GET http://localhost:3000/orders HTTP/1.1
 content-Type: application/json
 
+
 ### Ler saleprice
 GET http://localhost:3000/orders?saleMax=30&saleMin=20 HTTP/1.1
 content-Type: application/json
+
 
 ### Ler saleprice e servicePrice
 GET http://localhost:3000/orders?salePrice=20&servicePrice=29 HTTP/1.1
 content-Type: application/json
 
+
 ### Ler saleprice, servicePrice e productPrice
 GET http://localhost:3000/orders?salePrice=20&servicePrice=29&productPrice=10 HTTP/1.1
 content-Type: application/json
+
 
 ### Ler um order pelo id
 GET http://localhost:3000/orders/10 HTTP/1.1
@@ -38,12 +63,11 @@ content-Type: application/json
 
 
 ### Atualizar orders pelo id
-
 PUT http://localhost:3000/orders/1 HTTP/1.1
 content-Type: application/json
 
 {
-    "salePrice" : 24,
-    "servicePrice" : 30,
-    "productPrice" : 14
+  "salePrice": 24,
+  "servicePrice": 30,
+  "productPrice": 14
 }

@@ -1,15 +1,17 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVyaWxvQGdtYWlsLmNvbSIsIm5hbWUiOiJNdXJpbG8iLCJpYXQiOjE3NjIwMjM2MjAsImV4cCI6MTc2MjA1MjQyMH0.tzFUL-N6yRhsnd6SuZOg65RtpMYWE3E4V5H9LwMt_jg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc2MjQzODM2NCwiZXhwIjoxNzYyNDY3MTY0fQ.kBb1GQXBJcj3QeHtWHOhKV8Lubtb8sgHIJTno5ZfmdY
 
 ### criando um client
 POST http://localhost:3000/clients HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "name" : "Marcius",
-    "document" : "111.222.333.44",
+    "name" : "dffg",
+    "lastName" : "Marcius",
+    "document" : "072.162.178-37",
     "cep" : "12345-678",
-    "phone" : "16 12345-6789",
-    "email" : "marcius@gmail.com",
+    "phone" : "16 12340-6789",
+    "email" : "marcis@gmail.com",
     "address" : "Rua Epscopal",
     "number" : 700,
     "neighborhood" : "Centro",
