@@ -4,7 +4,7 @@ export const OrderController = {
   //C - CREATE, INSERT, POST, SET, STORE
   async store(req, res, next) {
     try {
-      const { serviceId, clientId, equipment, defect, report, guarantee, status, dateDelivery, dateRecipt, products } = req.body;
+      const { serviceId, clientId, equipment, defect, report, guarantee, status, dateDelivery, dateRecipt, dateCreate, products } = req.body;
 
       const error = {}
 
@@ -105,36 +105,42 @@ export const OrderController = {
       });
       if (orders.length === 0) {
         return res.status(404).json({ message: "Nada encontrado" });
-      } else {
-        const ordersWithTotal = orders.map((order) => {
-          const totalProdutos = order.shops.reduce(
-            (acc, shop) => acc + shop.salePrice * shop.amount,
-            0
-          );
+      } else 
 
-          const totalGeral = (order.service?.price || 0) + totalProdutos;
+      {
+        const ordersWithTotal = orders.map(order => {
+
+          // Total de serviços
+          let totalService = 0;
+          if (Array.isArray(order.service)) {
+            totalService = order.service.reduce(
+              (acc, s) => acc + (Number(s.price) || 0),
+              0
+            );
+          } else if (order.service) {
+            totalService = Number(order.service.price) || 0;
+          }
+
+          // Total de produtos
+          const totalProducts = (order.shops || []).reduce((acc, shop) => {
+            const productPrice = Number(shop.product.salePrice) || 0;
+            const quantity = Number(shop.amount) || 1;
+            return acc + productPrice * quantity;
+          }, 0);
+
+          // Soma total geral
+          const total = totalService + totalProducts;
 
           return {
-            id: order.id,
-            status: order.status,
-            equipment: order.equipment,
-            defect: order.defect,
-            report: order.report,
-            guarantee: order.guarantee,
-            dateDelivery: order.dateDelivery,
-            dateRecipt: order.dateRecipt,
-
-            // mantém os relacionamentos
-            client: order.client,
-            service: order.service,
-            shops: order.shops,
-
-            // adiciona total calculado
-            total: totalGeral,
+            ...order,
+            totalService,
+            totalProducts,
+            total,
           };
         });
 
         res.status(200).json(ordersWithTotal);
+
       }
     } catch (error) {
       next(error);
