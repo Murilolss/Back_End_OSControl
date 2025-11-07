@@ -1,4 +1,4 @@
-@token = 
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc2MjQ3NTAyMCwiZXhwIjoxNzYyNTAzODIwfQ.ecaeYuNX--XmxhOCWY_kMHmSCCpLuihpXK28gV2qj2Y
 
 ### Criando um Usuario
 POST http://localhost:3000/users HTTP/1.1

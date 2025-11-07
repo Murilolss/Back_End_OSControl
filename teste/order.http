@@ -1,5 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc2MjQzODM2NCwiZXhwIjoxNzYyNDY3MTY0fQ.kBb1GQXBJcj3QeHtWHOhKV8Lubtb8sgHIJTno5ZfmdY
-
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc2MjQ3NTAyMCwiZXhwIjoxNzYyNTAzODIwfQ.ecaeYuNX--XmxhOCWY_kMHmSCCpLuihpXK28gV2qj2Y
 ### Criando uma order
 POST http://localhost:3000/orders HTTP/1.1
 content-Type: application/json
@@ -7,14 +6,13 @@ Authorization: Bearer {{token}}
 
 {
   "userId": 1,
-  "clientId": 2,
-  "serviceId": 2,
+  "clientId": 1,
   "serviceId": 1,
-  "equipment": "Placa Mãe B550",
-  "defect": "Não liga",
-  "report": "Falta de tensão no VRM",
+  "equipment": "Placa Mãe",
+  "defect": "liga",
+  "report": "Falta de tensão",
   "guarantee": "90 dias",
-  "dateRecipt": "2025-11-06T00:00:00Z",
+  "dateRecipt": "06/11/2025",
   "dateDelivery": "2025-11-06T00:00:00Z",
   "status": "Em andamento",
   "products": [
@@ -22,11 +20,6 @@ Authorization: Bearer {{token}}
       "productId": 1,
       "amount": 1,
       "salePrice": 270.0
-    },
-    {
-      "productId": 2,
-      "amount": 4,
-      "salePrice": 70.0
     }
   ]
 }
@@ -35,6 +28,7 @@ Authorization: Bearer {{token}}
 ### Ler todas orders
 GET http://localhost:3000/orders HTTP/1.1
 content-Type: application/json
+Authorization: Bearer {{token}}
 
 
 ### Ler saleprice
@@ -53,13 +47,15 @@ content-Type: application/json
 
 
 ### Ler um order pelo id
-GET http://localhost:3000/orders/10 HTTP/1.1
+GET http://localhost:3000/orders/1 HTTP/1.1
 content-Type: application/json
+Authorization: Bearer {{token}}
 
 
 ### Deletar orders pelo id
-DELETE http://localhost:3000/orders/4 HTTP/1.1
+DELETE http://localhost:3000/orders/1 HTTP/1.1
 content-Type: application/json
+Authorization: Bearer {{token}}
 
 
 ### Atualizar orders pelo id

@@ -168,6 +168,7 @@ model Order{
   report       String  
   guarantee    String  
   status       String  
+  dateCreate   String  @map("date_create")
   dateDelivery String  @map("date_delivery")
   dateRecipt   String  @map("date_recipt")
 

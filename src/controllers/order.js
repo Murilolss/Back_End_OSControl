@@ -47,13 +47,14 @@ export const OrderController = {
           report,
           guarantee,
           status,
+          dateCreate,
           dateDelivery,
           dateRecipt,
 
           shops: {
             create: products.map((p) => ({
-              productId: p.productId,
-              amount: p.amount,
+              productId: Number(p.productId),
+              amount: Number(p.amount),
               salePrice: p.salePrice
             }))
           }
@@ -105,7 +106,35 @@ export const OrderController = {
       if (orders.length === 0) {
         return res.status(404).json({ message: "Nada encontrado" });
       } else {
-        res.status(200).json(orders);
+        const ordersWithTotal = orders.map((order) => {
+          const totalProdutos = order.shops.reduce(
+            (acc, shop) => acc + shop.salePrice * shop.amount,
+            0
+          );
+
+          const totalGeral = (order.service?.price || 0) + totalProdutos;
+
+          return {
+            id: order.id,
+            status: order.status,
+            equipment: order.equipment,
+            defect: order.defect,
+            report: order.report,
+            guarantee: order.guarantee,
+            dateDelivery: order.dateDelivery,
+            dateRecipt: order.dateRecipt,
+
+            // mantém os relacionamentos
+            client: order.client,
+            service: order.service,
+            shops: order.shops,
+
+            // adiciona total calculado
+            total: totalGeral,
+          };
+        });
+
+        res.status(200).json(ordersWithTotal);
       }
     } catch (error) {
       next(error);
@@ -131,7 +160,7 @@ export const OrderController = {
       const id = Number(req.params.id);
 
       let order = await prisma.order.delete({
-        where: { id },
+        where: { id }
       });
 
       res.status(200).json(order);
