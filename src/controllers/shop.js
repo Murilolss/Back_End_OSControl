@@ -3,7 +3,7 @@ import prisma from "../prisma.js";
 export const ShopController = {
   async store(req, res, next) {
     try {
-      const { orderId, productId, amount } = req.body;
+      const { orderId, productId, amount, salePrice } = req.body;
 
       const error = {};
 
@@ -91,8 +91,9 @@ export const ShopController = {
     try {
       const id = Number(req.params.id);
 
-      let signature = await prisma.shop.delete({ where: { id } });
+      const signature = await prisma.shop.delete({ where: { id } });
 
+    
       res.status(200).json(signature);
     } catch (err) {
       res.status(404).json({ error: "Não encontrado" });
@@ -101,24 +102,32 @@ export const ShopController = {
 
   async update(req, res, _next) {
     try {
-      let body = {};
+      const body = {};
 
       if (req.body.amount) {
-        body.amount = req.body.amount;
+        body.amount = Number(req.body.amount);
+      }
+
+      if (req.body.orderId) {
+        body.orderId = Number(req.body.orderId);
+      }
+
+      if (req.body.productId) {
+        body.productId = Number(req.body.productId);
       }
 
       if (req.body.salePrice) {
         body.salePrice = req.body.salePrice;
       }
 
-      let id = Number(req.params.id);
+      const id = Number(req.params.id);
 
       const shopUpdate = await prisma.shop.update({
         where: { id },
         data: body,
       });
 
-      res.status(200).json(shopUpdate);
+      res.status(200).json({message: "Ordem Atualizada com Sucesso"});
     } catch (err) {
       res.status(404).json({ error: "Não encontrado" });
     }

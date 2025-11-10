@@ -105,9 +105,7 @@ export const OrderController = {
       });
       if (orders.length === 0) {
         return res.status(404).json({ message: "Nada encontrado" });
-      } else 
-
-      {
+      } else {
         const ordersWithTotal = orders.map(order => {
 
           // Total de serviços
@@ -143,6 +141,8 @@ export const OrderController = {
 
       }
     } catch (error) {
+      console.error(error);
+      
       next(error);
     }
   },
@@ -153,10 +153,19 @@ export const OrderController = {
 
       let order = await prisma.order.findFirstOrThrow({
         where: { id },
+        include: {
+          client: true,
+          service: true,
+          shops: {
+            include: { product: true }
+          }
+        }
       });
 
       res.status(200).json(order);
     } catch (err) {
+      console.error(err);
+      
       res.status(404).json({ error: "Erro interno ao buscar orders" });
     }
   },
@@ -176,25 +185,63 @@ export const OrderController = {
   },
 
   async update(req, res, _next) {
+
+    const id = Number(req.params.id);
+
     try {
       let body = {};
 
-      if (req.body.servicePrice) {
-        body.servicePrice = Number(req.body.servicePrice);
-      }
-      if (req.body.productPrice) {
-        body.productPrice = Number(req.body.productPrice);
+      if (req.body.clientId) {
+        body.clientId = Number(req.body.clientId);
       }
 
-      const id = Number(req.params.id);
+      if (req.body.status) {
+        body.status = req.body.status;
+      }
+
+      const date = await prisma.order.findUnique({
+        where: { id },
+        select: { dateCreate: true }
+      });
+
+      if (req.body.dateCreate !== date.dateCreate) {
+        return res.status(404).json({ error: "Não é Possivel Alterar a Data de Criação da Ordem de Serviço" });
+      }
+
+      if (req.body.serviceId) {
+        body.serviceId = Number(req.body.serviceId);
+      }
+
+      if (req.body.dateDelivery) {
+        body.dateDelivery = req.body.dateDelivery;
+      }
+
+      if (req.body.equipment) {
+        body.equipment = req.body.equipment;
+      }
+
+      if (req.body.defect) {
+        body.defect = req.body.defect;
+      }
+
+      if (req.body.report) {
+        body.report = req.body.report;
+      }
+
+      if (req.body.guarantee) {
+        body.guarantee = req.body.guarantee;
+      }
+
 
       const updateOrder = await prisma.order.update({
         where: { id },
         data: body,
       });
 
-      res.status(200).json(updateOrder);
+
+      res.status(200).json({ message: "Ordem Atualizada com Sucesso" });
     } catch (err) {
+      console.error(err)
       res.status(404).json({ error: "Erro interno ao buscar orders" });
     }
   },

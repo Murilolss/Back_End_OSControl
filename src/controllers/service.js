@@ -37,21 +37,21 @@ export const ServiceController = {
       }
 
       if (campoVazio(nameService)) {
-        return res.status(400).json({error:"Preencha o Nome do Seriviço"});
+        return res.status(400).json({ error: "Preencha o Nome do Seriviço" });
       }
       if (campoVazio(description)) {
-        return res.status(400).json({error:"Preencha a Descrição"});
+        return res.status(400).json({ error: "Preencha a Descrição" });
       }
-      
+
       if (description.length > 300) {
         return res.status(401).json({ error: "Limite de caracteres atingido" })
       }
       else if (description.length < 10) {
-        res.status(400).json({ error: "A descrição precisa ter no mínimo de 10 caracteres" })
+        return res.status(400).json({ error: "A descrição precisa ter no mínimo de 10 caracteres" })
       }
-      
+
       if (campoVazio(price)) {
-        return res.status(400).json({error:"Preencha o Preço"});
+        return res.status(400).json({ error: "Preencha o Preço" });
       }
 
 
@@ -98,7 +98,7 @@ export const ServiceController = {
       });
 
       if (services.length == 0) {
-        res.status(404).json({error: "Nenhum Serviço Encontrado"});
+        res.status(404).json({ error: "Nenhum Serviço Encontrado" });
       } else {
         res.status(200).json(services);
       }
@@ -125,13 +125,23 @@ export const ServiceController = {
     try {
       const id = Number(req.params.id);
 
-      let service = await prisma.service.delete({
+      const order = await prisma.order.findFirst({
+        where: { serviceId: id },
+      });
+
+      if (order) {
+        return res.status(400).json({
+          error: "Não é possível deletar o serviço, pois ele está associado a uma ordem de serviço.",
+        });
+      }
+
+      const service = await prisma.service.delete({
         where: { id },
       });
 
-      res.status(200).json(service);
+      return res.status(200).json(service);
     } catch (err) {
-      res.status(404).json({ error: "Erro interno ao buscar orders" });
+      return res.status(400).json({ error: "Não foi Possivél Deletar o Serviço" });
     }
   },
 
@@ -151,7 +161,7 @@ export const ServiceController = {
       if (req.body.observations) {
         body.observations = req.body.observations;
       }
-      
+
       // Validação de Campo Vazio
       function campoVazio(campo) {
         // Se for null, undefined ou vazio
@@ -182,21 +192,21 @@ export const ServiceController = {
       }
 
       if (campoVazio(nameService)) {
-        return res.status(400).json({error:"Preencha o Nome do Seriviço"});
+        return res.status(400).json({ error: "Preencha o Nome do Seriviço" });
       }
       if (campoVazio(description)) {
-        return res.status(400).json({error:"Preencha a Descrição"});
+        return res.status(400).json({ error: "Preencha a Descrição" });
       }
-      
+
       if (description.length > 300) {
         return res.status(401).json({ error: "Limite de caracteres atingido" })
       }
       else if (description.length < 10) {
         res.status(400).json({ error: "A descrição precisa ter no mínimo de 10 caracteres" })
       }
-      
+
       if (campoVazio(price)) {
-        return res.status(400).json({error:"Preencha o Preço"});
+        return res.status(400).json({ error: "Preencha o Preço" });
       }
 
       const id = Number(req.params.id);
@@ -208,7 +218,7 @@ export const ServiceController = {
 
       res.status(200).json(updateService);
     } catch (err) {
-      res.status(404).json({ error: "Erro interno ao buscar orders" });
+      return res.status(404).json({ error: "Não foi Possivél Atualizar o Serviço" });
     }
   },
 };

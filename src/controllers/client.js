@@ -281,13 +281,23 @@ export const ClientController = {
     try {
       const id = Number(req.params.id);
 
+      const order = await prisma.order.findFirst({
+        where: { clientId: id },
+      });
+
+      if (order) {
+        return res.status(400).json({
+          error: "Não é possível deletar o Cliente, pois ele está associado a uma ordem de serviço.",
+        });
+      }
+
       const client = await prisma.client.delete({
         where: { id },
       });
 
       return res.status(200).json({ message: "Cliente Deletado com Sucesso!" });
     } catch (err) {
-      res.status(404).json({ error: "Erro ao Deletar Cliente" });
+      return res.status(404).json({ error: "Erro ao Deletar Cliente" });
     }
   },
 

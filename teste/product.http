@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc2MjQzODM2NCwiZXhwIjoxNzYyNDY3MTY0fQ.kBb1GQXBJcj3QeHtWHOhKV8Lubtb8sgHIJTno5ZfmdY
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVyaWxvQGdtYWlsLmNvbSIsIm5hbWUiOiJNdXJpbG8iLCJpYXQiOjE3NjI3MDA4OTUsImV4cCI6MTc2MjcyOTY5NX0.BR_paUSCuROhgkqA1B7K-z9A0V-1jfgDBTQqQ7FweOQ
 
 ### Criando um product
 POST http://localhost:3000/products HTTP/1.1

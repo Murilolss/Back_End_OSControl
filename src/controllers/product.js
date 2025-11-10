@@ -156,22 +156,35 @@ export const ProductController = {
     try {
       const id = Number(req.params.id);
 
+      const shop = await prisma.shop.findFirst({
+        where: { productId: id },
+      });
+
+      if (shop) {
+        return res.status(400).json({
+          error: "Não é possível deletar o produto, pois ele está associado a uma ordem de serviço",
+        });
+      }
+
       const product = await prisma.product.delete({
         where: { id },
       });
 
-      res.status(200).json({message: "Produto Deletado com Sucesso!"});
+
+      res.status(200).json({ message: "Produto Deletado com Sucesso!" });
     } catch (err) {
-      res.status(404).json({ error: "Não encontrado" });
+      res.status(404).json({ error: "Não enco" });
     }
   },
 
   async update(req, res, _next) {
     try {
 
-      let user = await prisma.user.findFirst({
+      const user = await prisma.user.findFirst({
         where: { id: Number(req.logado.id) }
       });
+
+
 
       if (!user) {
         return res.status(301).json({ error: "O Usuário Precisa estar Logado Para Criar um Produto" });
@@ -253,7 +266,7 @@ export const ProductController = {
       if (campoVazio(body.salesUnit)) {
         return res.status(400).json({ error: "Preencha a Unidade de Venda" });
       }
-      
+
       if (campoVazio(body.purchasePrice)) {
         return res.status(400).json({ error: "Preencha o Preço de Compra" });
       }

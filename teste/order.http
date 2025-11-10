@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiTXVpbDBAeWFob28uY29tIiwibmFtZSI6Ik11cmlsbyIsImlhdCI6MTc2MjQ3NTAyMCwiZXhwIjoxNzYyNTAzODIwfQ.ecaeYuNX--XmxhOCWY_kMHmSCCpLuihpXK28gV2qj2Y
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiTXVyaWxvQGdtYWlsLmNvbSIsIm5hbWUiOiJNdXJpbG8iLCJpYXQiOjE3NjI3MDA4OTUsImV4cCI6MTc2MjcyOTY5NX0.BR_paUSCuROhgkqA1B7K-z9A0V-1jfgDBTQqQ7FweOQ
 ### Criando uma order
 POST http://localhost:3000/orders HTTP/1.1
 content-Type: application/json
@@ -32,8 +32,9 @@ Authorization: Bearer {{token}}
 
 
 ### Ler saleprice
-GET http://localhost:3000/orders?saleMax=30&saleMin=20 HTTP/1.1
+GET http://localhost:3000/orders/1 HTTP/1.1
 content-Type: application/json
+Authorization: Bearer {{token}}
 
 
 ### Ler saleprice e servicePrice
