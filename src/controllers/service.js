@@ -94,7 +94,10 @@ export const ServiceController = {
       }
 
       const services = await prisma.service.findMany({
-        where: query,
+        where: {
+          ...query,
+          userId: req.logado.id
+        }
       });
 
       if (services.length == 0) {
@@ -111,9 +114,7 @@ export const ServiceController = {
     try {
       const id = Number(req.params.id);
 
-      let service = await prisma.service.findFirstOrThrow({
-        where: { id },
-      });
+      let service = await prisma.service.findFirstOrThrow({ where: { id, userId: req.logado.id } });
 
       res.status(200).json(service);
     } catch (err) {
@@ -124,6 +125,14 @@ export const ServiceController = {
   async del(req, res, _next) {
     try {
       const id = Number(req.params.id);
+
+      const productExists = await prisma.service.findFirst({
+        where: { id, userId: req.logado.id },
+      });
+
+      if (!productExists) {
+        return res.status(404).json({ error: "Serviço não encontrado" });
+      }
 
       const order = await prisma.order.findFirst({
         where: { serviceId: id },
@@ -147,6 +156,7 @@ export const ServiceController = {
 
   async update(req, res, _next) {
     try {
+
       let body = {};
 
       if (req.body.nameService) {
@@ -191,28 +201,36 @@ export const ServiceController = {
         return res.status(401).json({ error: "O Usuário Precisa estar Logado Para Editar um Serviço" })
       }
 
-      if (campoVazio(nameService)) {
+      if (campoVazio(body.nameService)) {
         return res.status(400).json({ error: "Preencha o Nome do Seriviço" });
       }
-      if (campoVazio(description)) {
+      if (campoVazio(body.description)) {
         return res.status(400).json({ error: "Preencha a Descrição" });
       }
 
-      if (description.length > 300) {
+      if (body.description.length > 300) {
         return res.status(401).json({ error: "Limite de caracteres atingido" })
       }
-      else if (description.length < 10) {
-        res.status(400).json({ error: "A descrição precisa ter no mínimo de 10 caracteres" })
+      else if (body.description.length < 10) {
+        return res.status(400).json({ error: "A descrição precisa ter no mínimo de 10 caracteres" })
       }
 
-      if (campoVazio(price)) {
+      if (campoVazio(body.price)) {
         return res.status(400).json({ error: "Preencha o Preço" });
       }
 
       const id = Number(req.params.id);
 
+      const serviceExists = await prisma.service.findFirst({
+        where: { id, userId: req.logado.id },
+      });
+
+      if (!serviceExists) {
+        return res.status(404).json({ error: "Serviço não encontrado" });
+      }
+
       const updateService = await prisma.service.update({
-        where: { id },
+        where: { id: serviceExists.id },
         data: body,
       });
 

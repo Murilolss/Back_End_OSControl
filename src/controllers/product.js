@@ -127,7 +127,10 @@ export const ProductController = {
       }
 
       const product = await prisma.product.findMany({
-        where: query,
+        where: {
+          ...query,
+          userId: req.logado.id
+        }
       });
 
       if (product.length == 0) {
@@ -144,7 +147,7 @@ export const ProductController = {
     try {
       const id = Number(req.params.id);
 
-      let product = await prisma.product.findFirstOrThrow({ where: { id } });
+      let product = await prisma.product.findFirstOrThrow({ where: { id, userId: req.logado.id } });
 
       res.status(200).json(product);
     } catch (err) {
@@ -155,6 +158,14 @@ export const ProductController = {
   async del(req, res, _next) {
     try {
       const id = Number(req.params.id);
+
+      const productExists = await prisma.product.findFirst({
+        where: { id, userId: req.logado.id },
+      });
+
+      if (!productExists) {
+        return res.status(404).json({ error: "Produto não encontrado" });
+      }
 
       const shop = await prisma.shop.findFirst({
         where: { productId: id },
@@ -183,8 +194,6 @@ export const ProductController = {
       const user = await prisma.user.findFirst({
         where: { id: Number(req.logado.id) }
       });
-
-
 
       if (!user) {
         return res.status(301).json({ error: "O Usuário Precisa estar Logado Para Criar um Produto" });
@@ -286,8 +295,16 @@ export const ProductController = {
 
       const id = Number(req.params.id);
 
+      const productExists = await prisma.product.findFirst({
+        where: { id, userId: req.logado.id },
+      });
+
+      if (!productExists) {
+        return res.status(404).json({ error: "Produto não encontrado" });
+      }
+
       const productUpdate = await prisma.product.update({
-        where: { id },
+        where: { id: productExists.id },
         data: body,
       });
 

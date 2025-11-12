@@ -94,7 +94,10 @@ export const OrderController = {
       }
 
       const orders = await prisma.order.findMany({
-        where: query,
+        where: {
+          ...query,
+          userId: req.logado.id
+        },
         include: {
           client: true,
           service: true,
@@ -142,7 +145,7 @@ export const OrderController = {
       }
     } catch (error) {
       console.error(error);
-      
+
       next(error);
     }
   },
@@ -152,7 +155,7 @@ export const OrderController = {
       const id = Number(req.params.id);
 
       let order = await prisma.order.findFirstOrThrow({
-        where: { id },
+        where: { id, userId: req.logado.id },
         include: {
           client: true,
           service: true,
@@ -165,7 +168,7 @@ export const OrderController = {
       res.status(200).json(order);
     } catch (err) {
       console.error(err);
-      
+
       res.status(404).json({ error: "Erro interno ao buscar orders" });
     }
   },
@@ -175,7 +178,7 @@ export const OrderController = {
       const id = Number(req.params.id);
 
       let order = await prisma.order.delete({
-        where: { id }
+        where: { id, userId: req.logado.id }
       });
 
       res.status(200).json(order);
@@ -232,9 +235,17 @@ export const OrderController = {
         body.guarantee = req.body.guarantee;
       }
 
+      const orderExists = await prisma.order.findFirst({
+        where: { id, userId: req.logado.id },
+      });
+
+      if (!orderExists) {
+        return res.status(404).json({ error: "Ordem d Serviço não encontrada" });
+      }
+
 
       const updateOrder = await prisma.order.update({
-        where: { id },
+        where: { id: orderExists.id },
         data: body,
       });
 

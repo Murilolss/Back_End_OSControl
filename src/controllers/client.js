@@ -77,7 +77,7 @@ export const ClientController = {
         return regex.test(email);
       }
 
-      
+
       const isPF = document.length === 14;
       const isPJ = document.length === 18;
 
@@ -185,7 +185,7 @@ export const ClientController = {
         data: {
           name: isPF ? name : null,
           lastName: isPF ? lastName : null,
-          companyName: isPJ ? companyName: null,
+          companyName: isPJ ? companyName : null,
           corporateReason: isPJ ? corporateReason : null,
           document,
           cep,
@@ -206,6 +206,7 @@ export const ClientController = {
       next(err);
     }
   },
+
   async index(req, res, next) {
     try {
       let query = {};
@@ -252,7 +253,10 @@ export const ClientController = {
 
 
       const clients = await prisma.client.findMany({
-        where: query,
+        where: {
+          ...query,
+          userId: req.logado.id
+        }
       });
 
       if (clients.length == 0) {
@@ -269,7 +273,7 @@ export const ClientController = {
     try {
       const id = Number(req.params.id);
 
-      let client = await prisma.client.findFirstOrThrow({ where: { id } });
+      let client = await prisma.client.findFirstOrThrow({ where: { id, userId: req.logado.id }});
 
       res.status(200).json(client);
     } catch (err) {
@@ -280,6 +284,14 @@ export const ClientController = {
   async del(req, res, _next) {
     try {
       const id = Number(req.params.id);
+
+      const clientExists = await prisma.client.findFirst({
+        where: { id, userId: req.logado.id },
+      });
+
+      if (!clientExists) {
+        return res.status(404).json({ error: "Cliente não encontrado" });
+      }
 
       const order = await prisma.order.findFirst({
         where: { clientId: id },
@@ -454,11 +466,18 @@ export const ClientController = {
         return res.status(422).json({ error: "Já existe um Cliente Cadastrado com esse Email" });
       }
 
-
       const id = Number(req.params.id);
 
+      const clientExists = await prisma.client.findFirst({
+        where: { id: Number(req.params.id), userId: req.logado.id },
+      });
+
+      if (!clientExists) {
+        return res.status(404).json({ error: "Cliente não encontrado" });
+      }
+
       const clientUpdate = await prisma.client.update({
-        where: { id },
+        where: { id: clientExists.id },
         data: body,
       });
 
